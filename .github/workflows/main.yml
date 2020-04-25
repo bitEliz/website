@@ -14,8 +14,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [13.x]
-
+        node-version: [ 13.x ]
+        
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -34,6 +34,6 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
         ARGS: "-avzr --delete"
         SOURCE: "dist/"
-        REMOTE_HOST: "167.179.90.97"
-        REMOTE_USER: "melvyn"
+        REMOTE_HOST: ${{ secrets.REMOTE_ADDRESS }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
         TARGET: "/usr/share/nginx/html/akii.me"
