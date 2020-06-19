@@ -29,7 +29,6 @@
     display: inline-block;
     height: 5em;
     width: 15em;
-    /*background-image: url('assets/vapor-3.png');*/
     background-size: 100%;
     background-position: center left;
     background-repeat: no-repeat;
@@ -75,14 +74,14 @@
 
 <script>
 export default {
-  name: "AkiNav",
+  name: 'AkiNav',
   data() {
     return {
       navLinks: [
-        { title: "HOME", url: "/" },
-        { title: "BLOG", url: "/blog" }
-      ]
+        { title: 'HOME', url: '/' },
+        { title: 'BLOG', url: '/blog' },
+      ],
     };
-  }
+  },
 };
 </script>

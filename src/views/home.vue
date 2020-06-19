@@ -27,7 +27,7 @@
 
 <script>
 // import AkiNav from "components/nav.vue"
-import AkiContact from 'components/contact.vue'
+import AkiContact from '../components/contact.vue';
 
 export default {
   name: 'akiApp',
@@ -35,7 +35,7 @@ export default {
     // AkiNav
     AkiContact,
   },
-}
+};
 </script>
 
 <style lang="scss">

@@ -24,7 +24,7 @@
 <script>
 export default {
   name: 'notFound',
-}
+};
 </script>
 
 <style lang="css">
@@ -236,7 +236,6 @@ export default {
     animation-delay: 2.15s;
   }
 
-
   @keyframes woosh {
     0% {
       width: 12px;
@@ -278,7 +277,6 @@ export default {
       transform: translate(700px, 0) rotate(-37deg);
     }
   }
-
 
   @keyframes boom-circle {
     0% {
