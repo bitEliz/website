@@ -1,26 +1,30 @@
-
-const path = require('path')
+/* eslint-disable no-param-reassign */
+const path = require('path');
 
 module.exports = {
-  publicPath: './',
+  publicPath: '/',
   outputDir: 'dist',
   lintOnSave: process.env.NODE_ENV !== 'production',
-  // pwa: {
-  //   iconPaths: {
-  //     favicon32: 'favicon.ico',
-  //     favicon16: 'favicon.ico',
-  //     appleTouchIcon: 'favicon.ico',
-  //     maskIcon: 'favicon.ico',
-  //     msTileImage: 'favicon.ico'
-  //   }
-  // },
   chainWebpack: (config) => {
-    config.plugins.delete('prefetch')
+    config.plugins.delete('prefetch');
+
+    config.module
+      .rule('images')
+      .use('url-loader')
+      .loader('url-loader')
+      .tap((args) => {
+        args.limit = 10240;
+        args.esModule = false;
+        return args;
+      })
+      .end();
 
     config.resolve.alias
       .set('@', path.resolve(__dirname, 'src'))
-      .set('public', path.resolve(__dirname, 'public'))
-      .set('assets', path.resolve(__dirname, 'src/assets'))
       .set('components', path.resolve(__dirname, 'src/components'))
+      .set('router', path.resolve(__dirname, 'src/router'))
+      .set('utils', path.resolve(__dirname, 'src/utils'))
+      .set('views', path.resolve(__dirname, 'src/views'))
+      .end();
   },
-}
+};
