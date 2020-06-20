@@ -4,8 +4,8 @@
       class="resume-navbar resume-navbar__expand-lg resume-navbar__dark bg-primary fixed-top"
       id="nav"
     >
-      <a class="resume-navbar__brand js-scroll-trigger" href="#resume">
-        <span class="d-block d-lg-none">Clarence Taylor</span>
+      <a class="resume-navbar__brand" href="#resume">
+        <span class="d-block d-lg-none">APPL</span>
         <span class="d-none d-lg-block">
           <img
             class="img-fluid img-profile rounded-circle mx-auto mb-2"
@@ -25,20 +25,19 @@
       >
         <span class="resume-navbar__toggler-icon"></span>
       </button>
-      <div class="resume-navbar__collapse collapse" id="resume-navbar__c">
-        <ul class="resume-navbar__list">
-          <li class="resume-navbar__list-item" v-for="(mdl, index) in modules" :key="mdl.id">
+      <div class="resume-navbar__collapse collapse">
+        <ul class="resume-navbar__list" v-scroll-spy-active v-scroll-spy-link>
+          <li class="resume-navbar__list-item" v-for="mdl in modules" :key="mdl.id">
             <a
-              class="resume-navbar__link js-scroll-trigger"
-              :class="index === 0 ? 'active' : ''"
-              :href="mdl.href"
+              class="resume-navbar__link"
+              :href="'#' + mdl.id"
             >{{ mdl.title }}</a>
           </li>
         </ul>
       </div>
     </nav>
 
-    <div class="resume-wrap container-fluid">
+    <div class="resume-wrap container-fluid" v-scroll-spy>
       <section v-for="mdl in modules" :key="mdl.id" :id="mdl.id">
         <div v-if="mdl.id === 'about'" class="resume-section__wrap">
           <h1 class="mb-0 display-2 font-weight-bold text-uppercase">
@@ -59,7 +58,7 @@
               :key="index"
               :href="app.href"
             >
-              <svg-icon class="icon" :paths="app.svg"></svg-icon>
+              <appl-svg class="icon" :paths="app.svg"></appl-svg>
             </a>
           </div>
         </div>
@@ -84,17 +83,13 @@
         <div v-else-if="mdl.id === 'skill'" class="resume-section__wrap">
           <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
           <h4 class="mb-3">Programming Languages &amp; Tools</h4>
-          <ul class="list-inline">
+          <ul class="list-inline xxLang-list">
             <li
               class="list-inline-item"
               v-for="(skill, index) in mdl.skills.langAndToolList"
               :key="index"
             >
-              <svg-icon
-                class="icon"
-                v-if="skill.svg !== undefined"
-                :paths="skill.svg"
-              ></svg-icon>
+              <appl-svg class="icon" v-if="skill.svg !== undefined" :paths="skill.svg"></appl-svg>
               <a v-else class="font-weight-bold">{{ skill.title }}</a>
             </li>
           </ul>
@@ -112,9 +107,7 @@
             :class="index === mdl.iList.length - 1 ? 'mb-0' : ''"
             v-for="(interest, index) in mdl.iList"
             :key="index"
-          >
-          {{ interest }}
-          </p>
+          >{{ interest }}</p>
         </div>
         <div v-else class="resume-section__wrap">
           <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
@@ -125,12 +118,13 @@
 </template>
 
 <script>
+
 import svg from 'components/svg.vue';
 
 export default {
   name: 'resume',
   components: {
-    'svg-icon': svg,
+    'appl-svg': svg,
   },
   data() {
     return {
@@ -138,7 +132,7 @@ export default {
         {
           id: 'about',
           title: 'about',
-          href: 'Abount',
+          isActive: true,
           profile: {
             firstName: 'CLARENCE',
             lastName: 'TAYLOR',
@@ -162,7 +156,8 @@ export default {
               },
               {
                 title: 'Twitter',
-                href: '#',
+                href:
+                  'https://twitter.com/messages/compose?recipient_id=1412947170&text=hi',
                 viewBox: '',
                 svg: [
                   {
@@ -211,7 +206,7 @@ export default {
         {
           id: 'exp',
           title: 'experiance',
-          href: 'experiance',
+          isActive: false,
           expList: [
             {
               title: 'Senior Web Developer',
@@ -246,12 +241,13 @@ export default {
         {
           id: 'edu',
           title: 'education',
-          href: 'education',
+          isActive: false,
           expList: [],
         },
         {
           id: 'skill',
           title: 'skills',
+          isActive: false,
           href: 'skills',
           skills: {
             langAndToolList: [
@@ -316,6 +312,10 @@ export default {
                     path:
                       'M853.333333 204.8c17.066667-8.533333 25.6-17.066667 38.4-17.066667 21.333333 0 34.133333 12.8 38.4 21.333334 8.533333 12.8 38.4 21.333333 51.2 21.333333 8.533333 0 21.333333-29.866667 29.866667-55.466667s8.533333-55.466667 4.266667-59.733333c-4.266667-4.266667-38.4-12.8-46.933334-12.8-4.266667 4.266667-12.8 8.533333-29.866666 8.533333s-34.133333-12.8-46.933334-25.6c-21.333333-21.333333-46.933333-29.866667-72.533333-38.4-25.6-8.533333-55.466667-8.533333-81.066667-8.533333-38.4-4.266667-81.066667-4.266667-119.466666 8.533333-17.066667 4.266667-29.866667 8.533333-46.933334 17.066667-4.266667 4.266667-17.066667 8.533333-21.333333 8.533333-4.266667 4.266667-4.266667 8.533333 0 8.533334s21.333333-4.266667 21.333333-4.266667-21.333333 8.533333-21.333333 17.066667c0 4.266667 4.266667 4.266667 4.266667 4.266666s12.8-4.266667 21.333333-4.266666c17.066667 0 42.666667-8.533333 64-8.533334 25.6 0 51.2 8.533333 76.8 34.133334 38.4 46.933333 34.133333 106.666667 34.133333 119.466666-8.533333 89.6-209.066667 635.733333-217.6 674.133334-8.533333 38.4-8.533333 59.733333 38.4 72.533333s64 0 72.533334-17.066667c4.266667-29.866667 132.266667-704 209.066666-763.733333z',
                   },
+                  {
+                    path:
+                      'M686.933333 162.133333L0 268.8 110.933333 981.333333l366.933334-59.733333c-4.266667-29.866667 93.866667-285.866667 110.933333-332.8l-187.733333 29.866667 25.6-76.8 132.266666-21.333334 34.133334 42.666667s8.533333-21.333333 8.533333-29.866667L418.133333 307.2c-8.533333-12.8-8.533333-29.866667 4.266667-38.4l8.533333-8.533333c12.8-8.533333 29.866667-8.533333 38.4 4.266666l162.133334 187.733334c34.133333-102.4 64-192 64-221.866667 4.266667-8.533333 4.266667-38.4-8.533334-68.266667z m-512 422.4l115.2-21.333333-29.866666 76.8-76.8 12.8-8.533334-68.266667z m247.466667-217.6l12.8 4.266667c17.066667 4.266667 21.333333 21.333333 17.066667 38.4l-128 341.333333L247.466667 853.333333l8.533333-128 128-341.333333c4.266667-17.066667 21.333333-21.333333 38.4-17.066667z m460.8-119.466666c-17.066667 17.066667-38.4 72.533333-81.066667 234.666666h4.266667l12.8 68.266667-34.133333 4.266667c-4.266667 21.333333-8.533333 42.666667-17.066667 68.266666 72.533333 38.4 34.133333 132.266667 29.866667 132.266667-4.266667 0-4.266667 0-4.266667-4.266667s4.266667-17.066667-8.533333-21.333333c-8.533333-4.266667-25.6-8.533333-38.4-17.066667-12.8 51.2-25.6 110.933333-38.4 174.933334l268.8-42.666667-89.6-601.6-4.266667 4.266667z',
+                  },
                 ],
               },
               {
@@ -340,7 +340,7 @@ export default {
         {
           id: 'int',
           title: 'interests',
-          href: 'interests',
+          isActive: false,
           iList: [
             'Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.',
             'When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.',
@@ -349,7 +349,12 @@ export default {
       ],
     };
   },
-  methods: {},
+  methods: {
+
+  },
+  mounted() {
+
+  },
 };
 </script>
 
@@ -765,17 +770,17 @@ $navbar-max-width: 17rem;
     padding: 5rem 0;
     max-width: 75rem;
 
-    border-bottom:1px solid $border-color;
+    border-bottom: 1px solid $border-color;
     &:last-child {
       border-bottom: none;
     }
 
     @include media-breakpoint-up(md) {
-        min-height: 100vh;
+      min-height: 100vh;
     }
 
     .resume-section__wrap {
-        width: 100%;
+      width: 100%;
     }
   }
 }
@@ -801,13 +806,16 @@ $navbar-max-width: 17rem;
   }
 }
 
-.list-inline-item:not(:last-child) {
-  margin-right: 1.5rem;
+.xxLang-list {
+  margin: 2rem 0;
+
+  .list-inline-item:not(:last-child) {
+    margin-right: 1.5rem;
+  }
 }
 
 .icon {
   width: 2rem;
   height: 2rem;
 }
-
 </style>
