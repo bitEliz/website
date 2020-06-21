@@ -14,27 +14,19 @@
           />
         </span>
       </a>
-      <button
-        class="resume-navbar__toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <b-button v-b-toggle.collapse-1 class="resume-navbar__toggler">
         <span class="resume-navbar__toggler-icon"></span>
-      </button>
-      <div class="resume-navbar__collapse collapse">
-        <ul class="resume-navbar__list" v-scroll-spy-active v-scroll-spy-link>
-          <li class="resume-navbar__list-item" v-for="mdl in modules" :key="mdl.id">
-            <a
-              class="resume-navbar__link"
-              :href="'#' + mdl.id"
-            >{{ mdl.title }}</a>
-          </li>
-        </ul>
-      </div>
+      </b-button>
+      <b-collapse id="collapse-1" class="resume-navbar__collapse">
+          <ul class="resume-navbar__list" v-scroll-spy-active v-scroll-spy-link>
+            <li class="resume-navbar__list-item" v-for="mdl in modules" :key="mdl.id">
+              <a
+                class="resume-navbar__link"
+                :href="'#' + mdl.id"
+              >{{ mdl.title }}</a>
+            </li>
+          </ul>
+      </b-collapse>
     </nav>
 
     <div class="resume-wrap container-fluid" v-scroll-spy>
@@ -128,11 +120,11 @@ export default {
   },
   data() {
     return {
+      toggle_visible: false,
       modules: [
         {
           id: 'about',
           title: 'about',
-          isActive: true,
           profile: {
             firstName: 'CLARENCE',
             lastName: 'TAYLOR',
@@ -206,7 +198,6 @@ export default {
         {
           id: 'exp',
           title: 'experiance',
-          isActive: false,
           expList: [
             {
               title: 'Senior Web Developer',
@@ -241,13 +232,11 @@ export default {
         {
           id: 'edu',
           title: 'education',
-          isActive: false,
           expList: [],
         },
         {
           id: 'skill',
           title: 'skills',
-          isActive: false,
           href: 'skills',
           skills: {
             langAndToolList: [
@@ -340,7 +329,6 @@ export default {
         {
           id: 'int',
           title: 'interests',
-          isActive: false,
           iList: [
             'Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.',
             'When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.',
@@ -711,6 +699,7 @@ $navbar-max-width: 17rem;
 
     width: $navbar-max-width;
     height: 100vh;
+
     .resume-navbar__brand {
       display: flex;
 
@@ -722,6 +711,7 @@ $navbar-max-width: 17rem;
         border: 0.5rem solid fade-out($white, 0.8);
       }
     }
+
     .resume-navbar__collapse {
       display: flex;
       align-items: flex-start;
