@@ -5,4 +5,14 @@ const service = axios.create({
   timeout: 5000, // request timeout
 });
 
-export default service;
+export default async (url = '', method = 'get', data = {}, headers = {}) => {
+  try {
+    const response = await service.request({
+      url, method, data, headers,
+    });
+
+    return new Promise((resolver) => resolver(response.data));
+  } catch (error) {
+    throw new Error(error);
+  }
+};
