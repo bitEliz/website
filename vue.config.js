@@ -3,21 +3,10 @@ const path = require('path');
 
 module.exports = {
   publicPath: '/',
-  outputDir: 'dist',
+  assetsDir: 'assets',
   lintOnSave: process.env.NODE_ENV !== 'production',
   chainWebpack: (config) => {
     config.plugins.delete('prefetch');
-
-    config.module
-      .rule('images')
-      .use('url-loader')
-      .loader('url-loader')
-      .tap((args) => {
-        args.limit = 10240;
-        args.esModule = false;
-        return args;
-      })
-      .end();
 
     config.resolve.alias
       .set('@', path.resolve(__dirname, 'src'))
