@@ -50,17 +50,18 @@
           <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
           <div
             class="exp-wrapper"
-            v-for="(exp, index) in mdl.works"
+            v-for="(exp, index) in sortedExpList(mdl.works)"
             :key="index"
           >
-            <div class="d-flex justify-content-between align-items-center">
-              <h2 class="font-weight-bold mb-0">{{ exp.title }}</h2>
-              <span class="text-primary">{{ exp.start_date }} - {{ exp.end_date }}</span>
+            <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
+              <h4>{{ exp.company_name }} • {{ exp.title }}</h4>
+              <span class="text-secondery">{{ exp.start_date }} - {{ exp.end_date }}</span>
             </div>
-            <h4 class="mb-3" v-if="exp.responsibilities != null">
-              {{ exp.responsibilities }}
-            </h4>
-            <p v-if="exp.description != null">{{ exp.description }}</p>
+            <ul v-if="exp.responsibilities != null">
+              <li class="mb-3" v-for="(responsibility, index) in exp.responsibilities" :key="index">
+                {{ responsibility }}
+              </li>
+            </ul>
           </div>
         </div>
         <div v-else-if="mdl.id === 'education'" class="section-wrapper">
@@ -70,17 +71,21 @@
             v-for="(exp, index) in mdl.edu"
             :key="index"
           >
-            <div class="d-flex justify-content-between">
+            <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
               <div class="flex-grow-1">
                 <h2 class="font-weight-bold mb-0">{{ exp.title }}</h2>
-                <h4 class="mb-3">{{ exp.school }} • {{ exp.degree }}</h4>
+                <div class="d-flex align-items-center">
+                  <i class="ali degree icon"></i>
+                  <h4 class="mb-0">{{ exp.field }} • {{ exp.degree }}</h4>
+                </div>
               </div>
-              <span class="text-primary">
+              <span class="text-secondery">
                 {{ exp.start_year }} - {{ exp.end_year }}
               </span>
             </div>
-            <p>{{ exp.field }}</p>
-            <div v-if="exp.activities">
+            <h5 v-if="index === mdl.edu.lenght - 1">{{ exp.school }}</h5>
+            <h5 class="mb-0" v-else>{{ exp.school }}</h5>
+            <div v-if="exp.activities != null">
               <h5>activities</h5>
               <ul class="activities mb-0">
                 <li v-for="(activity, index) in exp.activities" :key="index">
@@ -118,13 +123,15 @@
         </div>
         <div v-else-if="mdl.id === 'interests'" class="section-wrapper">
           <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
-          <p
-            :class="index === mdl.hobbies.length - 1 ? 'mb-0' : ''"
-            v-for="(hobby, index) in mdl.hobbies"
-            :key="index"
-          >
-            {{ hobby }}
-          </p>
+          <ul>
+            <li
+              class="mb-3"
+              v-for="(hobby, index) in mdl.hobbies"
+              :key="index"
+            >
+              {{ hobby }}
+            </li>
+          </ul>
         </div>
         <div v-else class="section-wrapper">
           <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
@@ -146,7 +153,11 @@ export default {
   },
   methods: {
     async onLoading() {
-      this.modules = await http('/users/website/resume');
+      this.modules = await http('/users/akii/resume');
+    },
+
+    sortedExpList(exp) {
+      return exp.slice().sort((lhs, rhs) => (lhs.start_date > rhs.start_date ? -1 : 1));
     },
   },
   mounted() {
@@ -156,8 +167,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "node_modules/bootstrap/scss/bootstrap";
-@import url("https://at.alicdn.com/t/font_1932202_ngetwtjh2xl.css");
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
 
 $navbar-max-width: 17rem;
 
@@ -251,25 +262,28 @@ $navbar-max-width: 17rem;
       &:not(:last-child) {
         margin-bottom: $spacer * 3;
       }
+
+      .degree {
+        margin-right: 1rem;
+        font-size: 1.5rem;
+      }
     }
   }
 }
 
-.sns-list {
-  .sns-list-item {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 3.5rem;
-    width: 3.5rem;
-    &:hover {
-      color: $primary;
-    }
+.sns-list-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.5rem;
+  width: 3.5rem;
+  &:hover {
+    color: $primary;
   }
+}
 
-  .icon {
-    font-size: 2rem;
-  }
+.icon {
+  font-size: 2rem;
 }
 
 .xxLang-list {
