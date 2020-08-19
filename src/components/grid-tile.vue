@@ -9,7 +9,7 @@
         :src="content.imageUrl"
         alt=""
         loading="lazy"
-      />
+      >
     </a>
     <header class="mt-4 mt-sm-3">
       <section class="mb-3">
@@ -17,7 +17,7 @@
           :href="content.tag.url"
           class="s-tag bar-md va-middle mr-2"
           v-if="content.tag != null"
-          >{{ content.tag.name }}
+        >{{ content.tag.name }}
         </a>
         <span class="text-uppercase">
           {{ content.time }}
@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  name: 'grid-tile',
+  name: 'GridTile',
   props: {
     content: Object,
   },
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/styles/body";
+@import "~@styles/_body";
 
 .box-shadow-md {
   box-shadow: var(--shadow-md);

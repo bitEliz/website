@@ -1,6 +1,10 @@
 <template>
   <div id="resume">
-    <b-navbar toggleable="lg" type="dark" variant="primary">
+    <b-navbar
+      toggleable="lg"
+      type="dark"
+      variant="primary"
+    >
       <b-navbar-brand>
         <span class="d-block d-lg-none">APPL</span>
         <span class="d-none d-lg-block">
@@ -10,27 +14,54 @@
           /> -->
         </span>
       </b-navbar-brand>
-      <b-button v-b-toggle.collapse class="navbar-toggler">
-        <span class="navbar-toggler-icon"></span>
+      <b-button
+        v-b-toggle.collapse
+        class="navbar-toggler"
+      >
+        <span class="navbar-toggler-icon" />
       </b-button>
-      <b-collapse id="collapse" class="navbar-collapse">
-        <b-navbar-nav v-scroll-spy-active v-scroll-spy-link>
-          <li class="nav-item" v-for="mdl in modules" :key="mdl.id">
+      <b-collapse
+        id="collapse"
+        class="navbar-collapse"
+      >
+        <b-navbar-nav
+          v-scroll-spy-active
+          v-scroll-spy-link
+        >
+          <li
+            class="nav-item"
+            v-for="mdl in modules"
+            :key="mdl.id"
+          >
             <a class="nav-link">{{ mdl.title }}</a>
           </li>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
 
-    <div class="resume-wrapper" v-scroll-spy>
-      <section class="module" v-for="mdl in modules" :key="mdl.id">
-        <div v-if="mdl.id === 'profile'" class="module-wrapper">
+    <div
+      class="resume-wrapper"
+      v-scroll-spy
+    >
+      <section
+        class="module"
+        v-for="mdl in modules"
+        :key="mdl.id"
+      >
+        <div
+          v-if="mdl.id === 'profile'"
+          class="module-wrapper"
+        >
           <h1 class="font-weight-bold text-uppercase display-2 mb-0">
             {{ mdl.profile.first_name }}
             <span class="text-primary">{{ mdl.profile.last_name }}</span>
           </h1>
-          <h4 class="mb-5">{{ mdl.profile.location }}</h4>
-          <p class="lead mb-5">{{ mdl.profile.about_me }}</p>
+          <h4 class="mb-5">
+            {{ mdl.profile.location }}
+          </h4>
+          <p class="lead mb-5">
+            {{ mdl.profile.about_me }}
+          </p>
           <div class="sns-list">
             <a
               class="sns-list-item"
@@ -41,24 +72,34 @@
               <i
                 class="ali icon"
                 :class="social.service.type.toLowerCase()"
-              ></i>
+              />
             </a>
           </div>
         </div>
-        <div v-else-if="mdl.id == 'projects'" class="module-wrapper">
-          <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
+        <div
+          v-else-if="mdl.id == 'projects'"
+          class="module-wrapper"
+        >
+          <h1 class="font-weight-bold text-uppercase mb-5">
+            {{ mdl.title }}
+          </h1>
           <div class="d-flex flex-wrap flex-column flex-md-row">
             <div
               class="grid-tile overflow-hidden p-4 pb-5 pb-sm-4"
               v-for="proj in projs"
               :key="proj.id"
             >
-              <grid-tile :content="proj"> </grid-tile>
+              <grid-tile :content="proj" />
             </div>
           </div>
         </div>
-        <div v-else-if="mdl.id === 'experiance'" class="module-wrapper">
-          <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
+        <div
+          v-else-if="mdl.id === 'experiance'"
+          class="module-wrapper"
+        >
+          <h1 class="font-weight-bold text-uppercase mb-5">
+            {{ mdl.title }}
+          </h1>
           <div
             class="exp-wrapper"
             v-for="(exp, index) in sortedExpList(mdl.works)"
@@ -68,9 +109,9 @@
               class="d-flex flex-column flex-md-row justify-content-between mb-3"
             >
               <h4>{{ exp.company_name }} • {{ exp.title }}</h4>
-              <span class="text-secondery"
-                >{{ exp.start_date }} - {{ exp.end_date }}</span
-              >
+              <span
+                class="text-secondery"
+              >{{ exp.start_date }} - {{ exp.end_date }}</span>
             </div>
             <ul v-if="exp.responsibilities != null">
               <li
@@ -83,37 +124,65 @@
             </ul>
           </div>
         </div>
-        <div v-else-if="mdl.id === 'education'" class="module-wrapper">
-          <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
-          <div class="exp-wrapper" v-for="(exp, index) in mdl.edu" :key="index">
+        <div
+          v-else-if="mdl.id === 'education'"
+          class="module-wrapper"
+        >
+          <h1 class="font-weight-bold text-uppercase mb-5">
+            {{ mdl.title }}
+          </h1>
+          <div
+            class="exp-wrapper"
+            v-for="(exp, index) in mdl.edu"
+            :key="index"
+          >
             <div
               class="d-flex flex-column flex-md-row justify-content-between mb-3"
             >
               <div class="flex-grow-1">
-                <h2 class="font-weight-bold mb-0">{{ exp.title }}</h2>
+                <h2 class="font-weight-bold mb-0">
+                  {{ exp.title }}
+                </h2>
                 <div class="d-flex align-items-center">
-                  <i class="ali degree icon"></i>
-                  <h4 class="mb-0">{{ exp.field }} • {{ exp.degree }}</h4>
+                  <i class="ali degree icon" />
+                  <h4 class="mb-0">
+                    {{ exp.field }} • {{ exp.degree }}
+                  </h4>
                 </div>
               </div>
               <span class="text-secondery">
                 {{ exp.start_year }} - {{ exp.end_year }}
               </span>
             </div>
-            <h5 v-if="index === mdl.edu.lenght - 1">{{ exp.school }}</h5>
-            <h5 class="mb-0" v-else>{{ exp.school }}</h5>
+            <h5 v-if="index === mdl.edu.lenght - 1">
+              {{ exp.school }}
+            </h5>
+            <h5
+              class="mb-0"
+              v-else
+            >
+              {{ exp.school }}
+            </h5>
             <div v-if="exp.activities != null">
               <h5>activities</h5>
               <ul class="activities mb-0">
-                <li v-for="(activity, index) in exp.activities" :key="index">
+                <li
+                  v-for="(activity, index) in exp.activities"
+                  :key="index"
+                >
                   <span>{{ activity }}</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <div v-else-if="mdl.id === 'skills'" class="module-wrapper">
-          <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
+        <div
+          v-else-if="mdl.id === 'skills'"
+          class="module-wrapper"
+        >
+          <h1 class="font-weight-bold text-uppercase mb-5">
+            {{ mdl.title }}
+          </h1>
           <div
             class="professional"
             v-if="mdl.skill && mdl.skill.profesional != null"
@@ -131,30 +200,55 @@
                   class="icon"
                   v-if="skill.icon != null"
                   :paths="skill.icon.paths"
-                ></eli-svg>
-                <span v-else class="font-weight-bold">{{ skill }}</span>
+                />
+                <span
+                  v-else
+                  class="font-weight-bold"
+                >{{ skill }}</span>
               </li>
             </ul>
           </div>
-          <div class="workflow" v-if="mdl.skill && mdl.skill.workflow != null">
-            <h4 class="mb-3">Workflow</h4>
+          <div
+            class="workflow"
+            v-if="mdl.skill && mdl.skill.workflow != null"
+          >
+            <h4 class="mb-3">
+              Workflow
+            </h4>
             <ul class="mb-0">
-              <li v-for="(wkf, index) in mdl.skill.workflow" :key="index">
+              <li
+                v-for="(wkf, index) in mdl.skill.workflow"
+                :key="index"
+              >
                 <span>{{ wkf }}</span>
               </li>
             </ul>
           </div>
         </div>
-        <div v-else-if="mdl.id === 'interests'" class="module-wrapper">
-          <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
+        <div
+          v-else-if="mdl.id === 'interests'"
+          class="module-wrapper"
+        >
+          <h1 class="font-weight-bold text-uppercase mb-5">
+            {{ mdl.title }}
+          </h1>
           <ul>
-            <li class="mb-3" v-for="(hobby, index) in mdl.hobbies" :key="index">
+            <li
+              class="mb-3"
+              v-for="(hobby, index) in mdl.hobbies"
+              :key="index"
+            >
               {{ hobby }}
             </li>
           </ul>
         </div>
-        <div v-else class="module-wrapper">
-          <h1 class="font-weight-bold text-uppercase mb-5">{{ mdl.title }}</h1>
+        <div
+          v-else
+          class="module-wrapper"
+        >
+          <h1 class="font-weight-bold text-uppercase mb-5">
+            {{ mdl.title }}
+          </h1>
         </div>
       </section>
     </div>
@@ -162,11 +256,11 @@
 </template>
 
 <script>
-import http from 'utils/task';
-import GridTile from 'components/grid-tile.vue';
+import http from '@utils/task';
+import GridTile from '@components/grid-tile.vue';
 
 export default {
-  name: 'resume',
+  name: 'Resume',
   components: {
     'grid-tile': GridTile,
   },
@@ -176,7 +270,7 @@ export default {
       projs: [
         {
           id: '1',
-          url: '',
+          url: '/users/littlerkie/projs/1',
           title:
             'Stack Overflow for Teams has a new kind of content – Articles',
           summary:
@@ -187,7 +281,7 @@ export default {
         },
         {
           id: '2',
-          url: '',
+          url: '/users/littlerkie/projs/1',
           title: 'The key components for building a React community',
           summary:
             "The React community grew organically thanks to its instant popularity. Here's how the folks shepherding that community ensure that everyone who wants to contribute is welcome to.",
@@ -197,7 +291,7 @@ export default {
         },
         {
           id: '3',
-          url: '',
+          url: '/users/littlerkie/projs/1',
           title: 'The Overflow #34: WYSIWYG style',
           summary:
             'Welcome to ISSUE #34 of the Overflow! This week, we explore how to build a full-text search engine, ways to get involved in open source development, and how to force a right-click on a website that doesn’t want you to. Plus, the debut of Articles, a new form of post in Stack Overflow for Teams.',
@@ -207,7 +301,7 @@ export default {
         },
         {
           id: '4',
-          url: '',
+          url: '/users/littlerkie/projs/1',
           title:
             'Our Series E Funding – An Inflection Point to Accelerate the Realization of our Mission',
           summary:
@@ -221,7 +315,7 @@ export default {
   },
   methods: {
     async onLoading() {
-      this.modules = await http('/users/littlerkie/resume');
+      this.modules = await http(`/users/${this.$route.params.userId}/resume`);
     },
 
     sortedExpList(exp) {
@@ -368,7 +462,4 @@ $navbar-max-width: 17rem;
   flex-basis: 33%;
 }
 
-.ff-row-wrap {
-  flex-flow: row wrap !important;
-}
 </style>
