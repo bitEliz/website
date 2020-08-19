@@ -1,29 +1,29 @@
 <template>
-  <div class='animation-container'>
+  <div class="animation-container">
     <h1>肥肠抱歉，你要找的页面不见了 ╮(￣▽￣)╭</h1>
-    <div class='lightning-container'>
-      <div class='lightning white'></div>
-      <div class='lightning red'></div>
+    <div class="lightning-container">
+      <div class="lightning white" />
+      <div class="lightning red" />
     </div>
-    <div class='boom-container'>
-      <div class='shape circle big white'></div>
-      <div class='shape circle white'></div>
-      <div class='shape triangle big yellow'></div>
-      <div class='shape disc white'></div>
-      <div class='shape triangle blue'></div>
+    <div class="boom-container">
+      <div class="shape circle big white" />
+      <div class="shape circle white" />
+      <div class="shape triangle big yellow" />
+      <div class="shape disc white" />
+      <div class="shape triangle blue" />
     </div>
-    <div class='boom-container second'>
-      <div class='shape circle big white'></div>
-      <div class='shape circle white'></div>
-      <div class='shape disc white'></div>
-      <div class='shape triangle blue'></div>
+    <div class="boom-container second">
+      <div class="shape circle big white" />
+      <div class="shape circle white" />
+      <div class="shape disc white" />
+      <div class="shape triangle blue" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'notFound',
+  name: 'NotFound',
 };
 </script>
 

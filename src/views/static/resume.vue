@@ -1,16 +1,19 @@
 <template>
   <div class="aki-resume">
-    <vue-markdown :source="markdown" class="aki-resume__content"></vue-markdown>
+    <vue-markdown
+      :source="markdown"
+      class="aki-resume__content"
+    />
   </div>
 </template>
 
 <script>
 
 import VueMarkdown from 'vue-markdown';
-import http from 'utils/task';
+import http from '@utils/task';
 
 export default {
-  name: 'resume',
+  name: 'Resume',
   components: {
     VueMarkdown,
   },
@@ -19,19 +22,19 @@ export default {
       markdown: '',
     };
   },
+  mounted() {
+    this.onLoading();
+  },
   methods: {
     async onLoading() {
       this.markdown = await http('/static/resume');
     },
   },
-  mounted() {
-    this.onLoading();
-  },
 };
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/variables";
+@import "~@styles/_variables";
 
 .aki-resume {
   .aki-resume__content {
