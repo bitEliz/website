@@ -1,127 +1,129 @@
 <template>
-  <main>
-    <section
-      class="proj-summary d-flex flex-column flex-md-row align-items-center"
-    >
-      <div class="p-5">
-        <img
-          class="mb-5"
-          :src="proj.artwork_url"
-          alt=""
-          width="167"
-          height="167"
-        />
-        <h1>{{ proj.name }}</h1>
-        <h2>A Twitter Client with Personality</h2>
-        <p class="mt-5 mb-5">{{ proj.summary }}</p>
-        <appl-dl-button :appl_dl_url="proj.track_view_url" />
-      </div>
-      <img
-        class="img-promo"
-        :src="proj.promo_image_url"
-        width="358"
-        height="982"
-      />
-    </section>
-    <section class="features d-flex flex-column flex-md-row m-5 p-5">
-      <div>
-        <h2>特色功能</h2>
-        <ul>
-          <li v-for="(feature, index) in proj.features" :key="index">
-            {{ feature }}
-          </li>
-        </ul>
-      </div>
-      <div id="choose">
-        <h2>Why Choose Tweetbot?</h2>
-        <ul>
-          <li>Create and use Twitter Lists as multiple timelines.</li>
-          <li>
-            Filter any timeline via keywords or predefined criteria (like tweets
-            with media or links only) and save for future access.
-          </li>
-          <li>
-            Second column on iPad to view other content like a list, mentions,
-            search results, and etc at the same time.
-          </li>
-          <li>
-            Sync your unread status and timeline position across all of your
-            devices running Tweetbot (Mac, iPhone, iPad).
-          </li>
-          <li>No inline ads.</li>
-        </ul>
-      </div>
-    </section>
-    <section class="screenshots p-5" v-if="screenshotUrls.length > 0">
-      <h2 class="mb-5">屏幕截图</h2>
-      <ul
-        class="img-list d-flex flex-column flex-md-row justify-content-between align-items-center"
+    <main class="main" role="main">
+      <section
+        class="proj__summary summary d-flex flex-column flex-md-row align-items-center"
       >
-        <li
+        <div class="p-5">
+          <img
+            class="mb-5"
+            :src="proj.artwork_url"
+            alt=""
+            width="167"
+            height="167"
+          />
+          <h1>{{ proj.name }}</h1>
+          <h2>A Twitter Client with Personality</h2>
+          <p class="mt-5 mb-5">{{ proj.summary }}</p>
+          <appl-dl-button :appl_dl_url="proj.track_view_url" />
+        </div>
+        <img
+          class="promo__img"
+          :src="proj.promo_image_url"
+          width="358"
+          height="982"
+        />
+      </section>
+      <section
+        class="proj__features features d-flex flex-column flex-md-row m-5 p-5"
+      >
+        <div class="features__wrapper">
+          <h2>特色功能</h2>
+          <ul>
+            <li v-for="(feature, index) in proj.features" :key="index">
+              {{ feature }}
+            </li>
+          </ul>
+        </div>
+        <div id="choose">
+          <h2>Why Choose Tweetbot?</h2>
+          <ul>
+            <li>Create and use Twitter Lists as multiple timelines.</li>
+            <li>
+              Filter any timeline via keywords or predefined criteria (like
+              tweets with media or links only) and save for future access.
+            </li>
+            <li>
+              Second column on iPad to view other content like a list, mentions,
+              search results, and etc at the same time.
+            </li>
+            <li>
+              Sync your unread status and timeline position across all of your
+              devices running Tweetbot (Mac, iPhone, iPad).
+            </li>
+            <li>No inline ads.</li>
+          </ul>
+        </div>
+      </section>
+      <section
+        class="proj__screenshots screenshots p-5"
+        v-if="screenshotUrls.length > 0"
+      >
+        <h2 class="mb-5">屏幕截图</h2>
+        <ul
+          class="d-flex flex-column flex-md-row justify-content-between align-items-center"
+        >
+          <li v-for="(url, index) in screenshotUrls" :key="index">
+            <a
+              :href="'#screenshot_' + index"
+              v-on:click="visibility($event, true)"
+            >
+              <img class="w-100 h-100" :src="url" />
+            </a>
+          </li>
+        </ul>
+        <div
+          class="screenshots__browser-item"
           v-for="(url, index) in screenshotUrls"
           :key="index"
+          :id="'screenshot_' + index"
+          @click="visibility($event, false)"
         >
-          <a
-            :href="'#screenshot_' + index"
-            v-on:click="visibility($event, true)"
-          >
-            <img class="w-100 h-100" :src="url" />
-          </a>
-        </li>
-      </ul>
-      <div
-        class="img-wrapper"
-        v-for="(url, index) in screenshotUrls"
-        :key="index"
-        :id="'screenshot_' + index"
-        @click="visibility($event, false)"
-      >
-        <div class="m-auto" :class="index >= copyLength ? 'ipad' : ''">
-          <img :src="url" alt="" />
+          <div class="m-auto" :class="index >= copyLength ? 'ipad' : ''">
+            <img :src="url" alt="" />
+          </div>
         </div>
-      </div>
-    </section>
-    <section class="technology p-5">
-      <h2>Notable Features</h2>
-      <ul>
-        <li id="timeline">
-          <strong>Timeline Filters</strong><br />Quickly filter a timeline to
-          show only tweets with media, retweets, links, or create your own
-          keyword or rules-based filter. Access these saved filters any time
-          with two taps.
-        </li>
-        <li id="mute">
-          <strong>Mute Filters</strong><br />
-          Hide Tweets in your timelines by specific users, keywords, hashtags,
-          or even the client that published the Tweet. Select the length of time
-          to mute and use regular expressions for smarter muting.
-        </li>
-        <li id="notes">
-          <strong>Profile Notes</strong><br />
-          Ever forget why you followed someone or wanted to jot notes for future
-          reference? Create private notes on a user’s profile that only you can
-          see.
-        </li>
-        <li id="lists">
-          <strong>Custom Timelines</strong><br />
-          Create and manage public or private lists and then use them as curated
-          timelines. Tweetbot allows you to quickly switch between lists and
-          even use one as your main timeline.
-        </li>
-        <li id="sync">
-          <strong>iCloud Sync</strong><br />
-          Tweetbot syncs your read position and much more so your experience is
-          seamless when switching from desktop to mobile and vice versa.
-        </li>
-        <li id="topics">
-          <strong>Tweet Topics</strong><br />
-          Start tweet topics to automatically chain together multiple Tweets
-          (with the ability to append optional hashtags) and create tweet
-          storms.
-        </li>
-      </ul>
-    </section>
-  </main>
+      </section>
+      <section class="proj__technology p-5">
+        <h2>Notable Features</h2>
+        <ul>
+          <li id="timeline">
+            <strong>Timeline Filters</strong><br />Quickly filter a timeline to
+            show only tweets with media, retweets, links, or create your own
+            keyword or rules-based filter. Access these saved filters any time
+            with two taps.
+          </li>
+          <li id="mute">
+            <strong>Mute Filters</strong><br />
+            Hide Tweets in your timelines by specific users, keywords, hashtags,
+            or even the client that published the Tweet. Select the length of
+            time to mute and use regular expressions for smarter muting.
+          </li>
+          <li id="notes">
+            <strong>Profile Notes</strong><br />
+            Ever forget why you followed someone or wanted to jot notes for
+            future reference? Create private notes on a user’s profile that only
+            you can see.
+          </li>
+          <li id="lists">
+            <strong>Custom Timelines</strong><br />
+            Create and manage public or private lists and then use them as
+            curated timelines. Tweetbot allows you to quickly switch between
+            lists and even use one as your main timeline.
+          </li>
+          <li id="sync">
+            <strong>iCloud Sync</strong><br />
+            Tweetbot syncs your read position and much more so your experience
+            is seamless when switching from desktop to mobile and vice versa.
+          </li>
+          <li id="topics">
+            <strong>Tweet Topics</strong><br />
+            Start tweet topics to automatically chain together multiple Tweets
+            (with the ability to append optional hashtags) and create tweet
+            storms.
+          </li>
+        </ul>
+      </section>
+    </main>
 </template>
 
 <script>
@@ -163,7 +165,6 @@ export default {
   },
   computed: {
     screenshotUrls() {
-      return Array()
       // Image viewer only display 4 image
       // Keep at least one ipad screenshot if `proj.ipad_screenshot` is not empty.
       const maxLength = 4;
@@ -207,11 +208,6 @@ export default {
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "@assets/css/common";
 
-body {
-  color: var(--black-800);
-  background-color: var(--white);
-}
-
 main {
   max-width: 1100px;
   margin: 0 auto;
@@ -219,8 +215,32 @@ main {
   background-repeat: no-repeat;
   background-color: var(--black-025);
   background-size: 100% auto;
+}
 
-  .img-wrapper {
+.screenshots {
+  background: var(--white);
+
+  ul {
+    list-style: none;
+
+    li {
+      &:not(:first-child) {
+        margin: 0 1rem;
+        @media (max-width: $breakpoint-md) {
+          margin: 1rem 0;
+        }
+      }
+
+      img {
+        max-width: 180px;
+        max-height: 180px;
+        border-radius: 1rem;
+        object-fit: cover;
+      }
+    }
+  }
+
+  &__browser-item {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -247,20 +267,14 @@ main {
       border-radius: 40px;
     }
 
-    .ipad {
-      img {
-        max-width: 1000px;
-        border-radius: 6px;
-      }
+    .ipad img {
+      max-width: 1000px;
+      border-radius: 6px;
     }
   }
 }
 
-.screenshots {
-  background: var(--white);
-}
-
-.img-promo {
+.promo__img {
   max-width: 800px;
   height: auto;
   flex-basis: 33%;
@@ -274,40 +288,5 @@ main {
 .features {
   background: #e53f5b;
   border-radius: 1.5rem;
-}
-
-.img-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  li {
-    margin: 0 1rem;
-    list-style: none;
-
-    &:first-child {
-      margin-left: 0;
-    }
-    &:last-child {
-      margin-right: 0;
-    }
-
-    @media (max-width: 768px) {
-      margin: 1rem 0;
-      &:first-child {
-        margin-top: 0;
-      }
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    img {
-      max-width: 180px;
-      max-height: 180px;
-      border-radius: 1rem;
-      object-fit: cover;
-    }
-  }
 }
 </style>
