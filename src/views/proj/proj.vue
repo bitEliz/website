@@ -1,9 +1,10 @@
 <template>
-  <div class="proj-wrapper">
-    <div class="proj-summary d-flex flex-column flex-md-row align-items-center">
-      <div class="intro p-5">
+  <main>
+    <section
+      class="proj-summary d-flex flex-column flex-md-row align-items-center"
+    >
+      <div class="p-5">
         <img
-          id="appicon"
           class="mb-5"
           :src="proj.artwork_url"
           alt=""
@@ -16,14 +17,14 @@
         <appl-dl-button :appl_dl_url="proj.track_view_url" />
       </div>
       <img
-        class="img-promo .align-self-xl-end mt-4"
+        class="img-promo"
         :src="proj.promo_image_url"
         width="358"
         height="982"
       />
-    </div>
-    <div class="proj-promo d-flex flex-column flex-md-row m-5 p-5">
-      <div class="proj-features">
+    </section>
+    <section class="features d-flex flex-column flex-md-row m-5 p-5">
+      <div>
         <h2>特色功能</h2>
         <ul>
           <li v-for="(feature, index) in proj.features" :key="index">
@@ -50,14 +51,13 @@
           <li>No inline ads.</li>
         </ul>
       </div>
-    </div>
-    <div class="proj-screenshots p-5">
+    </section>
+    <section class="screenshots p-5" v-if="screenshotUrls.length > 0">
       <h2 class="mb-5">屏幕截图</h2>
-      <div
-        class="proj-screen-list d-flex flex-column flex-md-row justify-content-between align-items-center"
+      <ul
+        class="img-list d-flex flex-column flex-md-row justify-content-between align-items-center"
       >
-        <div
-          class="proj-screen-list-item"
+        <li
           v-for="(url, index) in screenshotUrls"
           :key="index"
         >
@@ -67,10 +67,10 @@
           >
             <img class="w-100 h-100" :src="url" />
           </a>
-        </div>
-      </div>
+        </li>
+      </ul>
       <div
-        class="box-viewer"
+        class="img-wrapper"
         v-for="(url, index) in screenshotUrls"
         :key="index"
         :id="'screenshot_' + index"
@@ -80,8 +80,8 @@
           <img :src="url" alt="" />
         </div>
       </div>
-    </div>
-    <div class="proj-features p-5">
+    </section>
+    <section class="technology p-5">
       <h2>Notable Features</h2>
       <ul>
         <li id="timeline">
@@ -120,8 +120,8 @@
           storms.
         </li>
       </ul>
-    </div>
-  </div>
+    </section>
+  </main>
 </template>
 
 <script>
@@ -163,10 +163,11 @@ export default {
   },
   computed: {
     screenshotUrls() {
+      return Array()
       // Image viewer only display 4 image
       // Keep at least one ipad screenshot if `proj.ipad_screenshot` is not empty.
       const maxLength = 4;
-      const copy = this.sizedListCopy(
+      return this.sizedListCopy(
         this.proj.screenshot_urls,
         this.copyLength
       ).concat(
@@ -175,9 +176,6 @@ export default {
           maxLength - this.copyLength
         )
       );
-
-      console.log(copy.length);
-      return copy;
     },
     copyLength() {
       const maxLength = this.proj.ipad_screenshot_urls.length < 0 ? 4 : 3;
@@ -185,7 +183,7 @@ export default {
     },
   },
   mounted() {
-      document.body.classList.toggle("has-darkmode__forced", true);
+    document.body.classList.toggle("has-darkmode__forced", true);
   },
   methods: {
     visibility: (e, isVisible) => {
@@ -207,25 +205,22 @@ export default {
 
 <style lang="scss">
 @import "node_modules/bootstrap/scss/bootstrap";
-@import "~@styles/_body";
+@import "@assets/css/common";
 
-#app {
-  background: #222222;
+body {
+  color: var(--black-800);
+  background-color: var(--white);
 }
 
-.proj-wrapper {
+main {
   max-width: 1100px;
   margin: 0 auto;
+  background: url("~@/assets/img/texture.svg");
+  background-repeat: no-repeat;
+  background-color: var(--black-025);
+  background-size: 100% auto;
 
-  .proj-summary {
-    background: #2e3033;
-  }
-
-  .intro {
-    flex-grow: 2;
-  }
-
-  .box-viewer {
+  .img-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -261,27 +256,35 @@ export default {
   }
 }
 
+.screenshots {
+  background: var(--white);
+}
+
 .img-promo {
-  flex-grow: 1;
   max-width: 800px;
   height: auto;
   flex-basis: 33%;
   margin-top: 20px;
 
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-md) {
     width: 95%;
-    flex-grow: 0;
   }
 }
 
-.proj-promo {
+.features {
   background: #e53f5b;
   border-radius: 1.5rem;
 }
 
-.proj-screen-list {
-  .proj-screen-list-item {
+.img-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
     margin: 0 1rem;
+    list-style: none;
+
     &:first-child {
       margin-left: 0;
     }
@@ -298,13 +301,13 @@ export default {
         margin-bottom: 0;
       }
     }
-  }
 
-  img {
-    max-width: 180px;
-    max-height: 180px;
-    border-radius: 1rem;
-    object-fit: cover;
+    img {
+      max-width: 180px;
+      max-height: 180px;
+      border-radius: 1rem;
+      object-fit: cover;
+    }
   }
 }
 </style>
