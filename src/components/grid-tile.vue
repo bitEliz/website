@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@assets/styles/_body";
+@import "@assets/css/common";
 
 .box-shadow-md {
   box-shadow: var(--shadow-md);

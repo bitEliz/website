@@ -214,7 +214,7 @@ $uiColorMap: () !default;
 $uiColorMap: map-merge(
   $map1: (
     "white" : #fff,
-    "balck" : #0c0d0e,
+    "black" : #0c0d0e,
     "gold" : #ffcc01,
     "gold-lighter" : #fff4d1,
     "gold-darker" : #f1b600,
@@ -224,9 +224,9 @@ $uiColorMap: map-merge(
     "bronze" : #caa789,
     "bronze-lighter" : #f2e9e1,
     "bronze-darker" : #ab825f,
-    "fc-dark" : var(--black-900),
-    "fc-medium" : var(--black-700),
-    "fc-light" : var(--black-500),
+    "fc-dark" : #0c0d0e,
+    "fc-medium" : #3c4146,
+    "fc-light" : #6a737c,
     "focus-ring" : rgba(0, 149, 255, 0.15),
     "focus-ring-success" : rgba(166, 217, 183, 0.4),
     "focus-ring-warning" : rgba(233, 198, 63, 0.4),
@@ -240,7 +240,7 @@ $uiColorMap: map-merge(
 $darkModeUIColorMap: () !default;
 $darkModeUIColorMap: map-merge(
   $map1: (
-    "white": #0c0d0e,
+    "white": #2d2d2d,
     "black": #fff,
     "gold" : #ffcc01,
     "gold-lighter" : #5e553c,
@@ -278,3 +278,19 @@ $lightModeColorMap: map-merge(
   $map1: $lightModeColorMap,
   $map2: $uiColorMap,
 );
+
+
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Breakpoints
+$breakpointMap: (
+  xs: $breakpoint-xs,
+  sm: $breakpoint-sm,
+  md: $breakpoint-md,
+  lg: $breakpoint-lg,
+  xl: $breakpoint-xl
+) !default;
