@@ -14,7 +14,7 @@ module.exports = {
       .set('@router', path.resolve(__dirname, 'src/router'))
       .set('@utils', path.resolve(__dirname, 'src/utils'))
       .set('@views', path.resolve(__dirname, 'src/views'))
-      .set('@styles', path.resolve(__dirname, 'src/assets/styles'))
+      .set('@assets', path.resolve(__dirname, 'src/assets'))
       .end();
   }
 };

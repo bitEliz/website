@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@styles/_variables";
+@import "@assets/styles/_variables";
 
 .aki-resume {
   .aki-resume__content {
