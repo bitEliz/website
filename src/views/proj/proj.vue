@@ -1,129 +1,100 @@
 <template>
-    <main class="main" role="main">
-      <section
-        class="proj__summary summary d-flex flex-column flex-md-row align-items-center"
-      >
-        <div class="p-5">
-          <img
-            class="mb-5"
-            :src="proj.artwork_url"
-            alt=""
-            width="167"
-            height="167"
-          />
-          <h1>{{ proj.name }}</h1>
-          <h2>A Twitter Client with Personality</h2>
-          <p class="mt-5 mb-5">{{ proj.summary }}</p>
-          <appl-dl-button :appl_dl_url="proj.track_view_url" />
-        </div>
+  <main class="main" role="main">
+    <section
+      class="proj__summary summary d-flex flex-column flex-md-row align-items-center"
+    >
+      <div class="p-5">
         <img
-          class="promo__img"
-          :src="proj.promo_image_url"
-          width="358"
-          height="982"
+          class="mb-5"
+          :src="proj.artwork_url"
+          alt=""
+          width="167"
+          height="167"
         />
-      </section>
-      <section
-        class="proj__features features d-flex flex-column flex-md-row m-5 p-5"
-      >
-        <div class="features__wrapper">
-          <h2>特色功能</h2>
-          <ul>
-            <li v-for="(feature, index) in proj.features" :key="index">
-              {{ feature }}
-            </li>
-          </ul>
-        </div>
-        <div id="choose">
-          <h2>Why Choose Tweetbot?</h2>
-          <ul>
-            <li>Create and use Twitter Lists as multiple timelines.</li>
-            <li>
-              Filter any timeline via keywords or predefined criteria (like
-              tweets with media or links only) and save for future access.
-            </li>
-            <li>
-              Second column on iPad to view other content like a list, mentions,
-              search results, and etc at the same time.
-            </li>
-            <li>
-              Sync your unread status and timeline position across all of your
-              devices running Tweetbot (Mac, iPhone, iPad).
-            </li>
-            <li>No inline ads.</li>
-          </ul>
-        </div>
-      </section>
-      <section
-        class="proj__screenshots screenshots p-5"
-        v-if="screenshotUrls.length > 0"
-      >
-        <h2 class="mb-5">屏幕截图</h2>
-        <ul
-          class="d-flex flex-column flex-md-row justify-content-between align-items-center"
-        >
-          <li v-for="(url, index) in screenshotUrls" :key="index">
-            <a
-              :href="'#screenshot_' + index"
-              v-on:click="visibility($event, true)"
-            >
-              <img class="w-100 h-100" :src="url" />
-            </a>
-          </li>
-        </ul>
-        <div
-          class="screenshots__browser-item"
-          v-for="(url, index) in screenshotUrls"
-          :key="index"
-          :id="'screenshot_' + index"
-          @click="visibility($event, false)"
-        >
-          <div class="m-auto" :class="index >= copyLength ? 'ipad' : ''">
-            <img :src="url" alt="" />
-          </div>
-        </div>
-      </section>
-      <section class="proj__technology p-5">
-        <h2>Notable Features</h2>
+        <h1>{{ proj.name }}</h1>
+        <h2>A Twitter Client with Personality</h2>
+        <p class="mt-5 mb-5">{{ proj.summary }}</p>
+        <appl-dl-button :appl_dl_url="proj.track_view_url" />
+      </div>
+      <img
+        class="promo__img"
+        :src="proj.promo_image_url"
+        width="358"
+        height="982"
+      />
+    </section>
+    <section
+      class="proj__features features d-flex flex-column flex-md-row m-5 p-5"
+    >
+      <div class="features__wrapper">
+        <h2>特色功能</h2>
         <ul>
-          <li id="timeline">
-            <strong>Timeline Filters</strong><br />Quickly filter a timeline to
-            show only tweets with media, retweets, links, or create your own
-            keyword or rules-based filter. Access these saved filters any time
-            with two taps.
-          </li>
-          <li id="mute">
-            <strong>Mute Filters</strong><br />
-            Hide Tweets in your timelines by specific users, keywords, hashtags,
-            or even the client that published the Tweet. Select the length of
-            time to mute and use regular expressions for smarter muting.
-          </li>
-          <li id="notes">
-            <strong>Profile Notes</strong><br />
-            Ever forget why you followed someone or wanted to jot notes for
-            future reference? Create private notes on a user’s profile that only
-            you can see.
-          </li>
-          <li id="lists">
-            <strong>Custom Timelines</strong><br />
-            Create and manage public or private lists and then use them as
-            curated timelines. Tweetbot allows you to quickly switch between
-            lists and even use one as your main timeline.
-          </li>
-          <li id="sync">
-            <strong>iCloud Sync</strong><br />
-            Tweetbot syncs your read position and much more so your experience
-            is seamless when switching from desktop to mobile and vice versa.
-          </li>
-          <li id="topics">
-            <strong>Tweet Topics</strong><br />
-            Start tweet topics to automatically chain together multiple Tweets
-            (with the ability to append optional hashtags) and create tweet
-            storms.
+          <li v-for="(feature, index) in proj.features" :key="index">
+            {{ feature }}
           </li>
         </ul>
-      </section>
-    </main>
+      </div>
+      <div id="choose">
+        <h2>Why Choose Tweetbot?</h2>
+        <ul>
+          <li>Create and use Twitter Lists as multiple timelines.</li>
+          <li>
+            Filter any timeline via keywords or predefined criteria (like tweets
+            with media or links only) and save for future access.
+          </li>
+          <li>
+            Second column on iPad to view other content like a list, mentions,
+            search results, and etc at the same time.
+          </li>
+          <li>
+            Sync your unread status and timeline position across all of your
+            devices running Tweetbot (Mac, iPhone, iPad).
+          </li>
+          <li>No inline ads.</li>
+        </ul>
+      </div>
+    </section>
+    <section
+      class="proj__screenshots screenshots p-5"
+      v-if="screenshotUrls.length > 0"
+    >
+      <h2 class="mb-5">屏幕截图</h2>
+      <ul
+        class="d-flex flex-column flex-md-row justify-content-between align-items-center"
+      >
+        <li v-for="(url, index) in screenshotUrls" :key="index">
+          <a
+            :href="'#screenshot_' + index"
+            v-on:click="visibility($event, true)"
+          >
+            <img class="w-100 h-100" :src="url" />
+          </a>
+        </li>
+      </ul>
+      <div
+        class="screenshots__browser-item"
+        v-for="(url, index) in screenshotUrls"
+        :key="index"
+        :id="'screenshot_' + index"
+        @click="visibility($event, false)"
+      >
+        <div class="m-auto" :class="index >= copyLength ? 'ipad' : ''">
+          <img :src="url" alt="" />
+        </div>
+      </div>
+    </section>
+    <section class="proj__technology p-5">
+      <h2>Notable Features</h2>
+      <ul>
+        <li id="timeline">
+          <strong>Timeline Filters</strong><br />Quickly filter a timeline to
+          show only tweets with media, retweets, links, or create your own
+          keyword or rules-based filter. Access these saved filters any time
+          with two taps.
+        </li>
+      </ul>
+    </section>
+  </main>
 </template>
 
 <script>
@@ -217,76 +188,79 @@ main {
   background-size: 100% auto;
 }
 
-.screenshots {
-  background: var(--white);
+.proj {
+  &__summary {
+    .promo__img {
+      max-width: 800px;
+      height: auto;
+      flex-basis: 33%;
+      margin-top: 20px;
 
-  ul {
-    list-style: none;
+      @media (max-width: $breakpoint-md) {
+        width: 95%;
+      }
+    }
+  }
+  &__features {
+    background: #e53f5b;
+    border-radius: 1.5rem;
+  }
 
-    li {
-      &:not(:first-child) {
-        margin: 0 1rem;
-        @media (max-width: $breakpoint-md) {
-          margin: 1rem 0;
+  &__screenshots {
+    background: var(--white);
+
+    ul {
+      list-style: none;
+
+      li {
+        &:not(:first-child) {
+          margin: 0 1rem;
+          @media (max-width: $breakpoint-md) {
+            margin: 1rem 0;
+          }
         }
+
+        img {
+          max-width: 180px;
+          max-height: 180px;
+          border-radius: 1rem;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .screenshots__browser-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      vertical-align: middle;
+      left: 0;
+      top: 0;
+      overflow: scroll;
+      background: rgba(0, 0, 0, 0.6);
+      position: fixed;
+      z-index: 2;
+      visibility: hidden;
+
+      div {
+        width: 80%;
       }
 
       img {
-        max-width: 180px;
-        max-height: 180px;
-        border-radius: 1rem;
-        object-fit: cover;
+        width: 100%;
+        max-width: 375px;
+        height: auto;
+        border-radius: 40px;
+      }
+
+      .ipad img {
+        max-width: 1000px;
+        border-radius: 6px;
       }
     }
   }
-
-  &__browser-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    vertical-align: middle;
-    left: 0;
-    top: 0;
-    overflow: scroll;
-    background: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    z-index: 2;
-    visibility: hidden;
-
-    div {
-      width: 80%;
-    }
-
-    img {
-      width: 100%;
-      max-width: 375px;
-      height: auto;
-      border-radius: 40px;
-    }
-
-    .ipad img {
-      max-width: 1000px;
-      border-radius: 6px;
-    }
-  }
-}
-
-.promo__img {
-  max-width: 800px;
-  height: auto;
-  flex-basis: 33%;
-  margin-top: 20px;
-
-  @media (max-width: $breakpoint-md) {
-    width: 95%;
-  }
-}
-
-.features {
-  background: #e53f5b;
-  border-radius: 1.5rem;
 }
 </style>

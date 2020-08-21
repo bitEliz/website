@@ -1,25 +1,21 @@
 <template>
   <div class="aki-resume">
-    <vue-markdown
-      :source="markdown"
-      class="aki-resume__content"
-    />
+    <vue-markdown :source="markdown" class="aki-resume__content" />
   </div>
 </template>
 
 <script>
-
-import VueMarkdown from 'vue-markdown';
-import http from '@utils/task';
+import VueMarkdown from "vue-markdown";
+import http from "@utils/task";
 
 export default {
-  name: 'Resume',
+  name: "Resume",
   components: {
     VueMarkdown,
   },
   data() {
     return {
-      markdown: '',
+      markdown: "",
     };
   },
   mounted() {
@@ -27,7 +23,7 @@ export default {
   },
   methods: {
     async onLoading() {
-      this.markdown = await http('/static/resume');
+      this.markdown = await http("/static/resume");
     },
   },
 };
