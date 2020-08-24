@@ -1,10 +1,7 @@
 import axios from "axios";
 
 const service = axios.create({
-  baseURL:
-    process.env.NODE_ENV === "production"
-      ? "https://api.akii.me"
-      : "http://127.0.0.1:8181",
+  baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 5000, // request timeout
 });
 
