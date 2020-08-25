@@ -1,35 +1,20 @@
-$color-blue: #106BA3;
-$color-red: #FE625D;
-$color-yellow: #FFC146;
-$color-green: #2FC950;
+$color-blue: #106ba3;
+$color-red: #fe625d;
+$color-yellow: #ffc146;
+$color-green: #2fc950;
 $color-gray: #9b9b9b;
-$color-dark-gray: #4A4A4A;
+$color-dark-gray: #4a4a4a;
 
-$color-code-keyword: #EA80FC;
-$color-code-type: #80D8FF;
+$color-code-keyword: #ea80fc;
+$color-code-type: #80d8ff;
 $color-code-method: $color-code-type;
-$color-code-string: #FF80AB;
+$color-code-string: #ff80ab;
 
-$link-normal-color: #9798A1;
-$link-highlight-color: #106BA3;
-$link-visited-color: #7766CC;
+$link-normal-color: #9798a1;
+$link-highlight-color: #106ba3;
+$link-visited-color: #7766cc;
 
-$dark-gray:#333333;
-
-$font-weight-thin:100;
-$font-weight-extra-light:200;
-$font-weight-light:300;
-$font-weight-regular:400;
-$font-weight-medium:500;
-$font-weight-semibold:600;
-$font-weight-bold:700;
-$font-weight-heavy:800;
-$font-weight-black:900;
-
-$font-size-headline:18px;
-$font-size-subheadline:18px;
-$font-size-body:1em;
-$font-size-footnote:12px;
+$dark-gray: #333333;
 
 $defaultColorMap: () !default;
 $defaultColorMap: map-merge(
@@ -196,16 +181,16 @@ $darkModeOpacityColorMap: map-merge(
     "yellow-700": #f1d056,
     "yellow-800": #f8df7a,
     "yellow-900": #fcedaf,
-    "red-050": #572f32,
-    "red-100": #723738,
-    "red-200": #873f3e,
-    "red-300": #9b4544,
-    "red-400": #b24d49,
-    "red-500": #c4524f,
-    "red-600": #d25d5d,
-    "red-700": #de7176,
-    "red-800": #e7929a,
-    "red-900": #f2c1c7,
+    "red-050": #7a1819,
+    "red-100": #942121,
+    "red-200": #ac2726,
+    "red-300": #c02d2e,
+    "red-400": #d1383d,
+    "red-500": #de535e,
+    "red-600": #e87c87,
+    "red-700": #f4b4bb,
+    "red-800": #f9d3d7,
+    "red-900": #fdf3f4,
   ),
   $map2: $darkModeOpacityColorMap,
 );
@@ -213,26 +198,26 @@ $darkModeOpacityColorMap: map-merge(
 $uiColorMap: () !default;
 $uiColorMap: map-merge(
   $map1: (
-    "white" : #fff,
-    "black" : #0c0d0e,
-    "gold" : #ffcc01,
-    "gold-lighter" : #fff4d1,
-    "gold-darker" : #f1b600,
-    "silver" : #b4b8bc,
-    "silver-lighter" : #e8e8e8,
-    "silver-darker" : #9a9c9f,
-    "bronze" : #caa789,
-    "bronze-lighter" : #f2e9e1,
-    "bronze-darker" : #ab825f,
-    "fc-dark" : #0c0d0e,
-    "fc-medium" : #3c4146,
-    "fc-light" : #6a737c,
-    "focus-ring" : rgba(0, 149, 255, 0.15),
-    "focus-ring-success" : rgba(166, 217, 183, 0.4),
-    "focus-ring-warning" : rgba(233, 198, 63, 0.4),
-    "focus-ring-error" : rgba(192, 45, 46, 0.15),
-    "focus-ring-muted" : rgba(36, 39, 41, 0.1),
-    "scrollbar" : rgba(0, 0, 0, 0.2),
+    "white": #fff,
+    "black": #0c0d0e,
+    "gold": #ffcc01,
+    "gold-lighter": #fff4d1,
+    "gold-darker": #f1b600,
+    "silver": #b4b8bc,
+    "silver-lighter": #e8e8e8,
+    "silver-darker": #9a9c9f,
+    "bronze": #caa789,
+    "bronze-lighter": #f2e9e1,
+    "bronze-darker": #ab825f,
+    "fc-dark": #0c0d0e,
+    "fc-medium": #3c4146,
+    "fc-light": #6a737c,
+    "focus-ring": rgba(0, 149, 255, 0.15),
+    "focus-ring-success": rgba(166, 217, 183, 0.4),
+    "focus-ring-warning": rgba(233, 198, 63, 0.4),
+    "focus-ring-error": rgba(192, 45, 46, 0.15),
+    "focus-ring-muted": rgba(36, 39, 41, 0.1),
+    "scrollbar": rgba(0, 0, 0, 0.2),
   ),
   $map2: $uiColorMap,
 );
@@ -242,24 +227,24 @@ $darkModeUIColorMap: map-merge(
   $map1: (
     "white": #2d2d2d,
     "black": #fff,
-    "gold" : #ffcc01,
-    "gold-lighter" : #5e553c,
-    "gold-darker" : #bc8f03,
-    "silver" : #b4b8bc,
-    "silver-lighter" : #424242,
-    "silver-darker" : #7b7c7e,
-    "bronze" : #caa789,
-    "bronze-lighter" : #4d433b,
-    "bronze-darker" : #8b684a,
-    "fc-dark" : var(--black-900),
-    "fc-medium" : var(--black-700),
-    "fc-light" : var(--black-500),
-    "focus-ring" : rgba(55, 138, 211, 0.15),
-    "focus-ring-success" : rgba(72, 116, 85, 0.4),
-    "focus-ring-warning" : rgba(158, 136, 59, 0.4),
-    "focus-ring-error" : rgba(196, 82, 79, 0.3),
-    "focus-ring-muted" : rgba(231, 232, 235, 0.1),
-    "scrollbar" : rgba(255, 255, 255, 0.2),
+    "gold": #ffcc01,
+    "gold-lighter": #5e553c,
+    "gold-darker": #bc8f03,
+    "silver": #b4b8bc,
+    "silver-lighter": #424242,
+    "silver-darker": #7b7c7e,
+    "bronze": #caa789,
+    "bronze-lighter": #4d433b,
+    "bronze-darker": #8b684a,
+    "fc-dark": var(--black-900),
+    "fc-medium": var(--black-700),
+    "fc-light": var(--black-500),
+    "focus-ring": rgba(55, 138, 211, 0.15),
+    "focus-ring-success": rgba(72, 116, 85, 0.4),
+    "focus-ring-warning": rgba(158, 136, 59, 0.4),
+    "focus-ring-error": rgba(196, 82, 79, 0.3),
+    "focus-ring-muted": rgba(231, 232, 235, 0.1),
+    "scrollbar": rgba(255, 255, 255, 0.2),
   ),
   $map2: $darkModeUIColorMap,
 );
@@ -271,14 +256,13 @@ $darkModeColorMap: map-merge(
 
 $lightModeColorMap: map-merge(
   $map1: $defaultColorMap,
-  $map2: $opacityColorMap
+  $map2: $opacityColorMap,
 );
 
 $lightModeColorMap: map-merge(
   $map1: $lightModeColorMap,
   $map2: $uiColorMap,
 );
-
 
 $breakpoint-xs: 0;
 $breakpoint-sm: 576px;
@@ -292,5 +276,13 @@ $breakpointMap: (
   sm: $breakpoint-sm,
   md: $breakpoint-md,
   lg: $breakpoint-lg,
-  xl: $breakpoint-xl
+  xl: $breakpoint-xl,
 ) !default;
+
+$headings-margin-bottom: 1rem !default;
+
+// Paragraphs
+//
+// Style p element.
+
+$paragraph-margin-bottom: 1rem !default;

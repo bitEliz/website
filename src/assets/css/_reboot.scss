@@ -1,0 +1,172 @@
+@import "variables";
+// stylelint-disable at-rule-no-vendor-prefix, declaration-no-important, selector-no-qualifying-type, property-no-vendor-prefix
+
+// Reboot
+//
+// Normalization of HTML elements, manually forked from Normalize.css to remove
+// styles targeting irrelevant browsers while applying new styles.
+//
+// Normalize is licensed MIT. https://github.com/necolas/normalize.css
+
+// Document
+//
+// 1. Change from `box-sizing: content-box` so that `width` is not affected by `padding` or `border`.
+// 2. Change the default font family in all browsers.
+// 3. Correct the line height in all browsers.
+// 4. Prevent adjustments of font size after orientation changes in IE on Windows Phone and in iOS.
+// 5. Change the default tap highlight to be completely transparent in iOS.
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; // 1
+}
+
+// Body
+//
+// 1. Remove the margin in all browsers.
+// 2. As a best practice, apply a default `background-color`.
+// 3. Set an explicit initial text-align value so that we can later use
+//    the `inherit` value on things like `<th>` elements.
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+  font-size: 100%;
+  font-weight: normal;
+  line-height: 1.5;
+  color: var(--black);
+  background-color: var(--white); // 2
+}
+
+// Content grouping
+//
+// 1. Add the correct box sizing in Firefox.
+// 2. Show the overflow in Edge and IE.
+
+hr {
+  box-sizing: content-box; // 1
+  height: 0; // 1
+  overflow: visible; // 2
+  border: none;
+  border-top: 1px solid var(--black-075);
+  margin-bottom: 1rem;
+
+  &:last-child {
+    display: none;
+  }
+}
+
+//
+// Typography
+//
+
+// Remove top margins from headings
+//
+// By default, `<h1>`-`<h6>` all receive top and bottom margins. We nuke the top
+// margin for easier control within type scales as it avoids margin collapsing.
+// stylelint-disable-next-line selector-list-comma-newline-after
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: $headings-margin-bottom;
+}
+
+// Reset margins on paragraphs
+//
+// Similarly, the top margin on `<p>`s get reset. However, we also reset the
+// bottom margin to use `rem` units instead of `em`.
+p {
+  margin-top: 0;
+  margin-bottom: $paragraph-margin-bottom;
+}
+
+ol,
+ul,
+dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  list-style: none;
+}
+
+ol ol,
+ul ul,
+ol ul,
+ul ol {
+  margin-bottom: 0;
+}
+
+dd {
+  margin-bottom: 0.5rem;
+  margin-left: 0; // Undo browser default
+}
+
+blockquote {
+  margin: 0 0 1rem;
+}
+
+//
+// Links
+//
+
+a {
+  color: var(--blue-600);
+  text-decoration: none;
+  background-color: transparent; // Remove the gray background on active links in IE 10.
+
+  &:hover {
+    color: var(--blue-500);
+    text-decoration: none;
+  }
+}
+
+// And undo these styles for placeholder links/named anchors (without href).
+// It would be more straightforward to just use a[href] in previous block, but that
+// causes specificity issues in many other styles that are too complex to fix.
+// See https://github.com/twbs/bootstrap/issues/19402
+
+a:not([href]):not([class]) {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+//
+// Images and content
+//
+
+img {
+  vertical-align: middle;
+  border-style: none; // Remove the border on images inside links in IE 10-.
+}
+
+svg {
+  // Workaround for the SVG overflow bug in IE10/11 is still required.
+  // See https://github.com/twbs/bootstrap/issues/26878
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+fieldset {
+  // Browsers set a default `min-width: min-content;` on fieldsets,
+  // unlike e.g. `<div>`s, which have `min-width: 0;` by default.
+  // So we reset that to ensure fieldsets behave more like a standard block element.
+  // See https://github.com/twbs/bootstrap/issues/12359
+  // and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements
+  min-width: 0;
+  // Reset the default outline behavior of fieldsets so they don't affect page layout.
+  padding: 0;
+  margin: 0;
+  border: 0;
+}

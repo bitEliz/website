@@ -13,10 +13,6 @@ const routes = [
     component: () => import("@views/resume/resume"),
   },
   {
-    path: "/users/:userId/projs/:projId",
-    component: () => import("@views/proj/proj"),
-  },
-  {
     path: "/404",
     component: () => import("@views/oop"),
   },
