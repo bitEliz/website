@@ -1,0 +1,18 @@
+// stylelint-disable declaration-no-important, selector-list-comma-newline-after
+
+//
+// Lists
+//
+
+.list-unstyled {
+  @include list-unstyled();
+}
+
+// Inline turns list items into inline-block
+.list-inline {
+  @include list-unstyled();
+}
+
+.list-inline-item {
+  display: inline-block;
+}

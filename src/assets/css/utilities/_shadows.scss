@@ -1,4 +1,4 @@
-@import 'variables';
+// stylelint-disable declaration-no-important
 
 .shadow-sm { box-shadow: var(--shadow-sm) !important; }
 .shadow-md { box-shadow: var(--shadow-md) !important; }

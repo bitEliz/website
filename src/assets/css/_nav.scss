@@ -1,0 +1,147 @@
+// Base class
+//
+// Kickstart any navigation component with a set of style resets. Works with
+// `<nav>`s, `<ul>`s or `<ol>`s.
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+
+  %container-flex-properties {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .wrapper,
+  .wrapper-fluid {
+    @extend %container-flex-properties;
+  }
+
+  @each $breakpoint, $wrapper-max-width in $container-max-widths {
+    > .wrapper#{breakpoint-infix($breakpoint, $container-max-widths)} {
+        @extend %container-flex-properties;
+    }
+  }
+
+  &__item-list {
+    display: flex;
+    flex-direction: column;
+    @include list-unstyled();
+  }
+
+  &__link {
+    display: block;
+    padding: $nav-link-padding-y $nav-link-padding-x;
+    text-decoration: if($link-decoration == none, null, none);
+
+    // Disabled state lightens text
+    &.disabled {
+      color: $nav-link-color--disabled;
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+
+  //
+  // Justified variants
+  //
+
+  &--fill {
+    > .nav__link,
+    .nav__item {
+      flex: 1 1 auto;
+      text-align: center;
+    }
+  }
+
+  &--justified {
+    > .nav__link,
+    .nav__item {
+      flex-basis: 0;
+      flex-grow: 1;
+      text-align: center;
+    }
+  }
+
+  &__collapse {
+    flex-basis: 100%;
+    flex-grow: 1;
+    // For always expanded or extra full navbars, ensure content aligns itself
+    // properly vertically. Can be easily overridden with flex utilities.
+    align-items: center;
+  }
+
+  // Generate series of `.nav--expand-*` responsive classes for configuring
+  // where your navbar collapses.
+  &--expand {
+    @each $breakpoint in map-keys($grid-breakpoints) {
+      $next: breakpoint-next($breakpoint, $grid-breakpoints);
+      $infix: breakpoint-infix($next, $grid-breakpoints);
+
+      &#{$infix} {
+        @include media-breakpoint-down($breakpoint) {
+          %container-navbar-expand-#{$breakpoint} {
+            padding-right: 0;
+            padding-left: 0;
+          }
+
+          > .wrapper,
+          > .wrapper-fluid {
+            @extend %container-navbar-expand-#{$breakpoint};
+          }
+
+          @each $size, $container-max-width in $container-max-widths {
+            > .wrapper#{breakpoint-infix($size, $container-max-widths)} {
+              @extend %container-navbar-expand-#{$breakpoint};
+            }
+          }
+        }
+
+        @include media-breakpoint-up($next) {
+          flex-flow: row nowrap;
+          justify-content: flex-start;
+
+          .nav__item-list {
+            flex-direction: row;
+
+            .nav__link {
+              padding-right: $nav-link-padding-x;
+              padding-left: $nav-link-padding-x;
+            }
+          }
+
+          // For nesting containers, have to redeclare for alignment purposes
+          %container-nesting-#{$breakpoint} {
+            flex-wrap: nowrap;
+          }
+
+          > .wrapper,
+          > .wrapper-fluid {
+            @extend %container-nesting-#{$breakpoint};
+          }
+
+          @each $size, $container-max-width in $container-max-widths {
+            > .wrapper#{breakpoint-infix($size, $container-max-widths)} {
+              @extend %container-nesting-#{$breakpoint};
+            }
+          }
+
+          .nav__collapse {
+            display: flex !important; // stylelint-disable-line declaration-no-important
+
+            // Changes flex-bases to auto because of an IE10 bug
+            flex-basis: auto;
+          }
+
+          .nav__menu-toggle {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

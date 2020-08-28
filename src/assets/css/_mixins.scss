@@ -1,0 +1,23 @@
+// Toggles
+//
+// Used in conjunction with global variables to enable certain theme features.
+
+// Utilities
+@import "mixins/breakpoints";
+@import "mixins/img";
+@import "mixins/resizable";
+@import "mixins/text-truncate";
+
+// Components
+@import "mixins/pagination";
+@import "mixins/lists";
+
+// Skins
+@import "mixins/border-radius";
+@import "mixins/box-shadow";
+@import "mixins/gradients";
+@import "mixins/transition";
+
+// Layout
+@import "mixins/clearfix";
+@import "mixins/grid";
