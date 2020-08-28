@@ -64,6 +64,9 @@ hr {
   height: 0; // 1
   overflow: visible; // 2
 
+  border: none;
+  border-top: 1px solid var(--black-075);
+
   &:last-child {
     display: none;
   }

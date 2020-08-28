@@ -16,4 +16,11 @@ module.exports = {
       .set("@assets", path.resolve(__dirname, "src/assets"))
       .end();
   },
+  css: {
+    loaderOptions: {
+      scss: {
+        prependData: `@import "@assets/css/common.scss";`,
+      },
+    },
+  },
 };
