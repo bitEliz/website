@@ -7,20 +7,20 @@
   $line-height,
   $border-radius
 ) {
-  .page-link {
+  .page__link {
     padding: $padding-y $padding-x;
     @include font-size($font-size);
     line-height: $line-height;
   }
 
-  .page-item {
+  .page__item {
     &:first-child {
-      .page-link {
+      .page__link {
         @include border-left-radius($border-radius);
       }
     }
     &:last-child {
-      .page-link {
+      .page__link {
         @include border-right-radius($border-radius);
       }
     }

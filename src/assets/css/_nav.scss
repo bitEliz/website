@@ -17,7 +17,7 @@
   }
 
   .wrapper,
-  .wrapper-fluid {
+  .wrapper--fluid {
     @extend %container-flex-properties;
   }
 
@@ -27,13 +27,14 @@
     }
   }
 
-  &__item-list {
+  & &__item-list {
     display: flex;
     flex-direction: column;
     @include list-unstyled();
+    margin-bottom: 0;
   }
 
-  &__link {
+  & &__link {
     display: block;
     padding: $nav-link-padding-y $nav-link-padding-x;
     text-decoration: if($link-decoration == none, null, none);
@@ -67,7 +68,7 @@
     }
   }
 
-  &__collapse {
+  & &__collapse {
     flex-basis: 100%;
     flex-grow: 1;
     // For always expanded or extra full navbars, ensure content aligns itself
@@ -90,7 +91,7 @@
           }
 
           > .wrapper,
-          > .wrapper-fluid {
+          > .wrapper--fluid {
             @extend %container-navbar-expand-#{$breakpoint};
           }
 
@@ -120,7 +121,7 @@
           }
 
           > .wrapper,
-          > .wrapper-fluid {
+          > .wrapper--fluid {
             @extend %container-nesting-#{$breakpoint};
           }
 

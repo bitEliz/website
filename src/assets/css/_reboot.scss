@@ -128,14 +128,14 @@ ol,
 ul,
 dl {
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: $list-margin-bottom;
 }
 
 ol ol,
 ul ul,
 ol ul,
 ul ol {
-  margin-bottom: 0;
+  margin-bottom: $list-nesting-margin-bottom;
 }
 
 blockquote {

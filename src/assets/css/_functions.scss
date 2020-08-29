@@ -76,11 +76,6 @@
   @return map-get($colors, $key);
 }
 
-
-@function gray($key: "100") {
-  @return map-get($grays, $key);
-}
-
 // Return valid calc
 @function add($value1, $value2, $return-calc: true) {
   @if $value1 == null {

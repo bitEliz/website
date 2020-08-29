@@ -6,14 +6,14 @@
   // Single container class with breakpoint max-widths
   .wrapper,
     // 100% wide container at all breakpoints
-    .wrapper-fluid {
+    .wrapper--fluid {
     @include make-container();
   }
 
   // Responsive containers that are 100% wide until a breakpoint
   @each $breakpoint, $container-max-width in $container-max-widths {
     .wrapper-#{$breakpoint} {
-      @extend .wrapper-fluid;
+      @extend .wrapper--fluid;
     }
 
     @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
@@ -38,35 +38,4 @@
       }
     }
   }
-}
-
-// Row
-//
-// Rows contain your columns.
-
-@if $enable-grid-classes {
-  .grid__row {
-    @include make-row();
-  }
-
-  // Remove the negative margin from default .row, then the horizontal padding
-  // from all immediate children columns (to prevent runaway style inheritance).
-  .no-gutters {
-    margin-right: 0;
-    margin-left: 0;
-
-    > .grid__col,
-    > [class*="grid__col-"] {
-      padding-right: 0;
-      padding-left: 0;
-    }
-  }
-}
-
-// Columns
-//
-// Common styles for small and large grid columns
-
-@if $enable-grid-classes {
-  @include make-grid-columns();
 }

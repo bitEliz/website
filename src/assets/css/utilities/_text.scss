@@ -4,22 +4,22 @@
 // Text
 //
 
-.text-monospace {
+.txt-ff--monospace {
   font-family: $font-family-monospace !important;
 }
 
 // Alignment
 
-.text-justify {
+.txt-a--justify {
   text-align: justify !important;
 }
-.text-wrap {
+.txt-ws--wrap {
   white-space: normal !important;
 }
-.text-nowrap {
+.txt-ws--nowrap {
   white-space: nowrap !important;
 }
-.text-truncate {
+.txt--truncate {
   @include text-truncate();
 }
 
@@ -29,13 +29,13 @@
   @include media-breakpoint-up($breakpoint) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
-    .text#{$infix}-left {
+    .txt-a#{$infix}--left {
       text-align: left !important;
     }
-    .text#{$infix}-right {
+    .txt-a#{$infix}--right {
       text-align: right !important;
     }
-    .text#{$infix}-center {
+    .txt-a#{$infix}--center {
       text-align: center !important;
     }
   }
@@ -43,63 +43,40 @@
 
 // Transformation
 
-.text-lowercase {
+.txt-t--lowercase {
   text-transform: lowercase !important;
 }
-.text-uppercase {
+.txt-t--uppercase {
   text-transform: uppercase !important;
 }
-.text-capitalize {
+.txt-t--capitalize {
   text-transform: capitalize !important;
 }
 
 // Weight and italics
-
-.font-weight-thin {
-  font-weight: 100 !important;
-}
-.font-weight-extra-light {
-  font-weight: 200 !important;
-}
-.font-weight-light {
-  font-weight: 300 !important;
-}
-.font-weight-normal {
-  font-weight: 400 !important;
-}
-.font-weight-medium {
-  font-weight: 500 !important;
-}
-.font-weight-semi-bold {
-  font-weight: 600 !important;
-}
-.font-weight-bold {
-  font-weight: 700 !important;
-}
-.font-weight-extra-bold {
-  font-weight: 800 !important;
-}
-.font-weight-black {
-  font-weight: 900 !important;
+@each $key, $val in $txt-font-weights {
+  .txt-fw--#{"" + $key} {
+    font-weight: $val !important;
+  }
 }
 
-.font-style-italic {
+.txt-fs--italic {
   font-style: italic !important;
 }
 
 // Misc
 
-.text-decoration-none {
+.txt-d--none {
   text-decoration: none !important;
 }
 
-.text-break {
+.txt-wb--break-word {
   word-break: break-word !important; // IE & < Edge 18
   overflow-wrap: break-word !important;
 }
 
 // Reset
 
-.text-color-reset {
+.txt-color--reset {
   color: inherit !important;
 }
