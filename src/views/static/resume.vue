@@ -5,6 +5,7 @@
 <script>
 import marked from "marked";
 import http from "@utils/task";
+import darkModeEnabled from "@utils/dark-mode";
 
 export default {
   name: "Resume",
@@ -14,27 +15,10 @@ export default {
     };
   },
   mounted() {
-    this.theme();
+    darkModeEnabled();
     this.onLoading();
   },
   methods: {
-    theme() {
-      var forceSetting = localStorage.getItem("forceDarkModeOn");
-      var browserPrefersDark =
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches;
-      var darkModeEnabled =
-        forceSetting === "true" || (!forceSetting && browserPrefersDark);
-
-      if (browserPrefersDark) {
-        document.body.classList.toggle("has-darkmode", darkModeEnabled);
-        document.body.classList.toggle("has-darkmode__forced", false);
-      } else {
-        document.body.classList.toggle("has-darkmode", true);
-        document.body.classList.toggle("has-darkmode__forced", darkModeEnabled);
-      }
-    },
-
     async onLoading() {
       const markdown = await http("/static/resume");
       this.html = marked(markdown, { snitize: true });
@@ -44,11 +28,15 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+  font-size: 15px;
+  color: var(--black-900);
+}
+
 .main {
   margin: 0 auto;
   max-width: 798px;
   padding: 5em 1rem 3em;
-  color: var(--black-900);
 
   h1 {
     font-size: 3rem;
