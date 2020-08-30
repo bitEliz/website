@@ -1,78 +1,96 @@
 <template>
-  <div class="d-flex flex-column h-100">
-    <a
-      :href="content.url"
-      class="d-block bar-lg overflow-hidden imgfill box-shadow-md position-relative"
-    >
-      <img
-        class="w-100 h-100 d-block"
-        :src="content.imageUrl"
-        alt=""
-        loading="lazy"
-      />
-    </a>
-    <header class="mt-4 mt-sm-3">
-      <section class="mb-3">
-        <a
-          :href="content.tag.url"
-          class="s-tag bar-md va-middle mr-2"
-          v-if="content.tag != null"
-          >{{ content.tag.name }}
-        </a>
-        <span class="text-uppercase">
-          {{ content.time }}
-        </span>
-      </section>
-      <h2 class="">
-        <a
-          :href="content.url"
-          :title="content.title"
-          rel="bookmark"
-          class="fc-black-800 h:fc-blue-500"
-        >
-          {{ content.title }}
-        </a>
-      </h2>
+  <el-card class="tile" :body-style="{ padding: '0px' }" shadow="always">
+    <header>
+      <div class="tile__backgimg">
+        <el-image :src="content.backgroundImageUrl" fit="fit" lazy>
+          <div slot="placeholder">LOADING<span>...</span></div>
+        </el-image>
+      </div>
+      <div class="tile__extra">
+        <a class="tile__tag" href="">{{ content.category }}</a>
+        <span class="tile__datetime txt-t-uppercase">{{ content.date }}</span>
+      </div>
+      <h3 class="tile__title">{{ content.title }}</h3>
     </header>
-    <div class="mb-4">
-      {{ content.summary }}
-    </div>
-  </div>
+    <p class="tile__excerpt">{{ content.summary }}</p>
+  </el-card>
 </template>
 
 <script>
 export default {
   name: "GridTile",
   props: {
-    content: Object,
+    content: {
+      type: Object,
+      default: () => ({
+        url: "",
+        title: "",
+        summary: "",
+        backgroundImageUrl: "",
+        category: "",
+        date: "",
+      }),
+    },
+    shadow: String,
   },
 };
 </script>
 
 <style lang="scss">
-@import "@assets/css/common";
+.tile {
+  background: var(--white);
+  color: var(--black);
+  border: none;
 
-.box-shadow-md {
-  box-shadow: var(--shadow-md);
-  &:hover {
-    box-shadow: var(--shadow-lg);
+  %margin {
+    margin: 0.5rem;
   }
-}
 
-.bar-lg {
-  border-radius: 7px !important;
-}
+  & &__extra {
+    @extend %margin;
 
-.imgfill {
-  padding-top: 52.3%;
-}
+    %font-size {
+      font-size: 12px;
+    }
 
-.imgfill img {
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+    .tile__tag {
+      // display: inline-flex;
+      // align-content: center;
+      padding: 0.125rem;
+      margin-right: 0.5rem;
+      @extend %font-size;
+      background-color: var(--powder-100);
+      color: var(--powder-700);
+      border: 1px solid transparent;
+      border-radius: 0.25rem;
+    }
+
+    .tile__datetime {
+      @extend %font-size;
+      color: var(--black-600);
+    }
+  }
+
+  & &__title {
+    @extend %margin;
+  }
+
+  & &__backgimg {
+    display: block;
+    position: relative;
+    padding-top: 52.3%;
+
+    .el-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  & &__excerpt {
+    @extend %margin;
+  }
 }
 </style>
