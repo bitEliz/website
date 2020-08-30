@@ -283,10 +283,10 @@ $enable-validation-icons: true !default;
 //
 // Style anchor elements.
 
-$link-color: var(--blue-500) !default;
-$link-color--hover: var(--blue-600) !default;
+$link-color: var(--blue-600) !default;
+$link-color--hover: var(--blue-500) !default;
 $link-decoration: none !default;
-$link-decoration--hover: underline !default;
+$link-decoration--hover: none !default;
 
 // Navs
 
