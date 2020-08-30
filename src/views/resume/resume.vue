@@ -1,7 +1,7 @@
 <template>
   <div>
-    <nav role="nav" class="nav nav--expand-md">
-      <div class="wrapper-fluid">
+    <nav role="nav" class="nav nav--expand-sm">
+      <div class="wrapper--fluid">
         <div class="nav__logo">
           <span>{{ fullname }}</span>
         </div>
@@ -18,7 +18,7 @@
       </div>
     </nav>
 
-    <main role="main" class="main resume">
+    <main role="main" class="main">
       <section
         v-for="mdl in modules"
         :key="mdl.id"
@@ -27,13 +27,15 @@
         :id="mdl.id"
       >
         <template v-if="mdl.profile">
-          <div class="profile__me">
-            <img :src="mdl.profile.avatarUrl" alt="" />
-            <h1 class="text-uppercase">
-              {{ mdl.profile.firstName }}
-              <span>{{ mdl.profile.lastName }}</span>
+          <div class="profile__me d--flex flex--column">
+            <el-avatar src="@assets/img/menu.svg" :size="160">
+              <img :src="mdl.profile.avatarUrl" alt="" />
+            </el-avatar>
+            <h1 class="t-t--uppercase d--flex">
+              {{ mdl.profile.lastName }}
+              <span>{{ mdl.profile.firstName }}</span>
             </h1>
-            <ul v-if="mdl.profile.social">
+            <ul v-if="mdl.profile.social" class="list--unstyled d--flex">
               <li
                 v-for="(social, index) in mdl.profile.social"
                 :key="index"
@@ -41,8 +43,9 @@
               >
                 <i
                   v-if="social.service && social.service.type"
-                  class="ali icon"
+                  class="ali"
                   :class="social.service.type.toLowerCase()"
+                  style="font-size: 2rem"
                 />
               </li>
             </ul>
@@ -52,70 +55,76 @@
           </div>
         </template>
         <template v-else-if="mdl.projects">
-          <h1 class="text-uppercase">{{ mdl.title }}</h1>
-          <div class="d-flex flex-wrap flex-column flex-md-row">
-            <div
-              class="grid-tile overflow-hidden p-4 pb-5 pb-sm-4"
+          <h1 class="t-t--uppercase">{{ mdl.title }}</h1>
+          <div class="d--flex flex--column flex-sm--row flex-sm--wrap">
+            <grid-tile
+              class="project__tile"
               v-for="proj in mdl.projects"
               :key="proj.id"
+              :content="projTileMaker(proj)"
             >
-              <grid-tile :content="projTileMaker(proj)" />
-            </div>
+            </grid-tile>
           </div>
         </template>
-        <template v-else-if="mdl.experiance">
-          <h1 class="text-uppercase">{{ mdl.title }}</h1>
-          <div
-            class="exp-wrapper"
-            v-for="(exp, index) in sortedExpList(mdl.works)"
-            :key="index"
-          >
-            <div
-              class="d-flex flex-column flex-md-row justify-content-between mb-3"
-            >
-              <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
-              <span class="text-secondery">
-                {{ exp.startDate }} - {{ exp.endDate }}
-              </span>
-            </div>
-            <ul v-if="exp.responsibilities != null">
-              <li
-                v-for="(responsibility, index) in exp.responsibilities"
-                :key="index"
-              >
-                {{ responsibility }}
-              </li>
-            </ul>
-          </div>
-        </template>
-        <template v-else-if="mdl.edu">
-          <h1 class="text-uppercase">
-            {{ mdl.title }}
-          </h1>
-          <div class="exp-wrapper" v-for="(exp, index) in mdl.edu" :key="index">
-            <div
-              class="d-flex flex-column flex-md-row justify-content-between mb-3"
-            >
-              <div class="flex-grow-1">
-                <h2 class="mb-0">{{ exp.title }}</h2>
-                <div class="d-flex align-items-center">
-                  <i class="ali degree icon" />
-                  <h4 class="mb-0">{{ exp.field }} • {{ exp.degree }}</h4>
+        <template v-else-if="mdl.exp && mdl.exp.length > 0">
+          <div class="exp__wrapper d--flex flex--column flex-sm--row">
+            <div class="exp__group-list" v-for="m in mdl.exp" :key="m.id">
+              <template v-if="m.workExps">
+                <h1 class="t-t--uppercase">{{ m.title }}</h1>
+                <div
+                  class="exp__work"
+                  v-for="(exp, index) in sortedExpList(m.workExps)"
+                  :key="index"
+                >
+                  <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
+                  <span> {{ exp.startDate }} - {{ exp.endDate }} </span>
+                  <ul v-if="exp.responsibilities">
+                    <li
+                      v-for="(responsibility, index) in exp.responsibilities"
+                      :key="index"
+                    >
+                      {{ responsibility }}
+                    </li>
+                  </ul>
                 </div>
-              </div>
-              <span class="text-secondery">
-                {{ exp.startYear }} - {{ exp.endYear }}
-              </span>
-            </div>
-            <h5 v-if="index === mdl.edu.lenght - 1">{{ exp.school }}</h5>
-            <h5 class="mb-0" v-else>{{ exp.school }}</h5>
-            <div v-if="exp.activities != null">
-              <h5>activities</h5>
-              <ul class="activities mb-0">
-                <li v-for="(activity, index) in exp.activities" :key="index">
-                  <span>{{ activity }}</span>
-                </li>
-              </ul>
+              </template>
+              <template v-if="m.eduExps">
+                <h1 class="t-t--uppercase">{{ m.title }}</h1>
+                <div
+                  class="exp__edu"
+                  v-for="(exp, index) in m.eduExps"
+                  :key="index"
+                >
+                  <div>
+                    <div class="flex-grow--1">
+                      <h2 class="m-b--0">{{ exp.title }}</h2>
+                      <div class="d--flex align-items-center">
+                        <i class="ali degree icon" />
+                        <h4 class="m-b--0">
+                          {{ exp.field }} • {{ exp.degree }}
+                        </h4>
+                      </div>
+                    </div>
+                    <span class="text-secondery">
+                      {{ exp.startYear }} - {{ exp.endYear }}
+                    </span>
+                  </div>
+                  <h5>
+                    {{ exp.school }}
+                  </h5>
+                  <div v-if="exp.activities != null">
+                    <h5>activities</h5>
+                    <ul class="activities m-b--0">
+                      <li
+                        v-for="(activity, index) in exp.activities"
+                        :key="index"
+                      >
+                        <span>{{ activity }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </template>
             </div>
           </div>
         </template>
@@ -146,7 +155,7 @@
           </div>
         </template>
         <template v-else>
-          <h1 class="text-uppercase">{{ mdl.title }}</h1>
+          <h1 class="t-t--uppercase">{{ mdl.title }}</h1>
           <ul>
             <li class="mb-3" v-for="(hobby, index) in mdl.hobbies" :key="index">
               {{ hobby }}
@@ -160,6 +169,7 @@
 
 <script>
 import http from "@utils/task";
+import darkModeEnabled from "@utils/dark-mode";
 import GridTile from "@components/grid-tile";
 
 export default {
@@ -192,11 +202,51 @@ export default {
     this.$root.$on("bv::scrollspy::activate", this.onEvtActive);
   },
   mounted() {
+    darkModeEnabled();
     this.onLoading();
   },
   methods: {
     async onLoading() {
-      this.modules = await http(`/users/${this.$route.params.userId}/resume`);
+      const username = this.$route.params.uid;
+      const resume = await http(`/users/${username}/resume`);
+      this.modules = [
+        {
+          id: "profile",
+          title: "个人资料",
+          profile: resume,
+        },
+        {
+          id: "projects",
+          title: "精选项目",
+          projects: resume.projects,
+        },
+        {
+          id: "experiance",
+          title: "经验记录",
+          exp: [
+            {
+              id: "work",
+              title: "职业经历",
+              workExps: resume.workExps,
+            },
+            {
+              id: "education",
+              title: "教育经历",
+              eduExps: resume.eduExps,
+            },
+          ],
+        },
+        {
+          id: "skills",
+          title: "职业技能",
+          skills: resume.skill,
+        },
+        {
+          id: "interests",
+          title: "兴趣爱好",
+          interests: resume.interests,
+        },
+      ];
     },
 
     sortedExpList(exp) {
@@ -212,12 +262,12 @@ export default {
         summary: proj.summary,
         backgroundImageUrl: proj.backgroundImageUrl,
         category: proj.kind,
-        time: proj.startDate + " - " + proj.endDate,
+        date: proj.startDate + " - " + proj.endDate,
       };
     },
 
     onEvtActive(target) {
-      console.log("evt :", target);
+      // console.log("evt :", target);
     },
   },
 };
@@ -228,22 +278,17 @@ export default {
 
 .nav {
   position: fixed;
-  background-color: var(--white);
-  // // background-color: rgba($color: var(--white), $alpha: 0.7);
-  // // backdrop-filter: saturate(180%) blur(20px);
   z-index: $zindex-fixed;
   width: 100%;
   box-shadow: var(--shadow-sm);
+  padding: 0 1rem;
+  background: var(--white);
 
-  .wrapper-fluid {
-    padding: 0 2rem;
-  }
-
-  &__logo {
+  & &__logo {
     padding: 1em 0;
   }
 
-  &__menu-toggle {
+  & &__menu-toggle {
     width: 21px;
     height: 21px;
     background: no-repeat url(~@assets/img/close.svg);
@@ -254,109 +299,105 @@ export default {
     }
   }
 
-  &__link {
+  & &__link {
     text-transform: uppercase;
     &.active {
-      color: var(--orange);
+      color: $link-color--hover;
     }
   }
 
-  &__collapse {
+  & &__collapse {
     justify-content: flex-end;
   }
 }
 
-.resume {
-  height: 100%;
-  margin: 0 5rem;
+.main {
+  .resume__module {
+    padding: 8em 1rem;
 
-  &__module {
-    padding: 5em 0;
-
-    @include media-breakpoint-up(md) {
-      padding: 5rem 3rem;
+    @include media-breakpoint-up(sm) {
+      padding: 8rem 4rem;
       min-height: 100vh;
     }
-    &:not(:last-child) {
-      border-bottom: 1px solid var(--black-075);
-    }
 
-    .exp-wrapper {
-      &:not(:last-child) {
-        margin-bottom: 1rem;
-      }
-
-      .degree {
-        margin-right: 1rem;
-        font-size: 1.5rem;
-      }
-    }
-  }
-
-  .profile {
-    background: url(~@assets/img/bottom-line.png) bottom no-repeat;
-    background-size: 100% calc(100% * 271 / 1440);
-    display: flex;
-    flex-flow: column nowrap;
-    @include media-breakpoint-up(md) {
-      flex-flow: row wrap;
-    }
-
-    &:not(:first-child) {
-      margin-left: 0;
-      margin-top: 1em;
-      @include media-breakpoint-up(md) {
-        margin-left: 1rem;
-        margin-top: 0;
-      }
-    }
-
-    &__me {
+    &.profile {
       display: flex;
-      flex-basis: 33%;
+      flex-direction: column;
+      @include media-breakpoint-up(sm) {
+        flex-direction: row;
+      }
       align-items: center;
-    }
 
-    &__about {
-    }
+      & > div:not(:first-child) {
+        margin-left: 0;
+        margin-top: 1em;
+        @include media-breakpoint-up(sm) {
+          margin-left: 1rem;
+          margin-top: 0;
+        }
+      }
 
-    h1 {
-      font-size: 5rem;
-      font-weight: bold;
+      .profile__me {
+        align-items: center;
+        flex-grow: 1;
 
-      span {
-        color: var(--blue-500);
+        ul li {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+
+          &:not(:last-child) {
+            margin-right: 1rem;
+          }
+
+          &:hover {
+            color: var(--blue-500);
+          }
+        }
+      }
+
+      .profile__about {
+        flex-basis: 66.66667%;
       }
     }
 
-    ul li {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    &.projects {
+      .project__tile {
+        flex-basis: calc(100% / 3 - 2rem);
+        margin: 1rem;
+      }
+    }
 
-      &:not(:last-child) {
-        margin-right: 1rem;
+    &.experiance {
+      .exp__wrapper {
+        $exp-spacing: 2rem;
+        & > div {
+          flex-grow: 1;
+          width: 50%;
+
+          &:not(:first-child) {
+            padding-top: $exp-spacing;
+            @include media-breakpoint-up(sm) {
+              padding-top: 0;
+              padding-left: $exp-spacing;
+            }
+          }
+
+          &:not(:last-child) {
+            margin-bottom: $exp-spacing;
+            @include media-breakpoint-up(sm) {
+              margin-bottom: 0;
+              margin-right: $exp-spacing;
+            }
+          }
+        }
       }
 
-      &:hover {
-        color: var(--blue-500);
+      ul {
+        margin-left: 1rem;
+        list-style: disc inside;
       }
     }
   }
-
-  .experiance {
-    ul {
-      margin-left: 1rem;
-      list-style: disc inside;
-    }
-  }
-}
-
-.icon {
-  font-size: 2em;
-}
-
-.grid-tile {
-  flex-basis: 33%;
 }
 </style>

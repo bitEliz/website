@@ -1,12 +1,14 @@
 import Vue from "vue";
-import { CollapsePlugin, VBScrollspyPlugin } from "bootstrap-vue";
+import BootstrapVue from "bootstrap-vue";
+import Element from "element-ui";
 import App from "./App.vue";
 import router from "./router";
+import "element-ui/lib/theme-chalk/index.css";
 
 Vue.config.productionTip = false;
 
-Vue.use(CollapsePlugin);
-Vue.use(VBScrollspyPlugin);
+Vue.use(BootstrapVue);
+Vue.use(Element);
 
 new Vue({
   router,
