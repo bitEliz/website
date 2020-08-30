@@ -9,16 +9,8 @@ const routes = [
     component: () => import("@views/static/resume"),
   },
   {
-    path: "/users/:userId/resume",
+    path: "/users/:uid/resume",
     component: () => import("@views/resume/resume"),
-  },
-  {
-    path: "/404",
-    component: () => import("@views/oop"),
-  },
-  {
-    path: "*",
-    redirect: "/404",
   },
 ];
 
