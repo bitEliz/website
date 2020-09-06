@@ -8,11 +8,16 @@ import http from "@utils/task";
 import darkModeEnabled from "@utils/dark-mode";
 
 export default {
-  name: "Resume",
+  name: "Static",
   data() {
     return {
       html: "",
     };
+  },
+  computed: {
+    id() {
+      return this.$route.params.id;
+    },
   },
   mounted() {
     darkModeEnabled();
@@ -20,7 +25,7 @@ export default {
   },
   methods: {
     async onLoading() {
-      const markdown = await http("/static/resume");
+      const markdown = await http(`/static/${this.id}`);
       this.html = marked(markdown, { snitize: true });
     },
   },

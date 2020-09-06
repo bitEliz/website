@@ -14,6 +14,7 @@ module.exports = {
       .set("@utils", path.resolve(__dirname, "src/utils"))
       .set("@views", path.resolve(__dirname, "src/views"))
       .set("@assets", path.resolve(__dirname, "src/assets"))
+      .set("@config", path.resolve(__dirname, "src/config"))
       .end();
   },
   css: {

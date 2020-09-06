@@ -1,7 +1,8 @@
 import axios from "axios";
+import { baseURL } from "@config/env";
 
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_URL,
+  baseURL: baseURL,
   timeout: 5000, // request timeout
 });
 

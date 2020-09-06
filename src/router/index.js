@@ -1,21 +1,18 @@
-import Vue from "vue";
-import Router from "vue-router";
+import App from "../App";
 
-Vue.use(Router);
-
-const routes = [
+export default [
   {
-    path: "/static/resume",
-    component: () => import("@views/static/resume"),
-  },
-  {
-    path: "/users/:uid/resume",
-    component: () => import("@views/resume/resume"),
+    path: "/",
+    component: App,
+    children: [
+      {
+        path: "/static/:id",
+        component: () => import("@views/static/static"),
+      },
+      {
+        path: "/users/:uid/resume",
+        component: () => import("@views/resume/resume"),
+      },
+    ],
   },
 ];
-
-export default new Router({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes,
-});
