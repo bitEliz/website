@@ -1,11 +1,16 @@
 module.exports = {
   presets: [
+    ["@vue/app", { useBuiltIns: "entry" }],
+    ["@babel/preset-env", { modules: false }],
+  ],
+  plugins: [
+    "@babel/plugin-proposal-optional-chaining",
     [
-      "@vue/app",
+      "component",
       {
-        useBuiltIns: "entry",
+        libraryName: "element-ui",
+        styleLibraryName: "theme-chalk",
       },
     ],
   ],
-  plugins: ["@babel/plugin-proposal-optional-chaining"],
 };

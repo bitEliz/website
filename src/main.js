@@ -1,14 +1,16 @@
 import Vue from "vue";
-import BootstrapVue from "bootstrap-vue";
-import Element from "element-ui";
+import { VBScrollspyPlugin, CollapsePlugin } from "bootstrap-vue";
+import { Card, Image, Avatar } from "element-ui";
 import App from "./App.vue";
 import router from "./router";
-import "element-ui/lib/theme-chalk/index.css";
 
 Vue.config.productionTip = false;
 
-Vue.use(BootstrapVue);
-Vue.use(Element);
+Vue.use(VBScrollspyPlugin);
+Vue.use(CollapsePlugin);
+Vue.use(Card);
+Vue.use(Image);
+Vue.use(Avatar);
 
 new Vue({
   router,
