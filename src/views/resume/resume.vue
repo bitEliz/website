@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <nav role="nav" class="nav nav--expand-sm">
+  <div id="resume">
+    <nav role="nav" class="nav sm:nav--expand">
       <div class="wrapper--fluid">
         <div class="nav__logo">
           <span>{{ fullname }}</span>
         </div>
         <button class="nav__menu-toggle" v-b-toggle.collapse></button>
-        <b-collapse id="collapse" class="nav__collapse">
+        <b-collapse id="collapse" class="nav__collapse justify--flex-end">
           <ul class="nav__item-list" v-b-scrollspy>
             <li class="nav__item nav-item" v-for="mdl in modules" :key="mdl.id">
               <a class="nav__link nav-link" :href="'#' + mdl.id">{{
@@ -28,13 +28,14 @@
       >
         <template v-if="mdl.profile">
           <div class="profile__me d--flex flex--column">
-            <el-avatar src="@assets/img/menu.svg" :size="160">
+            <el-avatar
+              src="@assets/img/menu.svg"
+              :size="160"
+              style="margin-bottom: 2rem"
+            >
               <img :src="mdl.profile.avatarUrl" alt="" />
             </el-avatar>
-            <h1 class="t-t--uppercase d--flex">
-              {{ mdl.profile.lastName }}
-              <span>{{ mdl.profile.firstName }}</span>
-            </h1>
+            <h1 class="t-t--uppercase">{{ fullname }}</h1>
             <ul v-if="mdl.profile.social" class="list--unstyled d--flex">
               <li
                 v-for="(social, index) in mdl.profile.social"
@@ -56,7 +57,7 @@
         </template>
         <template v-else-if="mdl.projects">
           <h1 class="t-t--uppercase">{{ mdl.title }}</h1>
-          <div class="d--flex flex--column flex-sm--row flex-sm--wrap">
+          <div class="d--flex flex--column sm:flex--row sm:flex--wrap">
             <grid-tile
               class="project__tile"
               v-for="proj in mdl.projects"
@@ -67,7 +68,7 @@
           </div>
         </template>
         <template v-else-if="mdl.exp && mdl.exp.length > 0">
-          <div class="exp__wrapper d--flex flex--column flex-sm--row">
+          <div class="exp__wrapper d--flex flex--column sm:flex--row">
             <div class="exp__group-list" v-for="m in mdl.exp" :key="m.id">
               <template v-if="m.workExps">
                 <h1 class="t-t--uppercase">{{ m.title }}</h1>
@@ -171,6 +172,7 @@
 import http from "@utils/task";
 import darkModeEnabled from "@utils/dark-mode";
 import GridTile from "@components/grid-tile";
+import marked from "marked";
 
 export default {
   name: "Resume",
@@ -198,9 +200,6 @@ export default {
       return lastName + firstName;
     },
   },
-  created() {
-    this.$root.$on("bv::scrollspy::activate", this.onEvtActive);
-  },
   mounted() {
     darkModeEnabled();
     this.onLoading();
@@ -221,8 +220,13 @@ export default {
           projects: resume.projects,
         },
         {
+          id: "skills",
+          title: "技能",
+          skills: resume.skill,
+        },
+        {
           id: "experiance",
-          title: "经验记录",
+          title: "经验",
           exp: [
             {
               id: "work",
@@ -235,16 +239,6 @@ export default {
               eduExps: resume.eduExps,
             },
           ],
-        },
-        {
-          id: "skills",
-          title: "职业技能",
-          skills: resume.skill,
-        },
-        {
-          id: "interests",
-          title: "兴趣爱好",
-          interests: resume.interests,
         },
       ];
     },
@@ -259,15 +253,15 @@ export default {
       return {
         url: "",
         title: proj.name,
-        summary: proj.summary,
+        summary: this.renderMarkedString(proj.summary),
         backgroundImageUrl: proj.backgroundImageUrl,
         category: proj.kind,
         date: proj.startDate + " - " + proj.endDate,
       };
     },
 
-    onEvtActive(target) {
-      // console.log("evt :", target);
+    renderMarkedString(markdown) {
+      return marked(markdown, { snitize: true });
     },
   },
 };
@@ -278,45 +272,58 @@ export default {
 
 .nav {
   position: fixed;
-  z-index: $zindex-fixed;
   width: 100%;
-  box-shadow: var(--shadow-sm);
   padding: 0 1rem;
   background: var(--white);
+  z-index: $zindex-fixed;
 
-  & &__logo {
+  .nav__logo {
     padding: 1em 0;
   }
 
-  & &__menu-toggle {
+  .nav__menu-toggle {
     width: 21px;
     height: 21px;
     background: no-repeat url(~@assets/img/close.svg);
-    border: none;
+    border-color: transparent;
 
     &.collapsed {
       background: no-repeat url(~@assets/img/menu.svg);
     }
   }
 
-  & &__link {
-    text-transform: uppercase;
-    &.active {
-      color: $link-color--hover;
+  .nav__item-list {
+    & > :not(:last-child) {
+      border-right-color: transparent;
+      @include media-breakpoint-up(sm) {
+        border-right: 1px solid var(--black-100);
+      }
     }
-  }
 
-  & &__collapse {
-    justify-content: flex-end;
+    .nav__link {
+      text-transform: uppercase;
+      @include media-breakpoint-up(sm) {
+        padding: 0 $nav-link-padding-y;
+      }
+      color: var(--black);
+
+      &:hover {
+        color: var(--powder-400);
+      }
+
+      &.active {
+        color: var(--black-400);
+      }
+    }
   }
 }
 
 .main {
   .resume__module {
-    padding: 8em 1rem;
+    padding: 3em 1rem;
 
     @include media-breakpoint-up(sm) {
-      padding: 8rem 4rem;
+      padding: 4rem;
       min-height: 100vh;
     }
 
@@ -363,7 +370,9 @@ export default {
 
     &.projects {
       .project__tile {
-        flex-basis: calc(100% / 3 - 2rem);
+        @include media-breakpoint-up(md) {
+          flex-basis: calc(100% / 3 - 2rem);
+        }
         margin: 1rem;
       }
     }

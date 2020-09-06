@@ -29,13 +29,13 @@
   @include media-breakpoint-up($breakpoint) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
-    .t-a#{$infix}--left {
+    .#{$infix}t-a--left {
       text-align: left !important;
     }
-    .t-a#{$infix}--right {
+    .#{$infix}t-a--right {
       text-align: right !important;
     }
-    .t-a#{$infix}--center {
+    .#{$infix}t-a--center {
       text-align: center !important;
     }
   }
