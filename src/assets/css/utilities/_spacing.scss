@@ -7,44 +7,44 @@
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
     // Some special margin utils
-    .m#{$infix}--auto {
+    .#{$infix}m--auto {
       margin: auto !important;
     }
-    .m-t#{$infix}--auto,
-    .m-y#{$infix}--auto {
+    .#{$infix}m-t--auto,
+    .#{$infix}m-y--auto {
       margin-top: auto !important;
     }
-    .m-r#{$infix}--auto,
-    .m-x#{$infix}--auto {
+    .#{$infix}m-r--auto,
+    .#{$infix}m-x--auto {
       margin-right: auto !important;
     }
-    .m-b#{$infix}--auto,
-    .m-y#{$infix}--auto {
+    .#{$infix}m-b--auto,
+    .#{$infix}m-y--auto {
       margin-bottom: auto !important;
     }
-    .m-l#{$infix}--auto,
-    .m-x#{$infix}--auto {
+    .#{$infix}m-l--auto,
+    .#{$infix}m-x--auto {
       margin-left: auto !important;
     }
 
     // Some special margin utils
-    .m#{$infix}--0 {
+    .#{$infix}m--0 {
       margin: 0 !important;
     }
-    .m-t#{$infix}--0,
-    .m-y#{$infix}--0 {
+    .#{$infix}m-t--0,
+    .#{$infix}m-y--0 {
       margin-top: 0 !important;
     }
-    .m-r#{$infix}--0,
-    .m-x#{$infix}--0 {
+    .#{$infix}m-r--0,
+    .#{$infix}m-x--0 {
       margin-right: 0 !important;
     }
-    .m-b#{$infix}--0,
-    .m-y#{$infix}--0 {
+    .#{$infix}m-b--0,
+    .#{$infix}m-y--0 {
       margin-bottom: 0 !important;
     }
-    .m-l#{$infix}--0,
-    .m-x#{$infix}--0 {
+    .#{$infix}m-l--0,
+    .#{$infix}m-x--0 {
       margin-left: 0 !important;
     }
   }
