@@ -8,7 +8,7 @@
       </div>
       <div class="tile__extra">
         <a class="tile__tag" href="">{{ content.category }}</a>
-        <span class="tile__datetime t-t-uppercase">{{ content.date }}</span>
+        <span class="tile__datetime txt-t-uppercase">{{ content.date }}</span>
       </div>
       <h3 class="tile__title">{{ content.title }}</h3>
     </header>

@@ -4,22 +4,19 @@
 // Text
 //
 
-.t-ff--monospace {
+.txt-ff--monospace {
   font-family: $font-family-monospace !important;
 }
 
-// Alignment
-
-.t-a--justify {
-  text-align: justify !important;
-}
-.t-ws--wrap {
+.txt-ws--wrap {
   white-space: normal !important;
 }
-.t-ws--nowrap {
+
+.txt-ws--nowrap {
   white-space: nowrap !important;
 }
-.t--truncate {
+
+.txt--truncate {
   @include text-truncate();
 }
 
@@ -29,13 +26,19 @@
   @include media-breakpoint-up($breakpoint) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
-    .#{$infix}t-a--left {
+    .#{$infix}txt-a--justify {
+      text-align: justify !important;
+    }
+
+    .#{$infix}txt-a--left {
       text-align: left !important;
     }
-    .#{$infix}t-a--right {
+
+    .#{$infix}txt-a--right {
       text-align: right !important;
     }
-    .#{$infix}t-a--center {
+
+    .#{$infix}txt-a--center {
       text-align: center !important;
     }
   }
@@ -43,40 +46,42 @@
 
 // Transformation
 
-.t-t--lowercase {
+.txt-t--lowercase {
   text-transform: lowercase !important;
 }
-.t-t--uppercase {
+
+.txt-t--uppercase {
   text-transform: uppercase !important;
 }
-.t-t--capitalize {
+
+.txt-t--capitalize {
   text-transform: capitalize !important;
 }
 
 // Weight and italics
 @each $key, $val in $txt-font-weights {
-  .t-fw--#{"" + $key} {
+  .txt-fw--#{"" + $key} {
     font-weight: $val !important;
   }
 }
 
-.t-fs--italic {
+.txt-fs--italic {
   font-style: italic !important;
 }
 
 // Misc
 
-.t-d--none {
+.txt-d--none {
   text-decoration: none !important;
 }
 
-.t-wb--break-word {
+.txt-wb--break-word {
   word-break: break-word !important; // IE & < Edge 18
   overflow-wrap: break-word !important;
 }
 
 // Reset
 
-.t-color--inherit {
+.txt-color--inherit {
   color: inherit !important;
 }
