@@ -3,14 +3,15 @@
 </template>
 
 <script>
-import marked from "marked";
+import markup from "@utils/markup";
 import http from "@utils/task";
 import darkModeEnabled from "@utils/dark-mode";
 
 export default {
-  name: "Static",
+  name: "Markup",
   data() {
     return {
+      markdown: "",
       html: "",
     };
   },
@@ -25,8 +26,8 @@ export default {
   },
   methods: {
     async onLoading() {
-      const markdown = await http(`/static/${this.id}`);
-      this.html = marked(markdown, { snitize: true });
+      this.markdown = await http(`/static/${this.id}`);
+      this.html = markup(this.markdown);
     },
   },
 };

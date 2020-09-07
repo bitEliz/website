@@ -3,7 +3,7 @@
     <nav role="nav" class="nav sm:nav--expand">
       <div class="wrapper--fluid">
         <div class="nav__logo">
-          <span>{{ fullname }}</span>
+          <span>{{ formattedName }}</span>
         </div>
         <button class="nav__menu-toggle" v-b-toggle.collapse></button>
         <b-collapse id="collapse" class="nav__collapse justify--flex-end">
@@ -27,7 +27,7 @@
         :id="mdl.id"
       >
         <template v-if="mdl.profile">
-          <div class="profile__me d--flex flex--column">
+          <div class="profile__me txt-a--center">
             <el-avatar
               src="@assets/img/menu.svg"
               :size="160"
@@ -35,8 +35,8 @@
             >
               <img :src="mdl.profile.avatarUrl" alt="" />
             </el-avatar>
-            <h1 class="t-t--uppercase">{{ fullname }}</h1>
-            <ul v-if="mdl.profile.social" class="list--unstyled d--flex">
+            <h1 class="txt-t--uppercase">{{ formattedName }}</h1>
+            <ul v-if="mdl.profile.social" class="list--unstyled">
               <li
                 v-for="(social, index) in mdl.profile.social"
                 :key="index"
@@ -56,7 +56,7 @@
           </div>
         </template>
         <template v-else-if="mdl.projects">
-          <h1 class="t-t--uppercase">{{ mdl.title }}</h1>
+          <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <div class="d--flex flex--column sm:flex--row sm:flex--wrap">
             <grid-tile
               class="project__tile"
@@ -71,7 +71,7 @@
           <div class="exp__wrapper d--flex flex--column sm:flex--row">
             <div class="exp__group-list" v-for="m in mdl.exp" :key="m.id">
               <template v-if="m.workExps">
-                <h1 class="t-t--uppercase">{{ m.title }}</h1>
+                <h1 class="txt-t--uppercase">{{ m.title }}</h1>
                 <div
                   class="exp__work"
                   v-for="(exp, index) in sortedExpList(m.workExps)"
@@ -90,7 +90,7 @@
                 </div>
               </template>
               <template v-if="m.eduExps">
-                <h1 class="t-t--uppercase">{{ m.title }}</h1>
+                <h1 class="txt-t--uppercase">{{ m.title }}</h1>
                 <div
                   class="exp__edu"
                   v-for="(exp, index) in m.eduExps"
@@ -156,7 +156,7 @@
           </div>
         </template>
         <template v-else>
-          <h1 class="t-t--uppercase">{{ mdl.title }}</h1>
+          <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <ul>
             <li class="mb-3" v-for="(hobby, index) in mdl.hobbies" :key="index">
               {{ hobby }}
@@ -169,10 +169,10 @@
 </template>
 
 <script>
+import GridTile from "@components/grid-tile";
+import markup from "@utils/markup";
 import http from "@utils/task";
 import darkModeEnabled from "@utils/dark-mode";
-import GridTile from "@components/grid-tile";
-import marked from "marked";
 
 export default {
   name: "Resume",
@@ -193,7 +193,11 @@ export default {
       }));
     },
 
-    fullname() {
+    uid() {
+      return this.$route.params.uid;
+    },
+
+    formattedName() {
       let profile = this.modules?.filter((m) => m.profile != null)[0]?.profile;
       let lastName = profile?.lastName ? profile.lastName : "";
       let firstName = profile?.firstName ? profile.firstName : "";
@@ -206,8 +210,8 @@ export default {
   },
   methods: {
     async onLoading() {
-      const username = this.$route.params.uid;
-      const resume = await http(`/users/${username}/resume`);
+      const resume = await http(`/users/${this.uid}/resume`);
+
       this.modules = [
         {
           id: "profile",
@@ -253,15 +257,11 @@ export default {
       return {
         url: "",
         title: proj.name,
-        summary: this.renderMarkedString(proj.summary),
+        summary: markup(proj.summary),
         backgroundImageUrl: proj.backgroundImageUrl,
         category: proj.kind,
         date: proj.startDate + " - " + proj.endDate,
       };
-    },
-
-    renderMarkedString(markdown) {
-      return marked(markdown, { snitize: true });
     },
   },
 };
@@ -276,6 +276,7 @@ export default {
   padding: 0 1rem;
   background: var(--white);
   z-index: $zindex-fixed;
+  box-shadow: var(--shadow-sm);
 
   .nav__logo {
     padding: 1em 0;
@@ -303,7 +304,7 @@ export default {
     .nav__link {
       text-transform: uppercase;
       @include media-breakpoint-up(sm) {
-        padding: 0 $nav-link-padding-y;
+        padding: 0 $nav-link-padding-x;
       }
       color: var(--black);
 
