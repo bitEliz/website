@@ -2,17 +2,34 @@
   <el-card class="tile" :body-style="{ padding: '0px' }" shadow="always">
     <header>
       <div class="tile__backgimg">
-        <el-image :src="content.backgroundImageUrl" fit="fit" lazy>
+        <a v-if="content.trackable" :href="content.url" target="_blank">
+          <el-image :src="content.backgroundImageUrl" fit="fit" lazy>
+            <div slot="placeholder">LOADING<span>...</span></div>
+          </el-image>
+        </a>
+        <el-image v-else :src="content.backgroundImageUrl" fit="fit" lazy>
           <div slot="placeholder">LOADING<span>...</span></div>
         </el-image>
       </div>
       <div class="tile__extra">
-        <a class="tile__tag" href="">{{ content.category }}</a>
-        <span class="tile__datetime txt-t-uppercase">{{ content.date }}</span>
+        <span class="tile__tag">{{ content.tag }}</span>
+        <time
+          class="tile__datetime txt-t-uppercase"
+          :datetime="content.datetime"
+          >{{ content.datetime }}</time
+        >
       </div>
-      <h3 class="tile__title">{{ content.title }}</h3>
+      <h3 class="tile__title">
+        <a v-if="content.trackable" :href="content.url" target="_blank">
+          {{ content.title }}
+        </a>
+        <span v-else>{{ content.title }}</span>
+      </h3>
     </header>
-    <div class="tile__excerpt" v-html="content.summary"></div>
+    <div
+      class="tile__excerpt"
+      :inner-html.prop="content.excerpt | markup"
+    ></div>
   </el-card>
 </template>
 
@@ -23,15 +40,15 @@ export default {
     content: {
       type: Object,
       default: () => ({
-        url: "",
         title: "",
-        summary: "",
+        url: "",
+        excerpt: "",
         backgroundImageUrl: "",
-        category: "",
-        date: "",
+        tag: "",
+        datetime: "",
+        trackable: true,
       }),
     },
-    shadow: String,
   },
 };
 </script>

@@ -5,6 +5,11 @@ import { Card, Image, Avatar } from "element-ui";
 import App from "./App.vue";
 import routes from "./router";
 import { routerMode } from "./config/env";
+import filters from "@utils/filters";
+
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key]);
+});
 
 Vue.config.productionTip = false;
 

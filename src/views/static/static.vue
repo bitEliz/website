@@ -1,9 +1,10 @@
 <template>
-  <main role="main" class="main" v-html="html"></main>
+  <div id="app">
+    <main role="main" class="main" :inner-html.prop="markdown | markup"></main>
+  </div>
 </template>
 
 <script>
-import markup from "@utils/markup";
 import http from "@utils/task";
 import darkModeEnabled from "@utils/dark-mode";
 
@@ -12,7 +13,6 @@ export default {
   data() {
     return {
       markdown: "",
-      html: "",
     };
   },
   computed: {
@@ -27,7 +27,6 @@ export default {
   methods: {
     async onLoading() {
       this.markdown = await http(`/static/${this.id}`);
-      this.html = markup(this.markdown);
     },
   },
 };
