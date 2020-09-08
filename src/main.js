@@ -6,6 +6,7 @@ import App from "./App.vue";
 import routes from "./router";
 import { routerMode } from "./config/env";
 import filters from "@utils/filters";
+import "@utils/fundation";
 
 Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key]);

@@ -1,5 +1,5 @@
 <template>
-  <div id="resume">
+  <div id="app">
     <nav role="nav" class="nav sm:nav--expand">
       <div class="wrapper--fluid">
         <div class="nav__logo">
@@ -51,35 +51,46 @@
               </li>
             </ul>
           </div>
-          <div class="profile__about">
-            <p>{{ mdl.profile.aboutMe }}</p>
-          </div>
+          <div
+            class="profile__about"
+            :inner-html.prop="mdl.profile.aboutMe | markup"
+          ></div>
         </template>
         <template v-else-if="mdl.projects">
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <div class="d--flex flex--column sm:flex--row sm:flex--wrap">
-            <grid-tile
+            <v-proj-tile
               class="project__tile"
               v-for="proj in mdl.projects"
               :key="proj.id"
-              :content="projTileMaker(proj)"
+              :content="proj"
             >
-            </grid-tile>
+            </v-proj-tile>
           </div>
         </template>
-        <template v-else-if="mdl.exp && mdl.exp.length > 0">
+        <template v-else-if="Array.isArray(mdl.exp) && !mdl.exp.isEmpty()">
           <div class="exp__wrapper d--flex flex--column sm:flex--row">
-            <div class="exp__group-list" v-for="m in mdl.exp" :key="m.id">
+            <ul
+              class="exp__item-list list--unstyled"
+              v-for="m in mdl.exp"
+              :key="m.id"
+            >
+              <h1 class="txt-t--uppercase">{{ m.title }}</h1>
               <template v-if="m.workExps">
-                <h1 class="txt-t--uppercase">{{ m.title }}</h1>
-                <div
-                  class="exp__work"
+                <li
+                  class="exp__item"
                   v-for="(exp, index) in sortedExpList(m.workExps)"
                   :key="index"
+                  :exp="exp"
                 >
                   <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
-                  <span> {{ exp.startDate }} - {{ exp.endDate }} </span>
-                  <ul v-if="exp.responsibilities">
+                  <time
+                    class="d--inline-block"
+                    style="margin-bottom: 0.5rem"
+                    :datetime="exp.startDate + '/' + exp.endDate"
+                    >{{ exp.startDate + " - " + exp.endDate }}</time
+                  >
+                  <ul class="list--circle-inside" v-if="exp.responsibilities">
                     <li
                       v-for="(responsibility, index) in exp.responsibilities"
                       :key="index"
@@ -87,78 +98,43 @@
                       {{ responsibility }}
                     </li>
                   </ul>
-                </div>
+                </li>
               </template>
               <template v-if="m.eduExps">
-                <h1 class="txt-t--uppercase">{{ m.title }}</h1>
-                <div
-                  class="exp__edu"
+                <li
+                  class="exp__item"
                   v-for="(exp, index) in m.eduExps"
                   :key="index"
+                  :exp="exp"
                 >
-                  <div>
-                    <div class="flex-grow--1">
-                      <h2 class="m-b--0">{{ exp.title }}</h2>
-                      <div class="d--flex align-items-center">
-                        <i class="ali degree icon" />
-                        <h4 class="m-b--0">
-                          {{ exp.field }} • {{ exp.degree }}
-                        </h4>
-                      </div>
-                    </div>
-                    <span class="text-secondery">
-                      {{ exp.startYear }} - {{ exp.endYear }}
-                    </span>
-                  </div>
-                  <h5>
-                    {{ exp.school }}
-                  </h5>
-                  <div v-if="exp.activities != null">
-                    <h5>activities</h5>
-                    <ul class="activities m-b--0">
-                      <li
-                        v-for="(activity, index) in exp.activities"
-                        :key="index"
-                      >
-                        <span>{{ activity }}</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                  <span class="d--flex">
+                    <i class="ali degree icon" />
+                    <h4>{{ exp.field }} • {{ exp.degree }}</h4>
+                  </span>
+                  <time
+                    class="d--inline-block"
+                    style="margin-bottom: 0.5rem"
+                    :datetime="exp.startYear + '/' + exp.endYear"
+                    >{{ exp.startYear + " - " + exp.endYear }}</time
+                  >
+                  <h5>{{ exp.school }}</h5>
+                </li>
               </template>
-            </div>
+            </ul>
           </div>
         </template>
-        <template v-else-if="mdl.skill">
-          <h1 class="text-uppercase">{{ mdl.title }}</h1>
-          <div
-            class="professional"
-            v-if="mdl.skill && mdl.skill.profesional != null"
-          >
-            <h4 class="mb-3">Programming Languages &amp; Tools</h4>
-            <ul class="list-inline xxLang-list">
-              <li
-                class="list-inline-item"
-                v-for="(skill, index) in mdl.skill.profesional"
-                :key="index"
-              >
-                <span class="font-weight-bold">{{ skill }}</span>
-              </li>
-            </ul>
-          </div>
-          <div class="workflow" v-if="mdl.skill && mdl.skill.workflow != null">
-            <h4 class="mb-3">Workflow</h4>
-            <ul class="mb-0">
-              <li v-for="(wkf, index) in mdl.skill.workflow" :key="index">
-                <span>{{ wkf }}</span>
-              </li>
-            </ul>
-          </div>
+        <template v-else-if="mdl.skills">
+          <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
+          <ul class="list--unstyled">
+            <li v-for="(skill, index) in mdl.skills" :key="index">
+              {{ skill }}
+            </li>
+          </ul>
         </template>
         <template v-else>
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <ul>
-            <li class="mb-3" v-for="(hobby, index) in mdl.hobbies" :key="index">
+            <li v-for="(hobby, index) in mdl.hobbies" :key="index">
               {{ hobby }}
             </li>
           </ul>
@@ -169,15 +145,14 @@
 </template>
 
 <script>
-import GridTile from "@components/grid-tile";
-import markup from "@utils/markup";
+import ProjTile from "@components/grid-tile";
 import http from "@utils/task";
 import darkModeEnabled from "@utils/dark-mode";
 
 export default {
   name: "Resume",
   components: {
-    "grid-tile": GridTile,
+    "v-proj-tile": ProjTile,
   },
   data() {
     return {
@@ -198,9 +173,10 @@ export default {
     },
 
     formattedName() {
-      let profile = this.modules?.filter((m) => m.profile != null)[0]?.profile;
-      let lastName = profile?.lastName ? profile.lastName : "";
-      let firstName = profile?.firstName ? profile.firstName : "";
+      const profile = this.modules?.filter((m) => m.profile != null)[0]
+        ?.profile;
+      const lastName = profile?.lastName ? profile.lastName : "";
+      const firstName = profile?.firstName ? profile.firstName : "";
       return lastName + firstName;
     },
   },
@@ -210,58 +186,70 @@ export default {
   },
   methods: {
     async onLoading() {
-      const resume = await http(`/users/${this.uid}/resume`);
+      let resume = await http(`/users/${this.uid}/resume`);
 
-      this.modules = [
-        {
+      if (resume) {
+        this.modules.push({
           id: "profile",
           title: "个人资料",
           profile: resume,
-        },
-        {
+        });
+      }
+
+      if (Array.isArray(resume?.projects)) {
+        this.modules.push({
           id: "projects",
           title: "精选项目",
-          projects: resume.projects,
-        },
-        {
+          projects: resume.projects.map((e) => ({
+            url: e.trackViewUrl,
+            trackable: e.visibility === "public" && !e.trackViewUrl.isEmpty(),
+            title: e.name,
+            excerpt: e.summary,
+            backgroundImageUrl: e.backgroundImageUrl,
+            tag: e.kind,
+            datetime: e.startDate + " - " + e.endDate,
+          })),
+        });
+      }
+
+      if (resume?.skill?.profesional) {
+        this.modules.push({
           id: "skills",
-          title: "技能",
-          skills: resume.skill,
-        },
-        {
+          title: "专业技能",
+          skills: resume.skill?.profesional,
+        });
+      }
+
+      let exp = [];
+      if (resume?.workExps) {
+        exp.push({
+          id: "work",
+          title: "职业经历",
+          workExps: resume.workExps,
+        });
+      }
+
+      if (resume?.eduExps) {
+        exp.push({
+          id: "education",
+          title: "教育经历",
+          eduExps: resume.eduExps,
+        });
+      }
+
+      if (!exp.isEmpty()) {
+        this.modules.push({
           id: "experiance",
           title: "经验",
-          exp: [
-            {
-              id: "work",
-              title: "职业经历",
-              workExps: resume.workExps,
-            },
-            {
-              id: "education",
-              title: "教育经历",
-              eduExps: resume.eduExps,
-            },
-          ],
-        },
-      ];
+          exp: exp,
+        });
+      }
     },
 
     sortedExpList(exp) {
       return exp
         .slice()
         .sort((lhs, rhs) => (lhs.startDate > rhs.startDate ? -1 : 1));
-    },
-
-    projTileMaker(proj) {
-      return {
-        url: "",
-        title: proj.name,
-        summary: markup(proj.summary),
-        backgroundImageUrl: proj.backgroundImageUrl,
-        category: proj.kind,
-        date: proj.startDate + " - " + proj.endDate,
-      };
     },
   },
 };
@@ -306,14 +294,14 @@ export default {
       @include media-breakpoint-up(sm) {
         padding: 0 $nav-link-padding-x;
       }
-      color: var(--black);
+      color: var(--black-400);
 
       &:hover {
         color: var(--powder-400);
       }
 
       &.active {
-        color: var(--black-400);
+        color: var(--black);
       }
     }
   }
@@ -321,26 +309,28 @@ export default {
 
 .main {
   .resume__module {
-    padding: 3em 1rem;
+    $module-spacing: $spacing;
+    padding: $module-spacing;
 
     @include media-breakpoint-up(sm) {
-      padding: 4rem;
-      min-height: 100vh;
+      padding: 4rem 8rem;
     }
 
     &.profile {
       display: flex;
       flex-direction: column;
       @include media-breakpoint-up(sm) {
+        min-height: 100vh;
         flex-direction: row;
       }
+      padding-top: 7rem;
       align-items: center;
 
       & > div:not(:first-child) {
         margin-left: 0;
-        margin-top: 1em;
+        margin-top: $spacing;
         @include media-breakpoint-up(sm) {
-          margin-left: 1rem;
+          margin-left: $spacing;
           margin-top: 0;
         }
       }
@@ -355,7 +345,7 @@ export default {
           justify-content: center;
 
           &:not(:last-child) {
-            margin-right: 1rem;
+            margin-right: $spacing;
           }
 
           &:hover {
@@ -374,38 +364,36 @@ export default {
         @include media-breakpoint-up(md) {
           flex-basis: calc(100% / 3 - 2rem);
         }
-        margin: 1rem;
+        margin: $spacing;
       }
     }
 
     &.experiance {
-      .exp__wrapper {
-        $exp-spacing: 2rem;
-        & > div {
-          flex-grow: 1;
-          width: 50%;
+      .exp__item-list {
+        flex-grow: 1;
+        flex-basis: 50%;
 
-          &:not(:first-child) {
-            padding-top: $exp-spacing;
-            @include media-breakpoint-up(sm) {
-              padding-top: 0;
-              padding-left: $exp-spacing;
-            }
-          }
-
-          &:not(:last-child) {
-            margin-bottom: $exp-spacing;
-            @include media-breakpoint-up(sm) {
-              margin-bottom: 0;
-              margin-right: $exp-spacing;
-            }
+        &:not(:first-child) {
+          padding-top: $module-spacing * 2;
+          @include media-breakpoint-up(sm) {
+            padding-top: 0;
+            padding-left: $module-spacing * 2;
           }
         }
-      }
 
-      ul {
-        margin-left: 1rem;
-        list-style: disc inside;
+        &:not(:last-child) {
+          margin-bottom: $module-spacing;
+          @include media-breakpoint-up(sm) {
+            margin-bottom: 0;
+            margin-right: $module-spacing * 2;
+          }
+        }
+
+        .exp__item {
+          &:not(:last-child) {
+            margin-bottom: $spacing * 2;
+          }
+        }
       }
     }
   }
