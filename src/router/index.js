@@ -7,11 +7,11 @@ export default [
     children: [
       {
         path: "/static/:id",
-        component: () => import("@views/static/static"),
+        component: () => import("@views/static/index"),
       },
       {
         path: "/users/:uid/resume",
-        component: () => import("@views/resume/resume"),
+        component: () => import("@views/users/_uid/resume"),
       },
     ],
   },

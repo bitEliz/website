@@ -3,9 +3,7 @@
     <header>
       <div class="tile__backgimg">
         <a v-if="content.trackable" :href="content.url" target="_blank">
-          <el-image :src="content.backgroundImageUrl" fit="fit" lazy>
-            <div slot="placeholder">LOADING<span>...</span></div>
-          </el-image>
+          <el-image :src="content.backgroundImageUrl" fit="fit" lazy></el-image>
         </a>
         <el-image v-else :src="content.backgroundImageUrl" fit="fit" lazy>
           <div slot="placeholder">LOADING<span>...</span></div>
@@ -71,8 +69,6 @@ export default {
     }
 
     .tile__tag {
-      // display: inline-flex;
-      // align-content: center;
       padding: 0.125rem;
       margin-right: 0.5rem;
       @extend %font-size;

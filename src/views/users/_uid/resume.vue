@@ -20,34 +20,33 @@
 
     <main role="main" class="main">
       <section
+        class="resume__module"
         v-for="mdl in modules"
         :key="mdl.id"
-        class="resume__module"
         :class="mdl.id"
         :id="mdl.id"
       >
-        <template v-if="mdl.profile">
+        <template v-if="isArray(mdl.profile) && !mdl.profile.isEmpty()">
+          <!-- Profile -->
           <div class="profile__me txt-a--center">
             <el-avatar
               src="@assets/img/menu.svg"
-              :size="160"
               style="margin-bottom: 2rem"
+              :size="160"
             >
               <img :src="mdl.profile.avatarUrl" alt="" />
             </el-avatar>
             <h1 class="txt-t--uppercase">{{ formattedName }}</h1>
             <ul v-if="mdl.profile.social" class="list--unstyled">
-              <li
-                v-for="(social, index) in mdl.profile.social"
-                :key="index"
-                :href="social.href"
-              >
-                <i
-                  v-if="social.service && social.service.type"
-                  class="ali"
-                  :class="social.service.type.toLowerCase()"
-                  style="font-size: 2rem"
-                />
+              <li v-for="(social, index) in mdl.profile.social" :key="index">
+                <a :href="social.url">
+                  <i
+                    v-if="social.service && social.service.type"
+                    class="ali"
+                    :class="social.service.type.toLowerCase()"
+                    style="font-size: 2rem"
+                  />
+                </a>
               </li>
             </ul>
           </div>
@@ -56,7 +55,8 @@
             :inner-html.prop="mdl.profile.aboutMe | markup"
           ></div>
         </template>
-        <template v-else-if="mdl.projects">
+        <template v-else-if="isArray(mdl.projects) && !mdl.projects.isEmpty()">
+          <!-- Projects -->
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <div class="d--flex flex--column sm:flex--row sm:flex--wrap">
             <v-proj-tile
@@ -68,7 +68,8 @@
             </v-proj-tile>
           </div>
         </template>
-        <template v-else-if="Array.isArray(mdl.exp) && !mdl.exp.isEmpty()">
+        <template v-else-if="isArray(mdl.exp) && !mdl.exp.isEmpty()">
+          <!-- Experience -->
           <div class="exp__wrapper d--flex flex--column sm:flex--row">
             <ul
               class="exp__item-list list--unstyled"
@@ -123,7 +124,7 @@
             </ul>
           </div>
         </template>
-        <template v-else-if="mdl.skills">
+        <template v-else-if="isArray(mdl.skills) && !mdl.skills.isEmpty()">
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <ul class="list--unstyled">
             <li v-for="(skill, index) in mdl.skills" :key="index">
