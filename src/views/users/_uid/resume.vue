@@ -56,7 +56,6 @@
           ></div>
         </template>
         <template v-else-if="mdl.projects">
-          <!-- Projects -->
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <div class="d--flex flex--column sm:flex--row sm:flex--wrap">
             <v-proj-tile
@@ -69,7 +68,6 @@
           </div>
         </template>
         <template v-else-if="mdl.exp">
-          <!-- Experience -->
           <div class="exp__wrapper d--flex flex--column sm:flex--row">
             <ul
               class="exp__item-list list--unstyled"
@@ -150,7 +148,7 @@ import { Component, Vue } from "vue-property-decorator";
 import ProjTile from "@/components/proj-tile.vue";
 import http from "@/utils/task";
 import darkModeEnabled from "@/utils/dark-mode";
-import { isArray } from "@/utils/fundation";
+import { isArray } from "@/utils/inspect";
 import { User, WorkExp } from "@/models/resume";
 import { plainToClass } from "class-transformer";
 

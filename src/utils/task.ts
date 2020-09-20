@@ -6,9 +6,9 @@ const service = axios.create({
   timeout: 5000, // request timeout
 });
 
-export default async (
+const http = async (
   url = "",
-  method: Method = "get",
+  method: Method = "GET",
   data = {},
   headers = {}
 ) => {
@@ -25,3 +25,5 @@ export default async (
     throw new Error(error);
   }
 };
+
+export default http;
