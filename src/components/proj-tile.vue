@@ -10,7 +10,7 @@
         </el-image>
       </div>
       <div class="tile__extra">
-        <span class="tile__tag">{{ content.tag }}</span>
+        <span class="tile__tag">{{ content.kind }}</span>
         <time
           class="tile__datetime txt-t-uppercase"
           :datetime="content.datetime"
@@ -18,37 +18,31 @@
         >
       </div>
       <h3 class="tile__title">
-        <a v-if="content.trackable" :href="content.url" target="_blank">
-          {{ content.title }}
+        <a
+          v-if="content.trackable"
+          :href="content.trackViewUrl"
+          target="_blank"
+        >
+          {{ content.name }}
         </a>
-        <span v-else>{{ content.title }}</span>
+        <span v-else>{{ content.name }}</span>
       </h3>
     </header>
     <div
       class="tile__excerpt"
-      :inner-html.prop="content.excerpt | markup"
+      :inner-html.prop="content.summary | markup"
     ></div>
   </el-card>
 </template>
 
-<script>
-export default {
-  name: "GridTile",
-  props: {
-    content: {
-      type: Object,
-      default: () => ({
-        title: "",
-        url: "",
-        excerpt: "",
-        backgroundImageUrl: "",
-        tag: "",
-        datetime: "",
-        trackable: true,
-      }),
-    },
-  },
-};
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { Project } from "@/models/resume";
+
+@Component
+export default class ProjTile extends Vue {
+  @Prop() content!: Project;
+}
 </script>
 
 <style lang="scss">

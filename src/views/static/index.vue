@@ -4,32 +4,26 @@
   </div>
 </template>
 
-<script>
-import http from "@utils/task";
-import darkModeEnabled from "@utils/dark-mode";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import darkModeEnabled from "@/utils/dark-mode";
+import http from "@/utils/task";
 
-export default {
-  name: "Markup",
-  data() {
-    return {
-      markdown: "",
-    };
-  },
-  computed: {
-    id() {
-      return this.$route.params.id;
-    },
-  },
+@Component
+export default class Static extends Vue {
+  markdown: string = "";
+  get id() {
+    return this.$route.params.id;
+  }
   mounted() {
     darkModeEnabled();
     this.onLoading();
-  },
-  methods: {
-    async onLoading() {
-      this.markdown = await http(`/static/${this.id}`);
-    },
-  },
-};
+  }
+
+  async onLoading() {
+    this.markdown = (await http(`/static/${this.id}`)) as string;
+  }
+}
 </script>
 
 <style lang="scss">

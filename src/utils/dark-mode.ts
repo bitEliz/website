@@ -1,6 +1,5 @@
 // Dark mode adapter
-
-export default () => {
+const darkModeEnabled = () => {
   var forceSetting = localStorage.getItem("forceDarkModeOn");
   var browserPrefersDark =
     window.matchMedia &&
@@ -16,3 +15,5 @@ export default () => {
     document.body.classList.toggle("has-darkmode__forced", darkModeEnabled);
   }
 };
+
+export default darkModeEnabled;

@@ -1,4 +1,4 @@
-import App from "../App";
+import App from "@/App.vue";
 
 export default [
   {
@@ -7,11 +7,11 @@ export default [
     children: [
       {
         path: "/static/:id",
-        component: () => import("@views/static/index"),
+        component: () => import("@/views/static/index.vue"),
       },
       {
         path: "/users/:uid/resume",
-        component: () => import("@views/users/_uid/resume"),
+        component: () => import("@/views/users/_uid/resume.vue"),
       },
     ],
   },

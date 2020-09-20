@@ -26,8 +26,7 @@
         :class="mdl.id"
         :id="mdl.id"
       >
-        <template v-if="isArray(mdl.profile) && !mdl.profile.isEmpty()">
-          <!-- Profile -->
+        <template v-if="mdl.profile">
           <div class="profile__me txt-a--center">
             <el-avatar
               src="@assets/img/menu.svg"
@@ -52,10 +51,11 @@
           </div>
           <div
             class="profile__about"
+            v-if="mdl.profile.aboutMe"
             :inner-html.prop="mdl.profile.aboutMe | markup"
           ></div>
         </template>
-        <template v-else-if="isArray(mdl.projects) && !mdl.projects.isEmpty()">
+        <template v-else-if="mdl.projects">
           <!-- Projects -->
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <div class="d--flex flex--column sm:flex--row sm:flex--wrap">
@@ -68,7 +68,7 @@
             </v-proj-tile>
           </div>
         </template>
-        <template v-else-if="isArray(mdl.exp) && !mdl.exp.isEmpty()">
+        <template v-else-if="mdl.exp">
           <!-- Experience -->
           <div class="exp__wrapper d--flex flex--column sm:flex--row">
             <ul
@@ -124,7 +124,7 @@
             </ul>
           </div>
         </template>
-        <template v-else-if="isArray(mdl.skills) && !mdl.skills.isEmpty()">
+        <template v-else-if="mdl.skills">
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <ul class="list--unstyled">
             <li v-for="(skill, index) in mdl.skills" :key="index">
@@ -145,115 +145,104 @@
   </div>
 </template>
 
-<script>
-import ProjTile from "@components/grid-tile";
-import http from "@utils/task";
-import darkModeEnabled from "@utils/dark-mode";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import ProjTile from "@/components/proj-tile.vue";
+import http from "@/utils/task";
+import darkModeEnabled from "@/utils/dark-mode";
+import { isArray } from "@/utils/fundation";
+import { User, WorkExp } from "@/models/resume";
+import { plainToClass } from "class-transformer";
 
-export default {
-  name: "Resume",
+@Component({
   components: {
     "v-proj-tile": ProjTile,
   },
-  data() {
-    return {
-      modules: [],
-    };
-  },
-  computed: {
-    items() {
-      return this.modules?.map((m) => ({
-        id: m.id,
-        title: m.title,
-        uri: m.id,
-      }));
-    },
+})
+export default class Resume extends Vue {
+  user: User = new User();
+  uid: string = this.$route.params.uid;
 
-    uid() {
-      return this.$route.params.uid;
-    },
+  get modules(): Object[] {
+    let result: Object[] = [];
 
-    formattedName() {
-      const profile = this.modules?.filter((m) => m.profile != null)[0]
-        ?.profile;
-      const lastName = profile?.lastName ? profile.lastName : "";
-      const firstName = profile?.firstName ? profile.firstName : "";
-      return lastName + firstName;
-    },
-  },
+    if (this.user) {
+      result.push({
+        id: "profile",
+        title: "个人资料",
+        profile: this.user,
+      });
+    }
+
+    if (isArray(this.user?.projects) && this.user!.projects!.length) {
+      result.push({
+        id: "projects",
+        title: "精选项目",
+        projects: this.user!.projects,
+      });
+    }
+
+    if (
+      isArray(this.user?.skill?.profesional) &&
+      this.user!.skill!.profesional!.length
+    ) {
+      result.push({
+        id: "skills",
+        title: "专业技能",
+        skills: this.user!.skill!.profesional,
+      });
+    }
+
+    let exp = [];
+    if (isArray(this.user?.workExps) && this.user!.workExps!.length) {
+      exp.push({
+        id: "work",
+        title: "职业经历",
+        workExps: this.user!.workExps,
+      });
+    }
+
+    if (isArray(this.user?.eduExps) && this.user!.eduExps!.length) {
+      exp.push({
+        id: "education",
+        title: "教育经历",
+        eduExps: this.user!.eduExps,
+      });
+    }
+
+    if (exp.length) {
+      result.push({
+        id: "experiance",
+        title: "经验",
+        exp: exp,
+      });
+    }
+
+    return result;
+  }
+
+  get formattedName() {
+    const lastName = this.user?.lastName ? this.user?.lastName : "";
+    const firstName = this.user?.firstName ? this.user?.firstName : "";
+    return lastName + firstName;
+  }
+
   mounted() {
     darkModeEnabled();
     this.onLoading();
-  },
-  methods: {
-    async onLoading() {
-      let resume = await http(`/users/${this.uid}/resume`);
+  }
 
-      if (resume) {
-        this.modules.push({
-          id: "profile",
-          title: "个人资料",
-          profile: resume,
-        });
-      }
+  async onLoading() {
+    const response = await http(`/users/${this.uid}/resume`);
+    this.user = plainToClass(User, response);
+  }
 
-      if (Array.isArray(resume?.projects)) {
-        this.modules.push({
-          id: "projects",
-          title: "精选项目",
-          projects: resume.projects.map((e) => ({
-            url: e.trackViewUrl,
-            trackable: e.visibility === "public" && !e.trackViewUrl.isEmpty(),
-            title: e.name,
-            excerpt: e.summary,
-            backgroundImageUrl: e.backgroundImageUrl,
-            tag: e.kind,
-            datetime: e.startDate + " - " + e.endDate,
-          })),
-        });
-      }
-
-      if (resume?.skill?.profesional) {
-        this.modules.push({
-          id: "skills",
-          title: "专业技能",
-          skills: resume.skill?.profesional,
-        });
-      }
-
-      let exp = [];
-      if (resume?.workExps) {
-        exp.push({
-          id: "work",
-          title: "职业经历",
-          workExps: resume.workExps,
-        });
-      }
-
-      if (resume?.eduExps) {
-        exp.push({
-          id: "education",
-          title: "教育经历",
-          eduExps: resume.eduExps,
-        });
-      }
-
-      if (!exp.isEmpty()) {
-        this.modules.push({
-          id: "experiance",
-          title: "经验",
-          exp: exp,
-        });
-      }
-    },
-
-    sortedExpList(exp) {
-      return exp
-        .slice()
-        .sort((lhs, rhs) => (lhs.startDate > rhs.startDate ? -1 : 1));
-    },
-  },
-};
+  sortedExpList(exp: WorkExp[]) {
+    return exp
+      .slice()
+      .sort((lhs, rhs) => (lhs.startDate > rhs.startDate ? -1 : 1));
+  }
+}
 </script>
 
 <style lang="scss">

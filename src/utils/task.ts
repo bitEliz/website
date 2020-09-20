@@ -1,12 +1,17 @@
-import axios from "axios";
-import { baseURL } from "@config/env";
+import axios, { Method } from "axios";
+import { baseURL } from "@/config/env";
 
 const service = axios.create({
   baseURL: baseURL,
   timeout: 5000, // request timeout
 });
 
-export default async (url = "", method = "get", data = {}, headers = {}) => {
+export default async (
+  url = "",
+  method: Method = "get",
+  data = {},
+  headers = {}
+) => {
   try {
     const response = await service.request({
       url,
