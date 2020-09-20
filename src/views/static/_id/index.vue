@@ -5,23 +5,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue } from "nuxt-property-decorator";
 import darkModeEnabled from "@/utils/dark-mode";
-import http from "@/utils/task";
 
 @Component
 export default class Static extends Vue {
   markdown: string = "";
-  get id() {
-    return this.$route.params.id;
-  }
+
   mounted() {
     darkModeEnabled();
-    this.onLoading();
   }
 
-  async onLoading() {
-    this.markdown = (await http(`/static/${this.id}`)) as string;
+  async asyncData(context: any) {
+    const response = await context.$axios.$request(`/static/${context.params.id}`);
+    return { markdown: response ?? "" };
   }
 }
 </script>

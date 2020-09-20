@@ -29,7 +29,6 @@
         <template v-if="mdl.profile">
           <div class="profile__me txt-a--center">
             <el-avatar
-              src="@assets/img/menu.svg"
               style="margin-bottom: 2rem"
               :size="160"
             >
@@ -144,13 +143,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue } from "nuxt-property-decorator";
 import ProjTile from "@/components/proj-tile.vue";
-import http from "@/utils/task";
 import darkModeEnabled from "@/utils/dark-mode";
 import { isArray } from "@/utils/inspect";
 import { User, WorkExp } from "@/models/resume";
-import { plainToClass } from "class-transformer";
 
 @Component({
   components: {
@@ -158,8 +155,7 @@ import { plainToClass } from "class-transformer";
   },
 })
 export default class Resume extends Vue {
-  user: User = new User();
-  uid: string = this.$route.params.uid;
+  user?: User;
 
   get modules(): Object[] {
     let result: Object[] = [];
@@ -219,7 +215,7 @@ export default class Resume extends Vue {
     return result;
   }
 
-  get formattedName() {
+  get formattedName(): string {
     const lastName = this.user?.lastName ? this.user?.lastName : "";
     const firstName = this.user?.firstName ? this.user?.firstName : "";
     return lastName + firstName;
@@ -227,12 +223,11 @@ export default class Resume extends Vue {
 
   mounted() {
     darkModeEnabled();
-    this.onLoading();
   }
 
-  async onLoading() {
-    const response = await http(`/users/${this.uid}/resume`);
-    this.user = plainToClass(User, response);
+  async asyncData(context: any) {
+    const response = await context.$axios.$request(`/users/${context.params.uid}/resume`);
+    return { user: response };
   }
 
   sortedExpList(exp: WorkExp[]) {
@@ -261,11 +256,11 @@ export default class Resume extends Vue {
   .nav__menu-toggle {
     width: 21px;
     height: 21px;
-    background: no-repeat url(~@assets/img/close.svg);
+    background: no-repeat url(~@/assets/img/close.svg);
     border-color: transparent;
 
     &.collapsed {
-      background: no-repeat url(~@assets/img/menu.svg);
+      background: no-repeat url(~@/assets/img/menu.svg);
     }
   }
 

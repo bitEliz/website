@@ -36,12 +36,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "nuxt-property-decorator";
 import { Project } from "@/models/resume";
 
 @Component
 export default class ProjTile extends Vue {
-  @Prop() content!: Project;
+  @Prop({ required: true }) content!: Project;
 }
 </script>
 
