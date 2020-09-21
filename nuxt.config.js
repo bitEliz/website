@@ -1,3 +1,5 @@
+import appConfig from "./src/config/app.config";
+
 export default {
   srcDir: "src/",
   dir: {
@@ -6,36 +8,29 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: "",
+    title: `${appConfig.meta.title}`,
+    titleTemplate: `%s | ${appConfig.meta.title}`,
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
+      { hid: "keywords", name: "keywords", content: appConfig.meta.keywords },
+      {
+        hid: "description",
+        name: "description",
+        content: appConfig.meta.description,
+      },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    noscript: [{ innerHTML: "This website requires JavaScript." }],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [],
-
-  styleResources: {
-    scss: ["~/assets/scss/common.scss"],
-  },
+  css: [
+    "~/assets/scss/common.scss"
+  ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ["@/plugins/element-ui", "@plugins/filters"],
-
-  babel: {
-    plugins: [
-      [
-        "component",
-        {
-          libraryName: "element-ui",
-          styleLibraryName: "theme-chalk",
-        },
-      ],
-    ],
-  },
+  plugins: ["~/plugins/element-ui", "~/plugins/filters"],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -73,5 +68,14 @@ export default {
     babel: {
       configFile: true,
     },
+    styleResources: {
+      scss: [
+        "~/assets/scss/_functions.scss",
+        "~/assets/scss/_mixins.scss",
+        "~/assets/scss/_variables.scss",
+      ],
+    },
+    extractCSS: true,
+    optimizeCSS: true,
   },
 };
