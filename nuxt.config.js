@@ -25,12 +25,10 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [
-    "~/assets/scss/common.scss"
-  ],
+  css: ["~/assets/scss/common.scss"],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ["~/plugins/element-ui", "~/plugins/filters"],
+  plugins: ["~/plugins/element-ui", "~/plugins/filters", "~/plugins/http"],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -75,7 +73,5 @@ export default {
         "~/assets/scss/_variables.scss",
       ],
     },
-    extractCSS: true,
-    optimizeCSS: true,
   },
 };
