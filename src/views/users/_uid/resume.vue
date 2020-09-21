@@ -28,10 +28,7 @@
       >
         <template v-if="mdl.profile">
           <div class="profile__me txt-a--center">
-            <el-avatar
-              style="margin-bottom: 2rem"
-              :size="160"
-            >
+            <el-avatar style="margin-bottom: 2rem" :size="160">
               <img :src="mdl.profile.avatarUrl" alt="" />
             </el-avatar>
             <h1 class="txt-t--uppercase">{{ formattedName }}</h1>
@@ -144,10 +141,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import ProjTile from "@/components/proj-tile.vue";
-import darkModeEnabled from "@/utils/dark-mode";
-import { isArray } from "@/utils/inspect";
-import { User, WorkExp } from "@/models/resume";
+import ProjTile from "~/components/proj-tile.vue";
+import darkModeEnabled from "~/utils/dark-mode";
+import { isArray } from "~/utils/inspect";
+import { User, WorkExp } from "~/models/resume";
+import { resumeStore } from "~/store";
 
 @Component({
   components: {
@@ -155,70 +153,12 @@ import { User, WorkExp } from "@/models/resume";
   },
 })
 export default class Resume extends Vue {
-  user?: User;
-
-  get modules(): Object[] {
-    let result: Object[] = [];
-
-    if (this.user) {
-      result.push({
-        id: "profile",
-        title: "个人资料",
-        profile: this.user,
-      });
-    }
-
-    if (isArray(this.user?.projects) && this.user!.projects!.length) {
-      result.push({
-        id: "projects",
-        title: "精选项目",
-        projects: this.user!.projects,
-      });
-    }
-
-    if (
-      isArray(this.user?.skill?.profesional) &&
-      this.user!.skill!.profesional!.length
-    ) {
-      result.push({
-        id: "skills",
-        title: "专业技能",
-        skills: this.user!.skill!.profesional,
-      });
-    }
-
-    let exp = [];
-    if (isArray(this.user?.workExps) && this.user!.workExps!.length) {
-      exp.push({
-        id: "work",
-        title: "职业经历",
-        workExps: this.user!.workExps,
-      });
-    }
-
-    if (isArray(this.user?.eduExps) && this.user!.eduExps!.length) {
-      exp.push({
-        id: "education",
-        title: "教育经历",
-        eduExps: this.user!.eduExps,
-      });
-    }
-
-    if (exp.length) {
-      result.push({
-        id: "experiance",
-        title: "经验",
-        exp: exp,
-      });
-    }
-
-    return result;
+  get modules(): Array<object> {
+    return resumeStore.list;
   }
 
   get formattedName(): string {
-    const lastName = this.user?.lastName ? this.user?.lastName : "";
-    const firstName = this.user?.firstName ? this.user?.firstName : "";
-    return lastName + firstName;
+    return resumeStore.formattedName;
   }
 
   mounted() {
@@ -226,8 +166,7 @@ export default class Resume extends Vue {
   }
 
   async asyncData(context: any) {
-    const response = await context.$axios.$request(`/users/${context.params.uid}/resume`);
-    return { user: response };
+    await resumeStore.onLoading(context.params.uid);
   }
 
   sortedExpList(exp: WorkExp[]) {
