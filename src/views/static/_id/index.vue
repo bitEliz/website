@@ -7,18 +7,20 @@
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
 import darkModeEnabled from "@/utils/dark-mode";
+import { fileStore } from "~/store";
 
 @Component
 export default class Static extends Vue {
-  markdown: string = "";
+  get markdown(): string {
+    return fileStore.markdown;
+  }
 
   mounted() {
     darkModeEnabled();
   }
 
   async asyncData(context: any) {
-    const response = await context.$axios.$request(`/static/${context.params.id}`);
-    return { markdown: response ?? "" };
+    await fileStore.onLoading(context.params.id);
   }
 }
 </script>
