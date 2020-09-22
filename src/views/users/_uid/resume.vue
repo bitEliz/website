@@ -152,7 +152,7 @@ import { resumeStore } from "~/store";
     "v-proj-tile": ProjTile,
   },
 })
-export default class Resume extends Vue {
+export default class ResumeView extends Vue {
   get modules(): Array<object> {
     return resumeStore.list;
   }

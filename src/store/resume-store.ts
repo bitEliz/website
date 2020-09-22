@@ -2,9 +2,10 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { User } from "~/models/resume";
 import { $http } from "~/utils/http";
 import { isArray } from "~/utils/inspect";
+import { Loadable } from "~/utils/loadable";
 
-@Module({ name: "resume", stateFactory: true, namespaced: true })
-export default class ResumeStore extends VuexModule {
+@Module({ name: "resume-store", stateFactory: true, namespaced: true })
+export default class ResumeStore extends VuexModule implements Loadable {
   private _user?: User;
   isLoading = false;
 

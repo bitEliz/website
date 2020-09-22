@@ -1,9 +1,10 @@
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { $http } from "~/utils/http";
 import { isString } from "~/utils/inspect";
+import { Loadable } from "~/utils/loadable";
 
-@Module({ name: "static", stateFactory: true, namespaced: true })
-export default class StaticStore extends VuexModule {
+@Module({ name: "pure-md-file-store", stateFactory: true, namespaced: true })
+export default class PureMDFileStore extends VuexModule implements Loadable {
   isLoading = false;
   markdown: string = "";
 

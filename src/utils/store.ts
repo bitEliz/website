@@ -1,14 +1,14 @@
 import { Store } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
-import ResumeStore from '~/store/resume'
-import StaticStore from '~/store/static'
+import ResumeStore from '~/store/resume-store'
+import PureMDFileStore from '~/store/pure-md-file-store'
 
 let resumeStore: ResumeStore
-let fileStore: StaticStore
+let pureMDFileStore: PureMDFileStore
 
 function initializeStores(store: Store<any>): void {
   resumeStore = getModule(ResumeStore, store)
-  fileStore = getModule(StaticStore, store)
+  pureMDFileStore = getModule(PureMDFileStore, store)
 }
 
-export { initializeStores, resumeStore, fileStore }
+export { initializeStores, resumeStore, pureMDFileStore}

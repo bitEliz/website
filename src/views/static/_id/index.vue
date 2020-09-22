@@ -7,12 +7,12 @@
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
 import darkModeEnabled from "@/utils/dark-mode";
-import { fileStore } from "~/store";
+import { pureMDFileStore } from "~/store";
 
 @Component
-export default class Static extends Vue {
+export default class PureMDFileView extends Vue {
   get markdown(): string {
-    return fileStore.markdown;
+    return pureMDFileStore.markdown;
   }
 
   mounted() {
@@ -20,7 +20,7 @@ export default class Static extends Vue {
   }
 
   async asyncData(context: any) {
-    await fileStore.onLoading(context.params.id);
+    await pureMDFileStore.onLoading(context.params.id);
   }
 }
 </script>
