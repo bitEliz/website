@@ -24,7 +24,9 @@
                 :aspectRatio="
                   index === 0 ? 'padding-bottom: 25%' : 'padding-bottom: 75%'
                 "
-                :layoutDirection="index === 0 ? direction.horizontal : direction.vertical"
+                :layoutDirection="
+                  index === 0 ? direction.horizontal : direction.vertical
+                "
               />
             </li>
           </ul>
@@ -58,6 +60,7 @@ import { Component, Vue } from "nuxt-property-decorator";
 import BlogTileView from "~/components/blog-tile.vue";
 import { Blog } from "~/models/blog";
 import { LayoutDirection } from "~/models/layout-direction";
+import { blogListStore } from "~/store";
 
 @Component({
   components: {
@@ -65,39 +68,24 @@ import { LayoutDirection } from "~/models/layout-direction";
   },
 })
 export default class BlogListView extends Vue {
-
   private get direction() {
     return LayoutDirection;
   }
 
   get latestBlog(): Array<Blog> {
-    return [
-      new Blog(),
-      new Blog(),
-      new Blog(),
-      new Blog(),
-      new Blog(),
-      new Blog(),
-      new Blog(),
-      new Blog(),
-      new Blog(),
-    ];
+    return blogListStore.latestBlog;
   }
 
   get featuredBlog(): Array<Blog> {
-    return [new Blog(), new Blog(), new Blog(), new Blog()];
+    return blogListStore.featuredBlog;
   }
 
   get trunkedBlog(): Array<Blog> {
-    return [
-      new Blog(),
-      new Blog(),
-      new Blog(),
-      new Blog(),
-      new Blog(),
-      new Blog(),
-      new Blog(),
-    ];
+    return blogListStore.trunkedBlog;
+  }
+
+  async asyncData() {
+    await blogListStore.onLoading();
   }
 }
 </script>

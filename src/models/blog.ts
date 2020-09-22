@@ -12,3 +12,9 @@ export class Blog extends Model<string> implements TileAttributes {
     return this.categories?.join(" ");
   }
 }
+
+export class BlogGroup {
+  latestBlog?: Array<Blog>;
+  featuredBlog?: Array<Blog>;
+  trunkedBlog?: Array<Blog>;
+}
