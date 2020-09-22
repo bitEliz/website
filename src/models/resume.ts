@@ -1,8 +1,6 @@
-export interface Model {
-  id: string;
-}
+import { Model } from "./model";
 
-export class User implements Model {
+export class User extends Model<string> {
   id!: string;
   emailAddress?: string;
   eduExps?: EducationalExp[];
@@ -19,7 +17,7 @@ export class User implements Model {
   aboutMe?: string;
 }
 
-export class Project implements Model {
+export class Project extends Model<string> {
   summary!: string;
   trackViewUrl?: string;
   note?: string;
@@ -33,30 +31,30 @@ export class Project implements Model {
   trackId?: string;
 }
 
-export class Skill implements Model {
+export class Skill extends Model<string> {
   id!: string;
   profesional?: string[];
   workflow?: string[];
 }
 
-export class SocialNetwork implements Model {
+export class SocialNetwork extends Model<string> {
   id!: string;
   userId!: string;
   url!: string;
   service!: SocialNetworkService;
 }
 
-export class SocialNetworkService implements Model {
+export class SocialNetworkService extends Model<string> {
   id!: string;
   type!: string;
 }
 
-export class Industry implements Model {
+export class Industry extends Model<string> {
   id!: string;
   title!: string;
 }
 
-export class EducationalExp implements Model {
+export class EducationalExp extends Model<string> {
   school!: string;
   userId!: string;
   degree?: string;
@@ -66,7 +64,7 @@ export class EducationalExp implements Model {
   endYear?: string;
 }
 
-export class WorkExp implements Model {
+export class WorkExp extends Model<string> {
   location!: string;
   responsibilities?: string[];
   endDate!: string;
