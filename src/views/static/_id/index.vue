@@ -8,6 +8,7 @@
 import { Component, Vue } from "nuxt-property-decorator";
 import darkModeEnabled from "@/utils/dark-mode";
 import { pureMDFileStore } from "~/store";
+import { Context } from "@nuxt/types/app";
 
 @Component
 export default class PureMDFileView extends Vue {
@@ -19,8 +20,12 @@ export default class PureMDFileView extends Vue {
     darkModeEnabled();
   }
 
-  async asyncData(context: any) {
-    await pureMDFileStore.onLoading(context.params.id);
+  async asyncData(context: Context) {
+    try {
+      await pureMDFileStore.onLoading(context.params.id);
+    } catch (error) {
+      context.error(error);
+    }
   }
 }
 </script>

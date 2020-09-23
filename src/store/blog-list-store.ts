@@ -44,7 +44,7 @@ export default class BlogListStore extends VuexModule implements Loadable {
       this.setLoadingState(false);
     } catch (error) {
       this.setLoadingState(false);
-      console.log(error);
+      throw error;
     }
   }
 }

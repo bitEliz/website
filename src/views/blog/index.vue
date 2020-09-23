@@ -56,6 +56,7 @@
 </template>
 
 <script lang="ts">
+import { Context } from "@nuxt/types/app";
 import { Component, Vue } from "nuxt-property-decorator";
 import BlogTileView from "~/components/blog-tile.vue";
 import { Blog } from "~/models/blog";
@@ -84,8 +85,12 @@ export default class BlogListView extends Vue {
     return blogListStore.trunkedBlog;
   }
 
-  async asyncData() {
-    await blogListStore.onLoading();
+  async asyncData(context: Context): Promise<void> {
+    try {
+      await blogListStore.onLoading();
+    } catch (error) {
+      context.error(error);
+    }
   }
 }
 </script>
