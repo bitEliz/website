@@ -7,6 +7,8 @@ export class Blog extends Model<string> implements TileAttributes {
   headline?: string;
   timestamp?: string;
   categories?: Array<string>;
+  excerpt?: string;
+  content?: string;
 
   get tag() {
     return this.categories?.join(" ");

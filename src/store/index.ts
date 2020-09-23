@@ -1,7 +1,7 @@
 import { Store } from 'vuex'
-import { initializeStores } from '~/utils/store'
+import { typedStore } from '~/utils/store'
 
-const initializer = (store: Store<any>) => initializeStores(store)
+const initializer = (store: Store<any>) => typedStore(store)
 
 export const plugins = [initializer]
 export * from "~/utils/store";
