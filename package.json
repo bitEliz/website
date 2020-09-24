@@ -17,6 +17,7 @@
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
+    "highlight.js": "^10.2.0",
     "marked": "^1.1.1",
     "nuxt": "^2.14.5",
     "nuxt-property-decorator": "^2.8.3",
@@ -43,6 +44,6 @@
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js, ts, vue, json, scss, md, html}": "eslint"
+    "*.{js, ts, vue}": "eslint"
   }
 }

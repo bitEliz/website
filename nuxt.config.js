@@ -1,6 +1,7 @@
 import appConfig from "./src/config/app.config";
 
 export default {
+  globalName: "app",
   srcDir: "src/",
   dir: {
     pages: "views",
@@ -26,6 +27,14 @@ export default {
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ["~/assets/scss/common.scss"],
+
+  styleResources: {
+    scss: [
+      "~/assets/scss/_functions.scss",
+      "~/assets/scss/_mixins.scss",
+      "~/assets/scss/_variables.scss",
+    ],
+  },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: ["~/plugins/element-ui", "~/plugins/filters", "~/plugins/http"],
@@ -66,12 +75,5 @@ export default {
     babel: {
       configFile: true,
     },
-    styleResources: {
-      scss: [
-        "~/assets/scss/_functions.scss",
-        "~/assets/scss/_mixins.scss",
-        "~/assets/scss/_variables.scss",
-      ],
     },
-  },
 };
