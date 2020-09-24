@@ -47,12 +47,6 @@ export default class ErrorView extends Vue {
   .localized-error {
     height: calc(100vh - #{$nav__bar-height});
 
-    &__name {
-    }
-
-    &__description {
-    }
-
     &__code {
       font-size: 5rem;
       color: var(--black-500);
