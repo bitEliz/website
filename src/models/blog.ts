@@ -1,18 +1,14 @@
+import { Article } from './article';
 import { Model } from "./model";
-import { TileAttributes } from "./tile-attributes";
 
-export class Blog extends Model<string> implements TileAttributes {
+export class Blog extends Model<string> implements Article {
   id!: string;
   media?: string;
   headline?: string;
   timestamp?: string;
-  categories?: Array<string>;
+  tags?: Array<string>;
   excerpt?: string;
   content?: string;
-
-  get tag() {
-    return this.categories?.join(" ");
-  }
 }
 
 export class BlogGroup {

@@ -7,7 +7,11 @@ import { Loadable } from "../utils/loadable";
 export default class BlogStore extends VuexModule implements Loadable {
   // MARK: Properties
   isLoading: boolean = false;
-  blog?: Blog;
+  private _blog?: Blog;
+
+  get blog(): Blog | undefined {
+    return this._blog;
+  };
 
   // MARK: Mutations
   @Mutation
@@ -17,7 +21,7 @@ export default class BlogStore extends VuexModule implements Loadable {
 
   @Mutation
   setBlog(newValue?: Blog) {
-    this.blog = newValue;
+    this._blog = newValue;
   }
 
   // MARK: Actions

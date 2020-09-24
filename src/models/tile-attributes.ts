@@ -3,7 +3,7 @@
 */
 export interface TileAttributes {
   media?: string;
-  tag?: string;
+  tags?: Array<string>;
   headline?: string;
   timestamp?: string;
 }
