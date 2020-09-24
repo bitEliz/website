@@ -1,7 +1,7 @@
 <template>
   <a
     class="tile d--flex flex--column"
-    :class="layoutDirection === direction.horizontal ? 'sm:flex--row' : ''"
+    :class="!vertical ? 'sm:flex--row' : ''"
   >
     <div class="tile__media" :style="aspectRatio" aria-hidden="true">
       <el-image
@@ -34,16 +34,12 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "nuxt-property-decorator";
 import { Blog } from "~/models/blog";
-import { LayoutDirection } from "~/models/layout-direction";
 
 @Component
 export default class BlogTileView extends Vue {
   @Prop({ required: true }) blog!: Blog;
   @Prop({ default: "padding-bottom: 75%" }) aspectRatio!: string;
-  @Prop({ default: false }) layoutDirection!: LayoutDirection;
-  private get direction() {
-    return LayoutDirection;
-  }
+  @Prop({ default: true }) vertical!: boolean;
 }
 </script>
 

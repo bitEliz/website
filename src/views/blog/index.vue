@@ -24,9 +24,7 @@
                 :aspectRatio="
                   index === 0 ? 'padding-bottom: 25%' : 'padding-bottom: 75%'
                 "
-                :layoutDirection="
-                  index === 0 ? direction.horizontal : direction.vertical
-                "
+                :vertical="index !== 0"
               />
             </li>
           </ul>
@@ -41,10 +39,14 @@
           <ul
             class="blog__item-list list--unstyled d--flex flex--column sm:flex--row flex--wrap"
           >
-            <li class="blog__item" v-for="blog in trunkedBlog" :key="blog.id">
+            <li
+              class="blog__item"
+              v-for="(blog, index) in trunkedBlog"
+              :key="blog.id"
+            >
               <BlogTileView
                 :blog="blog"
-                :landscape="1"
+                :vertical="index !== 0"
                 :aspectRatio="'padding-bottom: 25%'"
               />
             </li>
@@ -60,7 +62,6 @@ import { Context } from "@nuxt/types/app";
 import { Component, Vue } from "nuxt-property-decorator";
 import BlogTileView from "~/components/blog-tile.vue";
 import { Blog } from "~/models/blog";
-import { LayoutDirection } from "~/models/layout-direction";
 import { blogListStore } from "~/store";
 
 @Component({
@@ -69,10 +70,6 @@ import { blogListStore } from "~/store";
   },
 })
 export default class BlogListView extends Vue {
-  private get direction() {
-    return LayoutDirection;
-  }
-
   get latestBlog(): Array<Blog> {
     return blogListStore.latestBlog;
   }
