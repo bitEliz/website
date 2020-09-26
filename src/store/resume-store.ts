@@ -1,6 +1,6 @@
+import { Context } from "@nuxt/types";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { User } from "~/models/resume";
-import { $http } from "~/utils/http";
 import { isArray } from "~/utils/inspect";
 import { Loadable } from "~/utils/loadable";
 
@@ -30,10 +30,12 @@ export default class ResumeStore extends VuexModule implements Loadable {
   }
 
   @Action({ rawError: true })
-  async onLoading(uid: string) {
+  async onLoading(context: Context) {
     this.setLoadingState(true);
     try {
-      let user: User = await $http.$get(`/users/${uid}/resume`);
+      let user: User = await context.app.$http.$get(
+        `/users/${context.params.uid}/resume`
+      );
       this.setUser(user);
       this.setLoadingState(false);
     } catch (error) {
@@ -60,10 +62,7 @@ const _fillList = (user?: User) => {
       });
     }
 
-    if (
-      isArray(user?.skill?.profesional) &&
-      user.skill!.profesional!.length
-    ) {
+    if (isArray(user?.skill?.profesional) && user.skill!.profesional!.length) {
       result.push({
         id: "skills",
         title: "专业技能",

@@ -1,6 +1,6 @@
+import { Context } from "@nuxt/types";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { Blog, BlogGroup } from "~/models/blog";
-import { $http } from "~/utils/http";
 import { Loadable } from "../utils/loadable";
 
 @Module({ name: "blog-list-store", stateFactory: true, namespaced: true })
@@ -34,10 +34,10 @@ export default class BlogListStore extends VuexModule implements Loadable {
 
   // MARK: Actions
   @Action({ rawError: true})
-  async onLoading(): Promise<void> {
+  async onLoading(ctx: Context): Promise<void> {
     this.setLoadingState(true);
     try {
-      let blogGroup: BlogGroup = await $http.$get(`/blog`);
+      let blogGroup: BlogGroup = await ctx.app.$http.$get(`/blog`);
       this.setLatestBlog(blogGroup.latestBlog);
       this.setFeaturedBlog(blogGroup.featuredBlog);
       this.setTrunkedBlog(blogGroup.trunkedBlog);

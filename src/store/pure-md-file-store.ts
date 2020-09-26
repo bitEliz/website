@@ -1,5 +1,5 @@
+import { Context } from "@nuxt/types";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import { $http } from "~/utils/http";
 import { isString } from "~/utils/inspect";
 import { Loadable } from "~/utils/loadable";
 
@@ -19,10 +19,10 @@ export default class PureMDFileStore extends VuexModule implements Loadable {
   }
 
   @Action({ rawError: true })
-  async onLoading(id: string) {
+  async onLoading(ctx: Context) {
     this.setLoadingState(true);
     try {
-      let file: string = await $http.$get(`/static/${id}`);
+      let file: string = await ctx.app.$http.$get(`/static/${ctx.params.id}`);
       this.setMarkdown(file);
       this.setLoadingState(false);
     } catch (error) {

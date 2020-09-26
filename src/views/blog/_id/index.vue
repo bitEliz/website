@@ -63,7 +63,7 @@ export default class BlogView extends Vue {
 
   async asyncData(context: Context) {
     try {
-      await blogStore.onLoading(context.params.id);
+      await blogStore.onLoading(context);
     } catch (error) {
       context.error(error);
     }

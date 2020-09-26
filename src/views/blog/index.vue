@@ -84,7 +84,7 @@ export default class BlogListView extends Vue {
 
   async asyncData(context: Context): Promise<void> {
     try {
-      await blogListStore.onLoading();
+      await blogListStore.onLoading(context);
     } catch (error) {
       context.error(error);
     }
