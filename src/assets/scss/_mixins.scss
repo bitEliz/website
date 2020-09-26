@@ -3,6 +3,7 @@
 // Used in conjunction with global variables to enable certain theme features.
 
 // Utilities
+@import "mixins/aspect-ratio";
 @import "mixins/breakpoints";
 @import "mixins/img";
 @import "mixins/resizable";
