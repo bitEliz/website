@@ -3,7 +3,7 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { isString } from "~/utils/inspect";
 import { Loadable } from "~/utils/loadable";
 
-@Module({ name: "pure-md-file-store", stateFactory: true, namespaced: true })
+@Module({ name: "api-store", stateFactory: true, namespaced: true })
 export default class ApiStore extends VuexModule implements Loadable {
   isLoading = false;
   markdown: string = "";
