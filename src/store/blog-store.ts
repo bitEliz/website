@@ -11,7 +11,7 @@ export default class BlogStore extends VuexModule implements Loadable {
 
   get blog(): Blog | undefined {
     return this._blog;
-  };
+  }
 
   // MARK: Mutations
   @Mutation
@@ -29,7 +29,7 @@ export default class BlogStore extends VuexModule implements Loadable {
   async onLoading(ctx: Context): Promise<void> {
     this.setLoadingState(true);
     try {
-      let blog: Blog = await ctx.app.$http.$get(`/blog/${ctx.params.id}`);
+      const blog: Blog = await ctx.app.$http.$get(`/blog/${ctx.params.id}`);
       this.setBlog(blog);
       this.setLoadingState(false);
     } catch (error) {

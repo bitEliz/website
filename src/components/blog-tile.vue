@@ -2,12 +2,14 @@
   <a
     class="tile d--flex flex--column"
     :class="!vertical ? 'sm:flex--row' : ''"
+    :href="'/blog/' + blog.alias"
   >
-    <div class="tile__media" :style="aspectRatio" aria-hidden="true">
-      <el-image
-        :src="blog.media"
-        fit="contain"
-      />
+    <div
+      v-if="blog.artworkUrl"
+      class="tile__media"
+      :style="aspectRatio ? aspectRatio : ''"
+    >
+      <el-image :src="blog.artworkUrl" />
     </div>
 
     <div
@@ -17,15 +19,12 @@
       <div class="tile__head">
         <div class="tile__category txt-t--uppercase">{{ blog.category }}</div>
         <div class="tile__headline">
-          {{ blog.headline }}
+          {{ blog.title }}
         </div>
       </div>
 
-      <time
-        class="tile__timestamp txt-t--uppercase"
-        :datatime="blog.timestamp"
-      >
-        {{ blog.timestamp }}
+      <time class="tile__timestamp txt-t--uppercase" :datatime="blog.createdAt">
+        {{ blog.createdAt }}
       </time>
     </div>
   </a>
@@ -38,7 +37,10 @@ import { Blog } from "~/models/blog";
 @Component
 export default class BlogTileView extends Vue {
   @Prop({ required: true }) blog!: Blog;
-  @Prop({ default: "padding-bottom: 75%" }) aspectRatio!: string;
+  // Default aspect ratio is 16/9.
+  // set value with formmat `padding-top: value`,
+  // `value = (height / width) * 100%`.
+  @Prop() aspectRatio?: string;
   @Prop({ default: true }) vertical!: boolean;
 }
 </script>
@@ -47,19 +49,15 @@ export default class BlogTileView extends Vue {
 .tile {
   width: 100%;
   background: var(--white);
+  border-radius: 0.5rem;
 
   .tile__media {
-    position: relative;
-    width: 100%;
-    height: 0;
+    @include aspect-ratio(16, 9);
+  }
 
-    .el-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-    }
+  .tile__description {
+    padding: 2rem;
+    flex-grow: 1;
   }
 }
 </style>

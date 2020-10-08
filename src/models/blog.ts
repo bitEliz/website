@@ -3,9 +3,10 @@ import { Model } from "./model";
 
 export class Blog extends Model<string> implements Article {
   id!: string;
-  media?: string;
-  headline?: string;
-  timestamp?: string;
+  alias!: string;
+  artworkUrl?: string;
+  title?: string;
+  updatedAt?: string;
   tags?: Array<string>;
   excerpt?: string;
   content?: string;

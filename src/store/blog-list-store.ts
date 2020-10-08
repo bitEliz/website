@@ -33,7 +33,7 @@ export default class BlogListStore extends VuexModule implements Loadable {
   }
 
   // MARK: Actions
-  @Action({ rawError: true})
+  @Action({ rawError: true })
   async onLoading(ctx: Context): Promise<void> {
     this.setLoadingState(true);
     try {
