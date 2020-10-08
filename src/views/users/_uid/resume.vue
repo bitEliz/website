@@ -146,7 +146,7 @@ import darkModeEnabled from "~/utils/dark-mode";
 import { isArray } from "~/utils/inspect";
 import { User, WorkExp } from "~/models/resume";
 import { resumeStore } from "~/store";
-import { Context } from '@nuxt/types';
+import { Context } from "@nuxt/types";
 
 @Component({
   components: {
@@ -167,7 +167,11 @@ export default class ResumeView extends Vue {
   }
 
   async asyncData(context: Context) {
-    await resumeStore.onLoading(context);
+    try {
+      await resumeStore.onLoading(context);
+    } catch (error) {
+      context.error(error);
+    }
   }
 
   sortedExpList(exp: WorkExp[]) {
