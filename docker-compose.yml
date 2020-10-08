@@ -1,0 +1,14 @@
+# Docker Compose file for website
+#
+
+version: "3.7"
+
+services:
+
+  app:
+    image: website:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
