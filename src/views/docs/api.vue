@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <main role="main" class="main" :inner-html.prop="markdown | markup"></main>
+    <main role="main" class="main">
+      <article :inner-html.prop="markdown | markup"></article>
+    </main>
   </div>
 </template>
 
@@ -8,7 +10,7 @@
 import { Component, Vue } from "nuxt-property-decorator";
 import darkModeEnabled from "@/utils/dark-mode";
 import { apiStore } from "~/store";
-import { Context } from '@nuxt/types';
+import { Context } from "@nuxt/types";
 
 @Component
 export default class ApiView extends Vue {
@@ -31,36 +33,42 @@ export default class ApiView extends Vue {
 </script>
 
 <style lang="scss">
-body {
-  font-size: 15px;
-  color: var(--black-900);
-}
-
 .main {
-  margin: 0 auto;
   max-width: 798px;
-  padding: 5em 1rem 3em;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 2rem;
 
-  h1 {
-    font-size: 3rem;
-  }
+//   article {
+//     header {
+//       border-bottom: 1px solid var(--black-075);
+//       margin-bottom: 2.5rem;
+//     }
 
-  em {
-    font-size: 0.8em;
-    color: var(--black-400);
-  }
+//     h1,
+//     h2,
+//     h3 {
+//       font-weight: normal;
+//       padding-top: 1rem;
+//     }
 
-  code {
-    font-size: 0.9em;
-    color: var(--black-800);
-  }
+//     h1 {
+//       font-size: 3rem;
+//     }
 
-  ul {
-    @include list-unstyled();
-  }
+//     h2 {
+//       font-size: 2.5rem;
+//     }
 
-  hr {
-    margin-bottom: 1rem;
-  }
+//     ul {
+//       list-style: disc;
+//     }
+
+//     ul,
+//     ol {
+//       padding-left: 40px;
+//       margin: 1em 0;
+//     }
+//   }
 }
 </style>
