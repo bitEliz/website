@@ -28,8 +28,7 @@ WORKDIR /staging
 RUN mv /build/.nuxt . \
     && cp -r /build/node_modules ./node_modules \
     && cp /build/package.json . \
-    && cp /build/*config.* . \
-    && cp /build/.env* .
+    && cp /build/*config.* .
 
 # Copy resources
 RUN cp -r /build/public ./public
@@ -61,6 +60,9 @@ USER nuxtjs:nuxtjs
 # Let Docker bind to port 3000
 EXPOSE 3000
 
+# Set environment
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+
 # Start the Nuxt service when the image is run, default to listening on 3000 in production environment
-ENTRYPOINT ["npm"]
-CMD ["start"]
+CMD ["npm", "start"]
