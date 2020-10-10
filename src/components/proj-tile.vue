@@ -1,38 +1,31 @@
 <template>
-  <el-card class="tile" :body-style="{ padding: '0px' }" shadow="always">
-    <header>
-      <div class="tile__backgimg">
-        <a v-if="content.trackable" :href="content.url" target="_blank">
-          <el-image :src="content.backgroundImageUrl" fit="fit" lazy></el-image>
-        </a>
-        <el-image v-else :src="content.backgroundImageUrl" fit="fit" lazy>
-          <div slot="placeholder">LOADING<span>...</span></div>
-        </el-image>
-      </div>
-      <div class="tile__extra">
-        <span class="tile__tag">{{ content.kind }}</span>
-        <time
-          class="tile__datetime txt-t-uppercase"
-          :datetime="content.datetime"
-          >{{ content.datetime }}</time
-        >
-      </div>
-      <h3 class="tile__title">
-        <a
-          v-if="content.trackable"
-          :href="content.trackViewUrl"
-          target="_blank"
-        >
-          {{ content.name }}
-        </a>
-        <span v-else>{{ content.name }}</span>
-      </h3>
-    </header>
-    <div
-      class="tile__excerpt"
-      :inner-html.prop="content.summary | markup"
-    ></div>
-  </el-card>
+  <a
+    :href="_isActive ? content.trackViewUrl : undefined"
+    :target="_isActive ? '_blank' : '_self'"
+  >
+    <el-card class="tile" :body-style="{ padding: '0px' }" shadow="always">
+      <header>
+        <div class="tile__backgimg">
+          <el-image :src="content.backgroundImageUrl" fit="fit" lazy>
+            <div slot="placeholder">LOADING<span>...</span></div>
+          </el-image>
+        </div>
+        <div class="tile__extra">
+          <span class="tile__tag">{{ content.kind }}</span>
+          <time
+            class="tile__datetime txt-t-uppercase"
+            :datetime="_formattedDatetime"
+            >{{ _formattedDatetime }}</time
+          >
+        </div>
+        <h3 class="tile__title">{{ content.name }}</h3>
+      </header>
+      <div
+        class="tile__excerpt"
+        :inner-html.prop="content.summary | markup"
+      ></div>
+    </el-card>
+  </a>
 </template>
 
 <script lang="ts">
@@ -42,6 +35,16 @@ import { Project } from "@/models/resume";
 @Component
 export default class ProjTile extends Vue {
   @Prop({ required: true }) content!: Project;
+
+  private get _isActive(): boolean {
+    return (
+      this.content.trackViewUrl != null && this.content.visibility === "public"
+    );
+  }
+
+  private get _formattedDatetime(): string {
+    return (this.content.startDate ?? "") + "-" + (this.content.endDate ?? "");
+  }
 }
 </script>
 

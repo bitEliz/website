@@ -53,15 +53,17 @@
         </template>
         <template v-else-if="mdl.projects">
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
-          <div class="d--flex flex--column sm:flex--row sm:flex--wrap">
-            <v-proj-tile
+          <ul
+            class="d--flex flex--column sm:flex--row sm:flex--wrap list--unstyled"
+          >
+            <li
               class="project__tile"
               v-for="proj in mdl.projects"
               :key="proj.id"
-              :content="proj"
             >
-            </v-proj-tile>
-          </div>
+              <v-proj-tile :content="proj"> </v-proj-tile>
+            </li>
+          </ul>
         </template>
         <template v-else-if="mdl.exp">
           <div class="exp__wrapper d--flex flex--column sm:flex--row">
