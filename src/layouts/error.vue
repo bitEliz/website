@@ -1,6 +1,6 @@
 <template>
-  <div class="error">
-    <nav role="nav" class="nav">
+  <div class="__error">
+    <!-- <nav role="nav" class="nav">
       <div class="wrapper--fluid">
         <a class="logo" href="/">
           <img width="125" />
@@ -11,7 +11,7 @@
           </li>
         </ul>
       </div>
-    </nav>
+    </nav> -->
     <main
       role="main"
       class="main localized-error d--flex flex--column justify--center"
@@ -37,7 +37,7 @@ export default class ErrorView extends Vue {
 </script>
 
 <style lang="scss">
-.error {
+.__error {
   $nav__bar-height: 4rem;
 
   .nav {

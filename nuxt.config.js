@@ -1,5 +1,5 @@
 export default {
-  globalName: "app",
+  globalName: "root",
   srcDir: "src/",
   dir: {
     pages: "views",
@@ -24,13 +24,13 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ["~/assets/scss/common.scss"],
+  css: ["node_modules/prettify/scss/prettify.scss"],
 
   styleResources: {
     scss: [
-      "~/assets/scss/_functions.scss",
-      "~/assets/scss/_mixins.scss",
-      "~/assets/scss/_variables.scss",
+      "prettify/scss/_functions.scss",
+      "prettify/scss/_mixins.scss",
+      "prettify/scss/_variables.scss"
     ],
   },
 
@@ -73,5 +73,10 @@ export default {
     babel: {
       configFile: true,
     },
-    },
+    extend(config, { isClient }) {
+      if (isClient) {
+        config.devtool = 'source-map'
+      }
+    }
+  },
 };

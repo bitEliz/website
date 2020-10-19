@@ -33,6 +33,8 @@ export default class ApiView extends Vue {
 </script>
 
 <style lang="scss">
+@import "~/assets/scss/_prettify.scss";
+
 .main {
   max-width: 798px;
   min-width: 320px;

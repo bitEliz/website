@@ -31,6 +31,8 @@ export default class PureMDFileView extends Vue {
 </script>
 
 <style lang="scss">
+@import "~/assets/scss/_prettify.scss";
+
 body {
   font-size: 15px;
   color: var(--black-900);

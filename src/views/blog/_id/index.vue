@@ -71,6 +71,8 @@ export default class BlogView extends Vue {
 </script>
 
 <style lang="scss">
+@import "~/assets/scss/_prettify.scss";
+
 .blog {
   max-width: 798px;
   min-width: 320px;
