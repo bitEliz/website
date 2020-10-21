@@ -1,5 +1,5 @@
 export default {
-  globalName: "root",
+  globalName: "rt",
   srcDir: "src/",
   dir: {
     pages: "views",
@@ -58,6 +58,7 @@ export default {
   bootstrapVue: {
     css: false,
     bvCSS: false,
+    icons: false,
     componentPlugins: ["CollapsePlugin"],
     directivePlugins: ["VBScrollspyPlugin"],
   },
@@ -71,12 +72,7 @@ export default {
   build: {
     transpile: [/^element-ui/],
     babel: {
-      configFile: true,
-    },
-    extend(config, { isClient }) {
-      if (isClient) {
-        config.devtool = 'source-map'
-      }
+      configFile: true
     }
   },
 };

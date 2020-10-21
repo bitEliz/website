@@ -4,7 +4,7 @@
 FROM node:alpine as builder
 
 # Install OS updates
-RUN apk update \
+RUN apk --update add git less openssh \
     && apk upgrade \
     && rm -rf /var/cache/apk/*
 
@@ -26,7 +26,7 @@ WORKDIR /staging
 
 # Copy main executable to staging area
 RUN mv /build/.nuxt . \
-    && cp -r /build/node_modules ./node_modules \
+    && cp -r /build/node_modules . \
     && cp /build/package.json . \
     && cp /build/*config.* .
 
