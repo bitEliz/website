@@ -34,10 +34,12 @@ export default class BlogListStore extends VuexModule implements Loadable {
 
   // MARK: Actions
   @Action({ rawError: true })
-  async onLoading(ctx: Context): Promise<void> {
+  async onLoading(context: Context): Promise<void> {
     this.setLoadingState(true);
     try {
-      let blogGroup: BlogGroup = await ctx.app.$http.$get(`/blog`);
+      let blogGroup: BlogGroup = await context.app.$http.$get(
+        `users/${context.$config.uid}/blog`
+      );
       this.setLatestBlog(blogGroup.latestBlog);
       this.setFeaturedBlog(blogGroup.featuredBlog);
       this.setTrunkedBlog(blogGroup.trunkedBlog);
