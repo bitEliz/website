@@ -62,6 +62,14 @@ export default {
     "@nuxtjs/style-resources",
   ],
 
+  router: {
+    linkActiveClass: "link--active",
+    linkExactActiveClass: "link--exact-active",
+    prefetchLinks: false,
+    prefetchPayloads: false,
+    linkPrefetchedClass: 'link--prefetched'
+  },
+
   bootstrapVue: {
     css: false,
     bvCSS: false,
