@@ -1,13 +1,20 @@
+const __url = process.env.BASE_URL || "http://localhost:8080";
+const __uid = process.env.USER_ID || "dev";
+
 export default {
   globalName: "rt",
   srcDir: "src/",
   dir: {
     pages: "views",
   },
-
+  publicRuntimeConfig: {
+    baseURL: __url,
+    uid: __uid,
+  },
+  privateRuntimeConfig: {},
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: "JUNFENG ZHANGE",
+    title: __uid.toUpperCase(),
     titleTemplate: `%s`,
     meta: [
       { charset: "utf-8" },
@@ -24,13 +31,13 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ["node_modules/prettify/scss/prettify.scss"],
+  css: ["prettify/scss/prettify.scss"],
 
   styleResources: {
     scss: [
       "prettify/scss/_functions.scss",
       "prettify/scss/_mixins.scss",
-      "prettify/scss/_variables.scss"
+      "prettify/scss/_variables.scss",
     ],
   },
 
@@ -65,14 +72,15 @@ export default {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: process.env.BASE_URL ?? "http://localhost:8080",
+    baseURL: __url,
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     transpile: [/^element-ui/],
     babel: {
-      configFile: true
-    }
+      configFile: true,
+      compact: true,
+    },
   },
 };
