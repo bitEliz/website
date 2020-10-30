@@ -1,10 +1,7 @@
 import { NuxtConfig } from "@nuxt/types";
 
-// const __url = process.env.BASE_URL || "http://localhost:8080";
-// const __uid = process.env.USER_ID || "dev";
-
-const __url = "https://api.akii.me";
-const __uid = "paul";
+const __url = process.env.BASE_URL || "http://localhost:8080";
+const __uid = process.env.USER_ID || "dev";
 
 const nuxtConfig: NuxtConfig = {
   globalName: "rt",
@@ -36,7 +33,10 @@ const nuxtConfig: NuxtConfig = {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ["prettify/scss/prettify.scss"],
+  css: [
+    "prettify/scss/prettify.scss",
+    "~/assets/scss/hl.scss",
+  ],
 
   styleResources: {
     scss: [
