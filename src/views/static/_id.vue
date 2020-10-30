@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <main role="main" class="main" :inner-html.prop="markdown | markup"></main>
-  </div>
+    <main role="main" class="main" :inner-html.prop="markdown | markup" />
 </template>
 
 <script lang="ts">
@@ -31,10 +29,9 @@ export default class PureMDFileView extends Vue {
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/_prettify.scss";
 
 body {
-  font-size: 15px;
+  font-size: 90%;
   color: var(--black-900);
 }
 
@@ -45,16 +42,6 @@ body {
 
   h1 {
     font-size: 3rem;
-  }
-
-  em {
-    font-size: 0.8em;
-    color: var(--black-400);
-  }
-
-  code {
-    font-size: 0.9em;
-    color: var(--black-800);
   }
 
   ul {
