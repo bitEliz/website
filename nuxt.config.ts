@@ -1,7 +1,12 @@
-const __url = process.env.BASE_URL || "http://localhost:8080";
-const __uid = process.env.USER_ID || "dev";
+import { NuxtConfig } from "@nuxt/types";
 
-export default {
+// const __url = process.env.BASE_URL || "http://localhost:8080";
+// const __uid = process.env.USER_ID || "dev";
+
+const __url = "https://api.akii.me";
+const __uid = "paul";
+
+const nuxtConfig: NuxtConfig = {
   globalName: "rt",
   srcDir: "src/",
   dir: {
@@ -66,8 +71,7 @@ export default {
     linkActiveClass: "link--active",
     linkExactActiveClass: "link--exact-active",
     prefetchLinks: false,
-    prefetchPayloads: false,
-    linkPrefetchedClass: 'link--prefetched'
+    linkPrefetchedClass: "link--prefetched",
   },
 
   bootstrapVue: {
@@ -92,3 +96,5 @@ export default {
     },
   },
 };
+
+module.exports = nuxtConfig;
