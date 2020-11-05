@@ -1,7 +1,7 @@
 import { Context } from "@nuxt/types";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import { User } from "~/models/resume";
-import { isArray } from "~/utils/inspect";
+import { ListGroup, MDL_ID } from "~/models/list-group";
+import { Project, User } from "~/models/resume";
 import { Loadable } from "~/utils/loadable";
 
 @Module({ name: "resume-store", stateFactory: true, namespaced: true })
@@ -9,7 +9,7 @@ export default class ResumeStore extends VuexModule implements Loadable {
   private _user?: User;
   isLoading = false;
 
-  get list(): Array<object> {
+  get list(): Array<ListGroup<any>> {
     return _fillList(this._user);
   }
 
@@ -45,55 +45,65 @@ export default class ResumeStore extends VuexModule implements Loadable {
   }
 }
 
-const _fillList = (user?: User) => {
-  let result = Array<object>();
-  if (user != null) {
-    result.push({
-      id: "profile",
-      title: "个人资料",
-      profile: user,
-    });
+const PROJ_VISIBILITY_PUBLIC = "public";
 
-    if (isArray(user?.projects) && user.projects!.length) {
-      result.push({
-        id: "projects",
-        title: "精选项目",
-        projects: user.projects,
-      });
-    }
+const GITHUB = "github.com";
 
-    let exp = [];
-    if (isArray(user?.workExps) && user.workExps!.length) {
-      exp.push({
-        id: "work",
-        title: "职业经历",
-        workExps: user.workExps,
-      });
-    }
+const _fillList = (arg?: User) => {
+  let result = Array<ListGroup<any>>();
 
-    if (isArray(user?.eduExps) && user.eduExps!.length) {
-      exp.push({
-        id: "education",
-        title: "教育经历",
-        eduExps: user.eduExps,
-      });
-    }
+  if (!arg) {
+    return result;
+  }
 
-    if (exp.length) {
-      result.push({
-        id: "experiance",
-        title: "经验",
-        exp: exp,
-      });
-    }
+  const user = arg!;
 
-    if (isArray(user?.skill?.professional) && user.skill!.professional!.length) {
-      result.push({
-        id: "skills",
-        title: "专业技能",
-        skills: user.skill!.professional,
-      });
+  result.push(new ListGroup(MDL_ID.PROFILE, "简介", [arg]));
+
+  // Filter visible proj.
+  const githubList: Project[] = [];
+  const otherList: Project[] = [];
+  user.projects?.forEach((proj) => {
+    // Only `proj.visibility` marked as `public` can pass filter.
+    if (proj.visibility === PROJ_VISIBILITY_PUBLIC) {
+      // All github repo project are marked as open source proj.
+      if (proj.trackViewUrl && proj.trackViewUrl?.indexOf(GITHUB) != -1) {
+        githubList.push(proj);
+      } else {
+        otherList.push(proj);
+      }
     }
+  });
+
+  const proj = [];
+
+  if (githubList.length) {
+    proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", githubList));
+  }
+
+  if (otherList.length) {
+    proj.push(new ListGroup(MDL_ID.DEFAULT, "精选项目", otherList));
+  }
+
+  if (proj.length) {
+    result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj));
+  }
+
+  let exp = [];
+  if (user.workExps?.length) {
+    exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.workExps));
+  }
+
+  if (user.eduExps?.length) {
+    exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.eduExps));
+  }
+
+  if (exp.length) {
+    result.push(new ListGroup(MDL_ID.EXPERIENCE, "经历", exp));
+  }
+
+  if (user.skill?.professional?.length) {
+    result.push(new ListGroup(MDL_ID.SKILL, "技能", user.skill!.professional));
   }
   return result;
 };

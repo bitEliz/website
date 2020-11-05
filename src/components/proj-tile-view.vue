@@ -1,7 +1,7 @@
 <template>
   <a
     class="tile d--flex flex--column"
-    :href="_isActive ? content.trackViewUrl : undefined"
+    :href="content.trackViewUrl ? content.trackViewUrl : undefined"
     target="_blank"
   >
     <div class="tile__media">
@@ -20,12 +20,6 @@ import { Project } from "~/models/resume";
 @Component
 export default class ProjectTileView extends Vue {
   @Prop() content!: Project;
-
-  private get _isActive(): boolean {
-    return (
-      this.content.trackViewUrl != null && this.content.visibility === "public"
-    );
-  }
 
   private get _formattedDatetime(): string {
     return (

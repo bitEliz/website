@@ -26,14 +26,18 @@
         :class="mdl.id"
         :id="mdl.id"
       >
-        <template v-if="mdl.profile">
+        <template v-if="mdl.id === MDL_ID.PROFILE">
           <div class="profile__me txt-a--center">
             <el-avatar style="margin-bottom: 2rem" :size="160">
-              <img :src="mdl.profile.avatarUrl" alt="" />
+              <img :src="mdl.list[0].avatarUrl" alt="" />
             </el-avatar>
             <h1 class="txt-t--uppercase">{{ formattedName }}</h1>
-            <ul v-if="mdl.profile.social" class="list--unstyled">
-              <li v-for="(social, index) in mdl.profile.social" :key="index">
+            <ul v-if="mdl.list[0].social" class="list--unstyled">
+              <li
+                v-for="(social, index) in mdl.list[0].social"
+                :key="index"
+                class="d--inline-flex align-i--center justify-c--center"
+              >
                 <a :href="social.url">
                   <i
                     v-if="social.service && social.service.type"
@@ -47,38 +51,35 @@
           </div>
           <div
             class="profile__about"
-            v-if="mdl.profile.aboutMe"
-            :inner-html.prop="mdl.profile.aboutMe | markup"
+            v-if="mdl.list[0].aboutMe"
+            :inner-html.prop="mdl.list[0].aboutMe | markup"
           ></div>
         </template>
-        <template v-else-if="mdl.projects">
-          <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
-          <ul
-            class="d--flex flex--column md:flex--row md:flex--wrap list--unstyled"
-          >
-            <li
-              class="project__tile"
-              v-for="proj in mdl.projects"
-              :key="proj.id"
+        <template v-else-if="mdl.id === MDL_ID.PROJECT">
+          <div v-for="g in mdl.list" :key="g.id">
+            <h1 class="txt-t--uppercase">{{ g.title }}</h1>
+            <ul
+              class="d--flex flex--column md:flex--row md:flex--wrap list--unstyled"
             >
-              <v-proj-tile-view :content="proj" />
-            </li>
-          </ul>
+              <li class="project__tile" v-for="proj in g.list" :key="proj.id">
+                <v-proj-tile-view :content="proj" />
+              </li>
+            </ul>
+          </div>
         </template>
-        <template v-else-if="mdl.exp">
+        <template v-else-if="mdl.id === MDL_ID.EXPERIENCE">
           <div class="exp__wrapper d--flex flex--column sm:flex--row">
             <ul
               class="exp__item-list list--unstyled"
-              v-for="m in mdl.exp"
+              v-for="m in mdl.list"
               :key="m.id"
             >
               <h1 class="txt-t--uppercase">{{ m.title }}</h1>
-              <template v-if="m.workExps">
+              <template v-if="m.id === MDL_ID.EXPERIENCE">
                 <li
                   class="exp__item"
-                  v-for="(exp, index) in m.workExps"
+                  v-for="(exp, index) in m.list"
                   :key="index"
-                  :exp="exp"
                 >
                   <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
                   <time
@@ -97,17 +98,17 @@
                   </ul>
                 </li>
               </template>
-              <template v-if="m.eduExps">
+              <template v-if="m.id === MDL_ID.EDUCATIONAL">
                 <li
                   class="exp__item"
-                  v-for="(exp, index) in m.eduExps"
+                  v-for="(exp, index) in m.list"
                   :key="index"
-                  :exp="exp"
                 >
-                  <span class="d--flex">
+                  <h4>
                     <i class="ali degree icon" />
-                    <h4>{{ exp.field }} • {{ exp.degree }}</h4>
-                  </span>
+                    {{ exp.field }} • {{ exp.degree }}
+                  </h4>
+
                   <time
                     class="d--inline-block"
                     style="margin-bottom: 0.5rem"
@@ -120,19 +121,11 @@
             </ul>
           </div>
         </template>
-        <template v-else-if="mdl.skills">
-          <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
-          <ul class="list--unstyled">
-            <li v-for="(skill, index) in mdl.skills" :key="index">
-              {{ skill }}
-            </li>
-          </ul>
-        </template>
         <template v-else>
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
-          <ul>
-            <li v-for="(hobby, index) in mdl.hobbies" :key="index">
-              {{ hobby }}
+          <ul class="list--unstyled">
+            <li v-for="(skill, index) in mdl.list" :key="index">
+              {{ skill }}
             </li>
           </ul>
         </template>
@@ -145,20 +138,21 @@
 import { Component, Vue } from "nuxt-property-decorator";
 import ProjTile from "~/components/proj-tile.vue";
 import darkModeEnabled from "~/utils/dark-mode";
-import { isArray } from "~/utils/inspect";
-import { User, WorkExp } from "~/models/resume";
 import { resumeStore } from "~/store";
 import { Context } from "@nuxt/types";
 import ProjectTileView from "~/components/proj-tile-view.vue";
+import { ListGroup, MDL_ID } from "~/models/list-group";
 
 @Component({
+  layout: "copyright",
   components: {
     "v-proj-tile-view": ProjectTileView,
   },
 })
 export default class ResumeView extends Vue {
+  MDL_ID = MDL_ID;
 
-  get modules(): Array<object> {
+  get modules(): Array<ListGroup<any>> {
     return resumeStore.list;
   }
 
@@ -166,12 +160,14 @@ export default class ResumeView extends Vue {
     return resumeStore.formattedName;
   }
 
-  layout(context: Context) {
-    return "copyright";
-  }
-
   mounted() {
     darkModeEnabled();
+  }
+
+  head() {
+    return {
+      title: this.$config.uid.toUpperCase() + "'s RESUME"
+    }
   }
 
   async asyncData(context: Context) {
@@ -238,8 +234,7 @@ export default class ResumeView extends Vue {
 
 .main {
   .resume__module {
-    $module-spacing: $spacing;
-    padding: $module-spacing;
+    padding: $spacing;
 
     &:nth-child(even) {
       background: var(--black-025);
@@ -253,7 +248,6 @@ export default class ResumeView extends Vue {
       display: flex;
       flex-direction: column;
       @include media-breakpoint-up(sm) {
-        min-height: 100vh;
         flex-direction: row;
       }
       padding-top: 7rem;
@@ -273,10 +267,6 @@ export default class ResumeView extends Vue {
         flex-grow: 1;
 
         ul li {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-
           &:not(:last-child) {
             margin-right: $spacing;
           }
@@ -293,6 +283,13 @@ export default class ResumeView extends Vue {
     }
 
     &.projects {
+      > div:not(:first-child) {
+        @include media-breakpoint-up(sm) {
+          padding-top: 3rem;
+        }
+        padding-top: 1rem;
+      }
+
       ul {
         margin-right: -$spacing;
 
@@ -323,24 +320,24 @@ export default class ResumeView extends Vue {
       }
     }
 
-    &.experiance {
+    &.experience {
       .exp__item-list {
         flex-grow: 1;
         flex-basis: 50%;
 
         &:not(:first-child) {
-          padding-top: $module-spacing * 2;
+          padding-top: $spacing * 2;
           @include media-breakpoint-up(sm) {
             padding-top: 0;
-            padding-left: $module-spacing * 2;
+            padding-left: $spacing * 2;
           }
         }
 
         &:not(:last-child) {
-          margin-bottom: $module-spacing;
+          margin-bottom: $spacing;
           @include media-breakpoint-up(sm) {
             margin-bottom: 0;
-            margin-right: $module-spacing * 2;
+            margin-right: $spacing * 2;
           }
         }
 
