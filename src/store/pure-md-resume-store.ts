@@ -4,7 +4,7 @@ import { isString } from "~/utils/inspect";
 import { Loadable } from "~/utils/loadable";
 
 @Module({ name: "pure-md-resume-store", stateFactory: true, namespaced: true })
-export default class PureMDFileStore extends VuexModule implements Loadable {
+export default class PureMDResumeStore extends VuexModule implements Loadable {
   isLoading = false;
   markdown: string = "";
 
@@ -22,7 +22,7 @@ export default class PureMDFileStore extends VuexModule implements Loadable {
   async onLoading(ctx: Context) {
     this.setLoadingState(true);
     try {
-      let file: string = await ctx.app.$http.$get(`/static/pure-md-resume`);
+      let file: string = await ctx.app.$http.$get(`/static/pure-md-resume.md`);
       this.setMarkdown(file);
       this.setLoadingState(false);
     } catch (error) {

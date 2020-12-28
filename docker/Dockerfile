@@ -30,9 +30,6 @@ RUN mv /build/.nuxt . \
     && cp /build/package.json . \
     && cp /build/*config.* .
 
-# Copy resources
-RUN cp -r /build/public ./public
-
 # ================================
 # Run image
 # ================================
