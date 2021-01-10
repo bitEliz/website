@@ -160,14 +160,16 @@ export default class ResumeView extends Vue {
     return resumeStore.formattedName;
   }
 
-  mounted() {
-    darkModeEnabled();
-  }
-
   head() {
     return {
-      title: this.$config.uid.toUpperCase() + "'s RESUME"
+      htmlAttrs: {
+        lang: 'zh-CN'
+      }
     }
+  }
+
+  mounted() {
+    darkModeEnabled();
   }
 
   async asyncData(context: Context) {
@@ -182,6 +184,10 @@ export default class ResumeView extends Vue {
 
 <style lang="scss">
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
+
+:lang(zh) {
+  line-height: 1.6;
+}
 
 .nav {
   position: fixed;
@@ -233,6 +239,9 @@ export default class ResumeView extends Vue {
 }
 
 .main {
+  font-size: 85%;
+  color: var(--black-700);
+
   .resume__module {
     padding: $spacing;
 
