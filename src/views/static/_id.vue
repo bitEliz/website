@@ -1,5 +1,9 @@
 <template>
-    <main role="main" class="main" :inner-html.prop="markdown | markup" />
+<div id="__file">
+  <main role="main">
+    <article class="article" :inner-html.prop="markdown | markup" />
+  </main>
+</div>
 </template>
 
 <script lang="ts">
@@ -12,6 +16,14 @@ import { Context } from '@nuxt/types';
 export default class PureMDFileView extends Vue {
   get markdown(): string {
     return pureMDFileStore.markdown;
+  }
+
+  head() {
+    return {
+      htmlAttrs: {
+        lang: 'zh-CN'
+      }
+    }
   }
 
   mounted() {
@@ -29,27 +41,33 @@ export default class PureMDFileView extends Vue {
 </script>
 
 <style lang="scss">
-
-body {
-  font-size: 90%;
-  color: var(--black-900);
+:lang(zh) {
+  line-height: 1.6;
 }
 
-.main {
-  margin: 0 auto;
-  max-width: 798px;
-  padding: 5em 1rem 3em;
+#__file {
+  color: var(--black-700);
+  font-size: 85%;
 
-  h1 {
-    font-size: 3rem;
-  }
+  main {
+    margin: 0 auto;
+    max-width: 798px;
+    min-width: 320px;
+    padding: 5em 1.75rem 3em;
 
-  ul {
-    @include list-unstyled();
-  }
+    article {
+      h1 {
+        font-size: 2em; // Fix size in article.
+      }
 
-  hr {
-    margin-bottom: 1rem;
+      ul {
+        @include list-unstyled();
+      }
+    
+      hr {
+        margin-bottom: 1rem;
+      }
+    }
   }
 }
 </style>
