@@ -28,7 +28,7 @@ const nuxtConfig: NuxtConfig = {
         content: "",
       },
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
     noscript: [{ innerHTML: "This website requires JavaScript." }],
   },
 
@@ -41,8 +41,8 @@ const nuxtConfig: NuxtConfig = {
   styleResources: {
     scss: [
       "prettify/scss/_functions.scss",
-      "prettify/scss/_mixins.scss",
       "prettify/scss/_variables.scss",
+      "prettify/scss/_mixins.scss",
     ],
   },
 
@@ -95,6 +95,6 @@ const nuxtConfig: NuxtConfig = {
       compact: true,
     },
   },
-};
+}
 
 module.exports = nuxtConfig;
