@@ -282,16 +282,7 @@ export default class ResumeView extends Vue {
 
     .project__list-wrapper {
       margin: 0 auto;
-      width: 980px;
-
-      @media (max-width: 1068px) {
-        width: 692px;
-      }
-      
-      @media (max-width: 734px) {
-        max-width: 366px;
-        width: 87.5%;
-      }
+      width: 100%;
 
       .project__list {
         margin-left: 0;
@@ -300,34 +291,10 @@ export default class ResumeView extends Vue {
         display: flex;
         flex-flow: row wrap;
 
-        @media (max-width: 1068px) {
-          margin-bottom: -1.5rem;
-          margin-right: -1.5rem;
-          flex-flow: row wrap;
-        }
-
-        @media (max-width: 734px) {
-          margin-bottom: -1.5rem;
-          margin-right: 0;
-          display: flex;
-          flex-flow: column nowrap;
-        }
-
         .project__list-item {
           margin-bottom: 2.25rem;
           margin-right: 2.25rem;
-          width: calc(33.33% - 2.25rem);
-
-          @media (max-width: 1068px) {
-            margin-bottom: 1.5rem;
-            margin-right: 1.5rem;
-            width: calc(50% - 1.5rem);
-          }
-
-          @media (max-width: 734px) {
-            margin-right: 0;
-            width: 100%;
-          }
+          width: calc(100% / 3 - 2.25rem);
           
           .tile {
             padding: 2rem;
@@ -340,6 +307,39 @@ export default class ResumeView extends Vue {
               height: 5rem;
               border-radius: 8px;
             }
+          }
+        }
+      }
+
+      @media (max-width: 1068px) {
+        width: 692px;
+
+        .project__list {
+          margin-bottom: -1.5rem;
+          margin-right: -1.5rem;
+          flex-flow: row wrap;
+
+          .project__list-item {
+            margin-bottom: 1.5rem;
+            margin-right: 1.5rem;
+            width: calc(50% - 1.5rem);
+          }
+        }
+      }
+      
+      @media (max-width: 734px) {
+        max-width: 366px;
+        width: 87.5%;
+
+        .project__list {
+          margin-bottom: -1.5rem;
+          margin-right: 0;
+          display: flex;
+          flex-flow: column nowrap;
+        
+          .project__list-item {
+            margin-right: 0;
+            width: 100%;
           }
         }
       }
