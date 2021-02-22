@@ -20,19 +20,19 @@
 
     <main role="main" class="main">
       <section
-        class="resume__module"
+        class="section"
         v-for="mdl in modules"
         :key="mdl.id"
         :class="mdl.id"
         :id="mdl.id"
       >
-        <template v-if="mdl.id === MDL_ID.PROFILE">
+        <div class="section__wrapper d--flex flex--column sm:flex--row align-i--center" v-if="mdl.id === MDL_ID.PROFILE">
           <div class="profile__me txt-a--center">
             <el-avatar style="margin-bottom: 2rem" :size="160">
               <img :src="mdl.list[0].avatarUrl" alt="" />
             </el-avatar>
             <h1 class="txt-t--uppercase">{{ formattedName }}</h1>
-            <ul v-if="mdl.list[0].social" class="list--unstyled">
+            <ul v-if="mdl.list[0].social" class="list--unstyled m-b--0">
               <li
                 v-for="(social, index) in mdl.list[0].social"
                 :key="index"
@@ -54,81 +54,81 @@
             v-if="mdl.list[0].aboutMe"
             :inner-html.prop="mdl.list[0].aboutMe | markup"
           ></div>
-        </template>
+        </div>
         <template v-else-if="mdl.id === MDL_ID.PROJECT">
-          <div v-for="g in mdl.list" :key="g.id">
+          <div class="section__wrapper" v-for="g in mdl.list" :key="g.id">
             <h1 class="txt-t--uppercase">{{ g.title }}</h1>
-            <ul
-              class="d--flex flex--column md:flex--row md:flex--wrap list--unstyled"
-            >
-              <li class="project__tile" v-for="proj in g.list" :key="proj.id">
-                <v-proj-tile-view :content="proj" />
+            <div class="project__list-wrapper">
+              <ul
+                class="project__list list--unstyled"
+              >
+                <li class="project__list-item" v-for="proj in g.list" :key="proj.id">
+                  <v-proj-tile-view :content="proj" />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </template>
+        <div class="section__wrapper d--flex flex--column sm:flex--row" v-else-if="mdl.id === MDL_ID.EXPERIENCE">
+          <ul
+            class="exp__list list--unstyled"
+            v-for="m in mdl.list"
+            :key="m.id"
+          >
+            <h1 class="txt-t--uppercase">{{ m.title }}</h1>
+            <template v-if="m.id === MDL_ID.EXPERIENCE">
+              <li
+                class="exp__list-item"
+                v-for="(exp, index) in m.list"
+                :key="index"
+              >
+                <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
+                <time
+                  class="d--inline-block"
+                  style="margin-bottom: 0.5rem"
+                  :datetime="exp.startDate + '/' + exp.endDate"
+                  >{{ exp.startDate + " - " + exp.endDate }}</time
+                >
+                <ul class="list--circle-inside" v-if="exp.responsibilities">
+                  <li
+                    v-for="(responsibility, index) in exp.responsibilities"
+                    :key="index"
+                  >
+                    {{ responsibility }}
+                  </li>
+                </ul>
               </li>
-            </ul>
-          </div>
-        </template>
-        <template v-else-if="mdl.id === MDL_ID.EXPERIENCE">
-          <div class="exp__wrapper d--flex flex--column sm:flex--row">
-            <ul
-              class="exp__item-list list--unstyled"
-              v-for="m in mdl.list"
-              :key="m.id"
-            >
-              <h1 class="txt-t--uppercase">{{ m.title }}</h1>
-              <template v-if="m.id === MDL_ID.EXPERIENCE">
-                <li
-                  class="exp__item"
-                  v-for="(exp, index) in m.list"
-                  :key="index"
-                >
-                  <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
-                  <time
-                    class="d--inline-block"
-                    style="margin-bottom: 0.5rem"
-                    :datetime="exp.startDate + '/' + exp.endDate"
-                    >{{ exp.startDate + " - " + exp.endDate }}</time
-                  >
-                  <ul class="list--circle-inside" v-if="exp.responsibilities">
-                    <li
-                      v-for="(responsibility, index) in exp.responsibilities"
-                      :key="index"
-                    >
-                      {{ responsibility }}
-                    </li>
-                  </ul>
-                </li>
-              </template>
-              <template v-if="m.id === MDL_ID.EDUCATIONAL">
-                <li
-                  class="exp__item"
-                  v-for="(exp, index) in m.list"
-                  :key="index"
-                >
-                  <h4>
-                    <i class="ali degree icon" />
-                    {{ exp.field }} • {{ exp.degree }}
-                  </h4>
+            </template>
+            <template v-if="m.id === MDL_ID.EDUCATIONAL">
+              <li
+                class="exp__list-item"
+                v-for="(exp, index) in m.list"
+                :key="index"
+              >
+                <h4>
+                  <i class="ali degree icon" />
+                  {{ exp.field }} • {{ exp.degree }}
+                </h4>
 
-                  <time
-                    class="d--inline-block"
-                    style="margin-bottom: 0.5rem"
-                    :datetime="exp.startYear + '/' + exp.endYear"
-                    >{{ exp.startYear + " - " + exp.endYear }}</time
-                  >
-                  <h5>{{ exp.school }}</h5>
-                </li>
-              </template>
-            </ul>
-          </div>
-        </template>
-        <template v-else>
+                <time
+                  class="d--inline-block"
+                  style="margin-bottom: 0.5rem"
+                  :datetime="exp.startYear + '/' + exp.endYear"
+                  >{{ exp.startYear + " - " + exp.endYear }}</time
+                >
+                <h5>{{ exp.school }}</h5>
+              </li>
+            </template>
+          </ul>
+        </div>
+        <div class="section__wrapper" v-else>
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <ul class="list--unstyled">
             <li v-for="(skill, index) in mdl.list" :key="index">
               {{ skill }}
             </li>
           </ul>
-        </template>
+        </div>
       </section>
     </main>
   </div>
@@ -136,7 +136,6 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import ProjTile from "~/components/proj-tile.vue";
 import darkModeEnabled from "~/utils/dark-mode";
 import { resumeStore } from "~/store";
 import { Context } from "@nuxt/types";
@@ -189,92 +188,86 @@ export default class ResumeView extends Vue {
   line-height: 1.6;
 }
 
-.nav {
-  position: fixed;
-  width: 100%;
-  padding: 0 1rem;
-  background: var(--white);
-  z-index: $zindex-fixed;
-  box-shadow: var(--shadow-sm);
+#__cv {
 
-  .nav__logo {
-    padding: 1em 0;
-  }
+  .nav {
+    position: fixed;
+    width: 100%;
+    padding: 0 1rem;
+    background: var(--white);
+    z-index: $zindex-fixed;
+    box-shadow: var(--shadow-sm);
 
-  .nav__menu-toggle {
-    width: 21px;
-    height: 21px;
-    background: no-repeat url(~@/assets/img/close.svg);
-    border-color: transparent;
-
-    &.collapsed {
-      background: no-repeat url(~@/assets/img/menu.svg);
+    .nav__logo {
+      padding: 1em 0;
     }
-  }
 
-  .nav__item-list {
-    & > :not(:last-child) {
-      border-right-color: transparent;
-      @include media-breakpoint-up(sm) {
-        border-right: 1px solid var(--black-100);
+    .nav__menu-toggle {
+      width: 21px;
+      height: 21px;
+      background: no-repeat url(~@/assets/img/close.svg);
+      border-color: transparent;
+
+      &.collapsed {
+        background: no-repeat url(~@/assets/img/menu.svg);
       }
     }
 
-    .nav__link {
-      text-transform: uppercase;
-      @include media-breakpoint-up(sm) {
-        padding: 0 $nav-link-padding-x;
-      }
-      color: var(--black-400);
-
-      &:hover {
-        color: var(--powder-400);
+    .nav__item-list {
+      & > :not(:last-child) {
+        border-right-color: transparent;
+        @include media-breakpoint-up(sm) {
+          border-right: 1px solid var(--black-100);
+        }
       }
 
-      &.active {
-        color: var(--black);
+      .nav__link {
+        text-transform: uppercase;
+        @include media-breakpoint-up(sm) {
+          padding: 0 $nav-link-padding-x;
+        }
+        color: var(--black-400);
+
+        &:hover {
+          color: var(--powder-400);
+        }
+
+        &.active {
+          color: var(--black);
+        }
       }
     }
   }
-}
 
-.main {
-  font-size: 85%;
-  color: var(--black-700);
+  .section {
+    font-size: 85%;
+    color: var(--black-700);
 
-  .resume__module {
-    padding: $spacing;
+    .section__wrapper {
+      margin: 0 auto;
+      padding: 1rem;
+      max-width: 980px;
+    }
 
     &:nth-child(even) {
       background: var(--black-025);
     }
 
-    @include media-breakpoint-up(sm) {
-      padding: 4rem 8rem;
-    }
-
     &.profile {
-      display: flex;
-      flex-direction: column;
-      @include media-breakpoint-up(sm) {
-        flex-direction: row;
-      }
-      padding-top: 7rem;
-      align-items: center;
+      .section__wrapper {
+        padding-top: 7rem;
 
-      & > div:not(:first-child) {
-        margin-left: 0;
-        margin-top: $spacing;
-        @include media-breakpoint-up(sm) {
-          margin-left: $spacing;
-          margin-top: 0;
+        & > div:not(:first-child) {
+          margin-left: 0;
+          margin-top: $spacing;
+          @include media-breakpoint-up(sm) {
+            margin-left: 4rem;
+            margin-top: 0;
+          }
         }
-      }
+      }     
 
       .profile__me {
-        align-items: center;
-        flex-grow: 1;
-
         ul li {
           &:not(:last-child) {
             margin-right: $spacing;
@@ -285,39 +278,62 @@ export default class ResumeView extends Vue {
           }
         }
       }
-
-      .profile__about {
-        flex-basis: 66.66667%;
-      }
     }
 
-    &.projects {
-      > div:not(:first-child) {
-        @include media-breakpoint-up(sm) {
-          padding-top: 3rem;
-        }
-        padding-top: 1rem;
+    .project__list-wrapper {
+      margin: 0 auto;
+      width: 980px;
+
+      @media (max-width: 1068px) {
+        width: 692px;
+      }
+      
+      @media (max-width: 734px) {
+        max-width: 366px;
+        width: 87.5%;
       }
 
-      ul {
-        margin-right: -$spacing;
+      .project__list {
+        margin-left: 0;
+        margin-bottom: -2.25rem;
+        margin-right: -2.25rem;
+        display: flex;
+        flex-flow: row wrap;
 
-        .project__tile {
-          padding-right: $spacing;
+        @media (max-width: 1068px) {
+          margin-bottom: -1.5rem;
+          margin-right: -1.5rem;
+          flex-flow: row wrap;
+        }
 
-          @include media-breakpoint-down(md) {
-            padding-bottom: $spacing;
+        @media (max-width: 734px) {
+          margin-bottom: -1.5rem;
+          margin-right: 0;
+          display: flex;
+          flex-flow: column nowrap;
+        }
+
+        .project__list-item {
+          margin-bottom: 2.25rem;
+          margin-right: 2.25rem;
+          width: calc(33.33% - 2.25rem);
+
+          @media (max-width: 1068px) {
+            margin-bottom: 1.5rem;
+            margin-right: 1.5rem;
+            width: calc(50% - 1.5rem);
           }
 
-          @include media-breakpoint-up(md) {
-            flex-basis: 33.33%;
+          @media (max-width: 734px) {
+            margin-right: 0;
+            width: 100%;
           }
-
+          
           .tile {
-            height: 100%;
             padding: 2rem;
             padding-bottom: 1rem;
             color: inherit;
+            height: 100%;
 
             .tile__media .el-image {
               width: 5rem;
@@ -329,31 +345,28 @@ export default class ResumeView extends Vue {
       }
     }
 
-    &.experience {
-      .exp__item-list {
-        flex-grow: 1;
-        flex-basis: 50%;
+    .exp__list {
+      flex-basis: 50%;
 
-        &:not(:first-child) {
-          padding-top: $spacing * 2;
-          @include media-breakpoint-up(sm) {
-            padding-top: 0;
-            padding-left: $spacing * 2;
-          }
+      &:not(:first-child) {
+        padding-top: $spacing * 2;
+        @include media-breakpoint-up(sm) {
+          padding-top: 0;
+          padding-left: $spacing * 2;
         }
+      }
 
+      &:not(:last-child) {
+        margin-bottom: $spacing;
+        @include media-breakpoint-up(sm) {
+          margin-bottom: 0;
+          margin-right: $spacing * 2;
+        }
+      }
+
+      .exp__list-item {
         &:not(:last-child) {
-          margin-bottom: $spacing;
-          @include media-breakpoint-up(sm) {
-            margin-bottom: 0;
-            margin-right: $spacing * 2;
-          }
-        }
-
-        .exp__item {
-          &:not(:last-child) {
-            margin-bottom: $spacing * 2;
-          }
+          margin-bottom: $spacing * 2;
         }
       }
     }
