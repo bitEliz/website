@@ -1,48 +1,42 @@
 <template>
   <div id="app" class="blog">
     <main role="main">
-      <section class="blog__lastest" v-if="latestBlog.length">
+      <section v-if="latestBlog.length" class="blog__lastest">
         <div class="wrapper">
           <h1>Latest Blog</h1>
           <ul
             class="blog__item-list list--unstyled d--flex flex--column sm:flex--row sm:flex--wrap"
           >
             <li
-              class="blog__item"
               v-for="(blog, index) in latestBlog"
               :key="blog.id"
+              class="blog__item"
               :class="index === 0 ? 'f-b--100' : index > 2 ? 'f-b--1/3' : ''"
             >
               <BlogTileView
                 :blog="blog"
                 :vertical="index !== 0"
-                :aspectRatio="
-                  index === 0 ? 'padding-top: 37.5%' : undefined
-                "
+                :aspect-ratio="index === 0 ? 'padding-top: 37.5%' : undefined"
               />
             </li>
           </ul>
         </div>
       </section>
-      <section class="blog__featured" v-if="featuredBlog.length">
+      <section v-if="featuredBlog.length" class="blog__featured">
         <h1>Featured Blog</h1>
       </section>
-      <section class="blog__more--trunked" v-if="trunkedBlog.length">
+      <section v-if="trunkedBlog.length" class="blog__more--trunked">
         <div class="wrapper">
           <h1>More Blog</h1>
           <ul
             class="blog__item-list list--unstyled d--flex flex--column sm:flex--row flex--wrap"
             style="margin-bottom: 0"
           >
-            <li
-              class="blog__item"
-              v-for="blog in trunkedBlog"
-              :key="blog.id"
-            >
+            <li v-for="blog in trunkedBlog" :key="blog.id" class="blog__item">
               <BlogTileView
                 :blog="blog"
                 :vertical="false"
-                :aspectRatio="'padding-top: 28.88%'"
+                :aspect-ratio="'padding-top: 28.88%'"
               />
             </li>
           </ul>
@@ -88,12 +82,12 @@ export default class BlogListView extends Vue {
 </script>
 
 <style lang="scss">
-
 .blog {
   background: var(--black-025);
 
   .blog__item-list {
     $blog__item-padding: 2rem;
+
     margin-right: -$blog__item-padding;
 
     .blog__item {

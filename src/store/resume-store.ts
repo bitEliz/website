@@ -33,7 +33,7 @@ export default class ResumeStore extends VuexModule implements Loadable {
   async onLoading(context: Context) {
     this.setLoadingState(true);
     try {
-      let user: User = await context.app.$http.$get(
+      const user: User = await context.app.$http.$get(
         `/users/${context.$config.uid}/resume`
       );
       this.setUser(user);
@@ -50,7 +50,7 @@ const PROJ_VISIBILITY_PUBLIC = "public";
 const GITHUB = "github.com";
 
 const _fillList = (arg?: User) => {
-  let result = Array<ListGroup<any>>();
+  const result: ListGroup<any>[] = [];
 
   if (!arg) {
     return result;
@@ -67,7 +67,7 @@ const _fillList = (arg?: User) => {
     // Only `proj.visibility` marked as `public` can pass filter.
     if (proj.visibility === PROJ_VISIBILITY_PUBLIC) {
       // All github repo project are marked as open source proj.
-      if (proj.trackViewUrl && proj.trackViewUrl?.indexOf(GITHUB) != -1) {
+      if (proj.trackViewUrl && proj.trackViewUrl?.indexOf(GITHUB) !== -1) {
         githubList.push(proj);
       } else {
         otherList.push(proj);
@@ -75,7 +75,7 @@ const _fillList = (arg?: User) => {
     }
   });
 
-  const proj = [];
+  const proj: ListGroup<Project>[] = [];
 
   if (githubList.length) {
     proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", githubList));
@@ -89,7 +89,7 @@ const _fillList = (arg?: User) => {
     result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj));
   }
 
-  let exp = [];
+  const exp: ListGroup<any>[] = [];
   if (user.workExps?.length) {
     exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.workExps));
   }

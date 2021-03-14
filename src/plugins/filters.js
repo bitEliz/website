@@ -3,12 +3,12 @@ import marked from "marked";
 import PR from "highlight.js";
 
 PR.configure({
-  classPrefix: 'prettyprint__'
+  classPrefix: "prettyprint__",
 });
 
 function markup(markdown) {
   const options = {
-    highlight: function (code, lang) {
+    highlight(code, lang) {
       return PR.highlight(lang, code).value;
     },
     langPrefix: "hljs prettyprint language-",

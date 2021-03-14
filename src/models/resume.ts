@@ -1,22 +1,5 @@
 import { Model } from "./model";
 
-export class User extends Model<string> {
-  id!: string;
-  emailAddress?: string;
-  eduExps?: EducationalExp[];
-  firstName!: string;
-  projects?: Project[];
-  workExps?: WorkExp[];
-  lastName!: string;
-  social?: SocialNetwork[];
-  skill?: Skill;
-  avatarUrl?: string;
-  location?: string;
-  username?: string;
-  interests?: string[];
-  aboutMe?: string;
-}
-
 export class Project extends Model<string> {
   summary!: string;
   trackViewUrl?: string;
@@ -37,16 +20,16 @@ export class Skill extends Model<string> {
   workflow?: string[];
 }
 
+export class SocialNetworkService extends Model<string> {
+  id!: string;
+  type!: string;
+}
+
 export class SocialNetwork extends Model<string> {
   id!: string;
   userId!: string;
   url!: string;
   service!: SocialNetworkService;
-}
-
-export class SocialNetworkService extends Model<string> {
-  id!: string;
-  type!: string;
 }
 
 export class Industry extends Model<string> {
@@ -75,4 +58,21 @@ export class WorkExp extends Model<string> {
   companyName!: string;
   industry!: Industry[];
   headline?: string;
+}
+
+export class User extends Model<string> {
+  id!: string;
+  emailAddress?: string;
+  eduExps?: EducationalExp[];
+  firstName!: string;
+  projects?: Project[];
+  workExps?: WorkExp[];
+  lastName!: string;
+  social?: SocialNetwork[];
+  skill?: Skill;
+  avatarUrl?: string;
+  location?: string;
+  username?: string;
+  interests?: string[];
+  aboutMe?: string;
 }

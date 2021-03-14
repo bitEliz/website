@@ -18,8 +18,7 @@
     >
       <div class="txt-a--center">
         <h1 class="localized-error__name">Whoops, {{ error.message }}.</h1>
-        <p class="localized-error__description">
-        </p>
+        <p class="localized-error__description"></p>
         <h1 class="localized-error__code">{{ error.statusCode }}</h1>
       </div>
     </main>

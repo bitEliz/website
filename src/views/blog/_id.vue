@@ -3,8 +3,8 @@
     <article v-if="blog" class="blog">
       <v-blog-header-view :blog="blog" />
       <div
-        class="blog__body"
         v-if="blog.content"
+        class="blog__body"
         :inner-html.prop="blog.content | markup"
       ></div>
     </article>

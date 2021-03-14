@@ -1,4 +1,4 @@
-import { Article } from './article';
+import { Article } from "./article";
 import { Model } from "./model";
 
 export class Blog extends Model<string> implements Article {

@@ -8,7 +8,7 @@
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
     "lint:js": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore .",
-    "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
+    "lint:style": "stylelint \"**/*.{vue,css,scss}\" --ignore-path .gitignore",
     "lint": "yarn lint:js && yarn lint:style"
   },
   "gitHooks": {
@@ -16,7 +16,7 @@
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint",
-    "*.{scss,vue}": "stylelint"
+    "*.{css,scss,vue}": "stylelint"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.1",
@@ -50,6 +50,7 @@
     "sass-loader": "^10.1.0",
     "stylelint": "^13.12.0",
     "stylelint-config-prettier": "^8.0.2",
-    "stylelint-config-standard": "^21.0.0"
+    "stylelint-config-standard": "^21.0.0",
+    "stylelint-scss": "^3.19.0"
   }
 }

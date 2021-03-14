@@ -16,10 +16,10 @@
         >
           <div class="tag__list">
             <span
-              class="tag"
-              style="margin-right: 0.5rem"
               v-for="tag in blog.tags"
               :key="tag"
+              class="tag"
+              style="margin-right: 0.5rem"
               >{{ tag }}</span
             >
           </div>
@@ -27,8 +27,8 @@
         </div>
       </div>
       <div
-        class="blog__excerpt"
         v-if="blog.excerpt"
+        class="blog__excerpt"
         :inner-html.prop="blog.excerpt | markup"
       ></div>
     </div>

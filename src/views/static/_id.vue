@@ -1,16 +1,16 @@
 <template>
-<div id="__file">
-  <main>
-    <article :inner-html.prop="markdown | markup" />
-  </main>
-</div>
+  <div id="__file">
+    <main>
+      <article :inner-html.prop="markdown | markup" />
+    </main>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
 import darkModeEnabled from "@/utils/dark-mode";
+import { Context } from "@nuxt/types";
 import { pureMDFileStore } from "~/store";
-import { Context } from '@nuxt/types';
 
 @Component
 export default class PureMDFileView extends Vue {
@@ -21,9 +21,9 @@ export default class PureMDFileView extends Vue {
   head() {
     return {
       htmlAttrs: {
-        lang: 'zh-CN'
-      }
-    }
+        lang: "zh-CN",
+      },
+    };
   }
 
   mounted() {
@@ -63,7 +63,7 @@ export default class PureMDFileView extends Vue {
       ul {
         @include list-unstyled();
       }
-    
+
       hr {
         margin-bottom: 1rem;
       }

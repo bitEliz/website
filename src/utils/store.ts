@@ -5,6 +5,7 @@ import BlogListStore from "~/store/blog-list-store";
 import PureMDFileStore from "~/store/pure-md-file-store";
 import ResumeStore from "~/store/resume-store";
 
+/* eslint-disable import/no-mutable-exports */
 let blogStore: BlogStore;
 let blogListStore: BlogListStore;
 let pureMDFileStore: PureMDFileStore;
@@ -17,10 +18,4 @@ function typedStore(store: Store<any>): void {
   resumeStore = getModule(ResumeStore, store);
 }
 
-export {
-  typedStore,
-  blogListStore,
-  blogStore,
-  pureMDFileStore,
-  resumeStore
-};
+export { typedStore, blogListStore, blogStore, pureMDFileStore, resumeStore };

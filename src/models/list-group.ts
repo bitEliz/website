@@ -1,3 +1,12 @@
+export enum MDL_ID {
+  DEFAULT = "",
+  PROJECT = "projects",
+  PROFILE = "profile",
+  EXPERIENCE = "experience",
+  EDUCATIONAL = "educational",
+  SKILL = "skills",
+}
+
 export class ListGroup<T> {
   id: MDL_ID;
   title: string;
@@ -8,13 +17,4 @@ export class ListGroup<T> {
     this.title = title ?? "";
     this.list = list ?? [];
   }
-}
-
-export enum MDL_ID {
-  DEFAULT = "",
-  PROJECT = "projects",
-  PROFILE = "profile",
-  EXPERIENCE = "experience",
-  EDUCATIONAL = "educational",
-  SKILL = "skills"
 }

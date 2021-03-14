@@ -22,7 +22,7 @@ export default class PureMDFileStore extends VuexModule implements Loadable {
   async onLoading(ctx: Context) {
     this.setLoadingState(true);
     try {
-      let file: string = await ctx.app.$http.$get(`/static/${ctx.params.id}`);
+      const file: string = await ctx.app.$http.$get(`/static/${ctx.params.id}`);
       this.setMarkdown(file);
       this.setLoadingState(false);
     } catch (error) {

@@ -3,10 +3,10 @@
     <nav class="nav sm:nav--expand">
       <div class="wrapper--fluid">
         <div class="nav__logo">{{ formattedName }}</div>
-        <button class="nav__menu-toggle" v-b-toggle.collapse></button>
+        <button v-b-toggle.collapse class="nav__menu-toggle"></button>
         <b-collapse id="collapse" class="nav__collapse justify--flex-end">
-          <ul class="nav__item-list" v-b-scrollspy="44">
-            <li class="nav__item nav-item" v-for="mdl in modules" :key="mdl.id">
+          <ul v-b-scrollspy="44" class="nav__item-list">
+            <li v-for="mdl in modules" :key="mdl.id" class="nav__item nav-item">
               <a class="nav__link nav-link" :href="'#' + mdl.id">{{
                 mdl.title
               }}</a>
@@ -19,13 +19,20 @@
     <main>
       <section
         v-for="mdl in modules"
+        :id="mdl.id"
         :key="mdl.id"
         :class="mdl.id"
-        :id="mdl.id"
       >
-        <div class="section__wrapper d--flex flex--column sm:flex--row align-i--center" v-if="mdl.id === MDL_ID.PROFILE">
+        <div
+          v-if="mdl.id === MDL_ID.PROFILE"
+          class="section__wrapper d--flex flex--column sm:flex--row align-i--center"
+        >
           <div class="profile__me txt-a--center">
-            <b-img-lazy class="profile__avatar" :src="mdl.list[0].avatarUrl" alt="User Avatar" />
+            <b-img-lazy
+              class="profile__avatar"
+              :src="mdl.list[0].avatarUrl"
+              alt="User Avatar"
+            />
             <h1 class="txt-t--uppercase">{{ formattedName }}</h1>
             <ul v-if="mdl.list[0].social" class="list--unstyled m-b--0">
               <li
@@ -45,37 +52,42 @@
             </ul>
           </div>
           <div
-            class="profile__about"
             v-if="mdl.list[0].aboutMe"
+            class="profile__about"
             :inner-html.prop="mdl.list[0].aboutMe | markup"
           ></div>
         </div>
         <template v-else-if="mdl.id === MDL_ID.PROJECT">
-          <div class="section__wrapper" v-for="g in mdl.list" :key="g.id">
+          <div v-for="g in mdl.list" :key="g.id" class="section__wrapper">
             <h1 class="txt-t--uppercase">{{ g.title }}</h1>
             <div class="project__list-wrapper">
-              <ul
-                class="project__list list--unstyled"
-              >
-                <li class="project__list-item" v-for="proj in g.list" :key="proj.id">
+              <ul class="project__list list--unstyled">
+                <li
+                  v-for="proj in g.list"
+                  :key="proj.id"
+                  class="project__list-item"
+                >
                   <v-proj-tile-view :content="proj" />
                 </li>
               </ul>
             </div>
           </div>
         </template>
-        <div class="section__wrapper d--flex flex--column sm:flex--row" v-else-if="mdl.id === MDL_ID.EXPERIENCE">
+        <div
+          v-else-if="mdl.id === MDL_ID.EXPERIENCE"
+          class="section__wrapper d--flex flex--column sm:flex--row"
+        >
           <ul
-            class="exp__list list--unstyled"
             v-for="m in mdl.list"
             :key="m.id"
+            class="exp__list list--unstyled"
           >
             <h1 class="txt-t--uppercase">{{ m.title }}</h1>
             <template v-if="m.id === MDL_ID.EXPERIENCE">
               <li
-                class="exp__list-item"
                 v-for="(exp, index) in m.list"
                 :key="index"
+                class="exp__list-item"
               >
                 <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
                 <time
@@ -84,10 +96,10 @@
                   :datetime="exp.startDate + '/' + exp.endDate"
                   >{{ exp.startDate + " - " + exp.endDate }}</time
                 >
-                <ul class="list--circle-inside" v-if="exp.responsibilities">
+                <ul v-if="exp.responsibilities" class="list--circle-inside">
                   <li
-                    v-for="(responsibility, index) in exp.responsibilities"
-                    :key="index"
+                    v-for="(responsibility, idx) in exp.responsibilities"
+                    :key="idx"
                   >
                     {{ responsibility }}
                   </li>
@@ -96,9 +108,9 @@
             </template>
             <template v-if="m.id === MDL_ID.EDUCATIONAL">
               <li
-                class="exp__list-item"
                 v-for="(exp, index) in m.list"
                 :key="index"
+                class="exp__list-item"
               >
                 <h4>
                   <i class="ali degree icon" />
@@ -116,7 +128,7 @@
             </template>
           </ul>
         </div>
-        <div class="section__wrapper" v-else>
+        <div v-else class="section__wrapper">
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <ul class="list--unstyled">
             <li v-for="(skill, index) in mdl.list" :key="index">
@@ -131,9 +143,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
+import { Context } from "@nuxt/types";
 import darkModeEnabled from "~/utils/dark-mode";
 import { resumeStore } from "~/store";
-import { Context } from "@nuxt/types";
 import ProjectTileView from "~/components/proj-tile-view.vue";
 import { ListGroup, MDL_ID } from "~/models/list-group";
 
@@ -157,9 +169,9 @@ export default class ResumeView extends Vue {
   head() {
     return {
       htmlAttrs: {
-        lang: 'zh-CN'
-      }
-    }
+        lang: "zh-CN",
+      },
+    };
   }
 
   mounted() {
@@ -184,7 +196,6 @@ export default class ResumeView extends Vue {
 }
 
 #__cv {
-
   .nav {
     top: 0;
     position: sticky;
@@ -224,6 +235,7 @@ export default class ResumeView extends Vue {
         @include media-breakpoint-up(sm) {
           padding: 0 $nav-link-padding-x;
         }
+
         color: var(--black-400);
 
         &:hover {
@@ -252,7 +264,6 @@ export default class ResumeView extends Vue {
     }
 
     &.profile {
-
       .section__wrapper {
         & > div:not(:first-child) {
           margin-left: 0;
@@ -273,7 +284,6 @@ export default class ResumeView extends Vue {
       }
 
       .profile__me {
-
         ul li {
           &:not(:last-child) {
             margin-right: $spacing;
@@ -301,7 +311,7 @@ export default class ResumeView extends Vue {
           margin-bottom: 2.25rem;
           margin-right: 2.25rem;
           width: calc(100% / 3 - 2.25rem);
-          
+
           .tile {
             padding: 2rem;
             padding-bottom: 1rem;
@@ -332,7 +342,7 @@ export default class ResumeView extends Vue {
           }
         }
       }
-      
+
       @media (max-width: 734px) {
         max-width: 366px;
         width: 87.5%;
@@ -342,7 +352,7 @@ export default class ResumeView extends Vue {
           margin-right: 0;
           display: flex;
           flex-flow: column nowrap;
-        
+
           .project__list-item {
             margin-right: 0;
             width: 100%;

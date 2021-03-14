@@ -36,10 +36,7 @@ const nuxtConfig: NuxtConfig = {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [
-    "prettify/scss/prettify.scss",
-    "~/assets/scss/hl.scss"
-  ],
+  css: ["prettify/scss/prettify.scss", "~/assets/scss/hl.scss"],
 
   styleResources: {
     scss: [
@@ -81,11 +78,7 @@ const nuxtConfig: NuxtConfig = {
     css: false,
     bvCSS: false,
     icons: false,
-    componentPlugins: [
-      "AvatarPlugin",
-      "CollapsePlugin",
-      "ImagePlugin"
-    ],
+    componentPlugins: ["AvatarPlugin", "CollapsePlugin", "ImagePlugin"],
     directivePlugins: ["VBScrollspyPlugin"],
   },
 
@@ -101,6 +94,6 @@ const nuxtConfig: NuxtConfig = {
       compact: true,
     },
   },
-}
+};
 
 module.exports = nuxtConfig;

@@ -5,12 +5,13 @@ import { NuxtAxiosInstance } from "@nuxtjs/axios";
 export default (ctx: Context, inject: Inject) => {
   const http = ctx.$axios.create() as NuxtAxiosInstance;
 
-  http.onRequest((config) => {
-    console.log(`${config.method?.toUpperCase()} ${config.url}`);
-  });
+  // http.onRequest((config) => {
+  // console.log(`${config.method?.toUpperCase()} ${config.url}`);
+  // });
 
   http.onError((error) =>
-  // Rebuild error to nuxt error.
+    // Rebuild error to nuxt error.
+    /* eslint-disable-next-line prefer-promise-reject-errors */
     Promise.reject({
       message: error.message,
       statusCode: error.response?.status,
@@ -18,4 +19,4 @@ export default (ctx: Context, inject: Inject) => {
   );
 
   inject("http", http);
-}
+};

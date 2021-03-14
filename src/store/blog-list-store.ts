@@ -1,7 +1,7 @@
 import { Context } from "@nuxt/types";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import { Blog, BlogGroup } from "~/models/blog";
 import { Loadable } from "../utils/loadable";
+import { Blog, BlogGroup } from "~/models/blog";
 
 @Module({ name: "blog-list-store", stateFactory: true, namespaced: true })
 export default class BlogListStore extends VuexModule implements Loadable {
@@ -37,7 +37,7 @@ export default class BlogListStore extends VuexModule implements Loadable {
   async onLoading(context: Context): Promise<void> {
     this.setLoadingState(true);
     try {
-      let blogGroup: BlogGroup = await context.app.$http.$get(
+      const blogGroup: BlogGroup = await context.app.$http.$get(
         `users/${context.$config.uid}/blog`
       );
       this.setLatestBlog(blogGroup.latestBlog);

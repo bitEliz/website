@@ -1,10 +1,10 @@
 // Dark mode adapter
 const darkModeEnabled = () => {
-  var forceSetting = localStorage.getItem("forceDarkModeOn");
-  var browserPrefersDark =
+  const forceSetting = localStorage.getItem("forceDarkModeOn");
+  const browserPrefersDark =
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches;
-  var darkModeEnabled =
+  const darkModeEnabled =
     forceSetting === "true" || (!forceSetting && browserPrefersDark);
 
   if (browserPrefersDark) {
