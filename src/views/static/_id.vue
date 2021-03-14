@@ -18,14 +18,6 @@ export default class PureMDFileView extends Vue {
     return pureMDFileStore.markdown;
   }
 
-  head() {
-    return {
-      htmlAttrs: {
-        lang: "zh-CN",
-      },
-    };
-  }
-
   mounted() {
     darkModeEnabled();
   }

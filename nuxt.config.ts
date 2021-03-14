@@ -1,7 +1,6 @@
 import { NuxtConfig } from "@nuxt/types";
 
 const __url = process.env.BASE_URL || "http://localhost:8080";
-const __uid = process.env.USER_ID || "dev";
 
 const nuxtConfig: NuxtConfig = {
   globalName: "rt",
@@ -11,12 +10,11 @@ const nuxtConfig: NuxtConfig = {
   },
   publicRuntimeConfig: {
     baseURL: __url,
-    uid: __uid,
+    uid: process.env.USER_ID || "dev",
   },
   privateRuntimeConfig: {},
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: __uid.toUpperCase(),
     titleTemplate: `%s`,
     htmlAttrs: {
       lang: "zh-CN",

@@ -13,9 +13,13 @@ export default class ResumeStore extends VuexModule implements Loadable {
     return _fillList(this._user);
   }
 
+  get formattedTitle(): string {
+    return this._user?.username ? this._user.username.toUpperCase() : "";
+  }
+
   get formattedName(): string {
-    const lastName = this._user?.lastName ? this._user.lastName : "";
-    const firstName = this._user?.firstName ? this._user.firstName : "";
+    const lastName = this._user?.lastName ?? "";
+    const firstName = this._user?.firstName ?? "";
     return lastName + firstName;
   }
 

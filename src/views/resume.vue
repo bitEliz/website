@@ -168,6 +168,7 @@ export default class ResumeView extends Vue {
 
   head() {
     return {
+      title: resumeStore.formattedTitle,
       htmlAttrs: {
         lang: "zh-CN",
       },
