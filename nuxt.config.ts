@@ -18,6 +18,9 @@ const nuxtConfig: NuxtConfig = {
   head: {
     title: __uid.toUpperCase(),
     titleTemplate: `%s`,
+    htmlAttrs: {
+      lang: "zh-CN",
+    },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
