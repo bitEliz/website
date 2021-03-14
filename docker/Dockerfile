@@ -12,14 +12,16 @@ RUN apk --update add git less openssh \
 WORKDIR /build
 
 # First just resolve dependencies.
-COPY ./package*.json ./
-RUN npm install
+COPY package.json .
+COPY yarn.lock .
+
+RUN yarn install
 
 # Copy entire repo into container
 COPY . .
 
 # Build everything
-RUN npm run build
+RUN yarn build
 
 # Switch to the staging area
 WORKDIR /staging
@@ -28,7 +30,8 @@ WORKDIR /staging
 RUN mv /build/.nuxt . \
     && cp -r /build/node_modules . \
     && cp /build/package.json . \
-    && cp /build/*config.* .
+    && cp /build/nuxt.config.ts . \
+    && cp /build/tsconfig.json .
 
 # ================================
 # Run image
@@ -62,4 +65,4 @@ ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 
 # Start the Nuxt service when the image is run, default to listening on 3000 in production environment
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
