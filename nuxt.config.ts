@@ -35,7 +35,7 @@ const nuxtConfig: NuxtConfig = {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     "prettify/scss/prettify.scss",
-    "~/assets/scss/hl.scss",
+    "~/assets/scss/hl.scss"
   ],
 
   styleResources: {
@@ -47,7 +47,7 @@ const nuxtConfig: NuxtConfig = {
   },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ["~/plugins/element-ui", "~/plugins/filters", "~/plugins/http"],
+  plugins: ["~/plugins/filters", "~/plugins/http"],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -78,7 +78,11 @@ const nuxtConfig: NuxtConfig = {
     css: false,
     bvCSS: false,
     icons: false,
-    componentPlugins: ["CollapsePlugin"],
+    componentPlugins: [
+      "AvatarPlugin",
+      "CollapsePlugin",
+      "ImagePlugin"
+    ],
     directivePlugins: ["VBScrollspyPlugin"],
   },
 
@@ -89,7 +93,6 @@ const nuxtConfig: NuxtConfig = {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    transpile: [/^element-ui/],
     babel: {
       configFile: true,
       compact: true,

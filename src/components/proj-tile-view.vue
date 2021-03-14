@@ -5,7 +5,7 @@
     target="_blank"
   >
     <div class="tile__media">
-      <el-image :src="content.artworkUrl" fit="fit" lazy></el-image>
+      <b-img-lazy :src="content.artworkUrl" fit="fit" />
     </div>
     <div class="tile__description d--flex flex--column justfy--space-between">
       <div class="tile__excerpt" :inner-html.prop="content.summary | markup" />

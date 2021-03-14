@@ -308,7 +308,7 @@ export default class ResumeView extends Vue {
             color: inherit;
             height: 100%;
 
-            .tile__media .el-image {
+            .tile__media img {
               width: 5rem;
               height: 5rem;
               border-radius: 8px;

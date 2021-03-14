@@ -9,7 +9,7 @@
       class="tile__media"
       :style="aspectRatio ? aspectRatio : ''"
     >
-      <el-image :src="blog.artworkUrl" />
+      <b-img-lazy :src="blog.artworkUrl" />
     </div>
 
     <div
