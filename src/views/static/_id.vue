@@ -1,7 +1,7 @@
 <template>
 <div id="__file">
-  <main role="main">
-    <article class="article" :inner-html.prop="markdown | markup" />
+  <main>
+    <article :inner-html.prop="markdown | markup" />
   </main>
 </div>
 </template>

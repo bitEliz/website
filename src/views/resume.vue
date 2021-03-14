@@ -1,13 +1,11 @@
 <template>
   <div id="__cv">
-    <nav role="nav" class="nav sm:nav--expand">
+    <nav class="nav sm:nav--expand">
       <div class="wrapper--fluid">
-        <div class="nav__logo">
-          <span>{{ formattedName }}</span>
-        </div>
+        <div class="nav__logo">{{ formattedName }}</div>
         <button class="nav__menu-toggle" v-b-toggle.collapse></button>
         <b-collapse id="collapse" class="nav__collapse justify--flex-end">
-          <ul class="nav__item-list" v-b-scrollspy>
+          <ul class="nav__item-list" v-b-scrollspy="44">
             <li class="nav__item nav-item" v-for="mdl in modules" :key="mdl.id">
               <a class="nav__link nav-link" :href="'#' + mdl.id">{{
                 mdl.title
@@ -18,9 +16,8 @@
       </div>
     </nav>
 
-    <main role="main" class="main">
+    <main>
       <section
-        class="section"
         v-for="mdl in modules"
         :key="mdl.id"
         :class="mdl.id"
@@ -28,9 +25,7 @@
       >
         <div class="section__wrapper d--flex flex--column sm:flex--row align-i--center" v-if="mdl.id === MDL_ID.PROFILE">
           <div class="profile__me txt-a--center">
-            <el-avatar style="margin-bottom: 2rem" :size="160">
-              <img :src="mdl.list[0].avatarUrl" alt="" />
-            </el-avatar>
+            <b-img-lazy class="profile__avatar" :src="mdl.list[0].avatarUrl" alt="User Avatar" />
             <h1 class="txt-t--uppercase">{{ formattedName }}</h1>
             <ul v-if="mdl.list[0].social" class="list--unstyled m-b--0">
               <li
@@ -191,15 +186,18 @@ export default class ResumeView extends Vue {
 #__cv {
 
   .nav {
-    position: fixed;
-    width: 100%;
+    top: 0;
+    position: sticky;
+    min-width: 100%;
     padding: 0 1rem;
-    background: var(--white);
-    z-index: $zindex-fixed;
+    background: var(--black-025);
+    backdrop-filter: blur(10px);
     box-shadow: var(--shadow-sm);
+    // border-bottom: 1px solid rgb(230, 230, 230);
+    z-index: $zindex-sticky;
 
     .nav__logo {
-      padding: 1em 0;
+      padding: 9.5px 0;
     }
 
     .nav__menu-toggle {
@@ -239,7 +237,7 @@ export default class ResumeView extends Vue {
     }
   }
 
-  .section {
+  section {
     font-size: 85%;
     color: var(--black-700);
 
@@ -254,9 +252,8 @@ export default class ResumeView extends Vue {
     }
 
     &.profile {
-      .section__wrapper {
-        padding-top: 7rem;
 
+      .section__wrapper {
         & > div:not(:first-child) {
           margin-left: 0;
           margin-top: $spacing;
@@ -265,9 +262,18 @@ export default class ResumeView extends Vue {
             margin-top: 0;
           }
         }
-      }     
+      }
+
+      .profile__avatar {
+        width: 160px;
+        height: 160px;
+        border: 4px solid white;
+        border-radius: 80px;
+        margin-bottom: 1rem;
+      }
 
       .profile__me {
+
         ul li {
           &:not(:last-child) {
             margin-right: $spacing;
