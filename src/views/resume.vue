@@ -40,9 +40,8 @@
                 :key="index"
                 class="d--inline-flex align-i--center justify-c--center"
               >
-                <a :href="social.url">
+                <a :href="social.service.type === 'Mail' ? 'mailto:' + social.url : social.url">
                   <i
-                    v-if="social.service && social.service.type"
                     class="ali"
                     :class="social.service.type.toLowerCase()"
                     style="font-size: 2rem"

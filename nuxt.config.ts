@@ -10,7 +10,7 @@ const nuxtConfig: NuxtConfig = {
   },
   publicRuntimeConfig: {
     baseURL: __url,
-    uid: process.env.USER_ID || "dev",
+    uid: process.env.USER_ID || "paul",
   },
   privateRuntimeConfig: {},
   // Global page headers (https://go.nuxtjs.dev/config-head)
