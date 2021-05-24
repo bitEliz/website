@@ -1,3 +1,3 @@
-export abstract class Model<ID> {
-  id!: ID;
+export interface Model<ID> {
+  id: ID;
 }

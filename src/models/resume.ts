@@ -1,73 +1,65 @@
 import { Model } from "./model";
 
-export class Project extends Model<string> {
-  summary!: string;
+export interface Project extends Model<string> {
+  summary: string;
   trackViewUrl?: string;
   note?: string;
-  id!: string;
-  startDate!: string;
-  endDate!: string;
-  userId!: string;
-  kind!: string;
-  name!: string;
-  visibility!: string;
+  startDate: string;
+  endDate: string;
+  userId: string;
+  kind: string;
+  name: string;
+  visibility: string;
   trackId?: string;
 }
 
-export class Skill extends Model<string> {
-  id!: string;
+export interface Skill extends Model<string> {
   professional?: string[];
   workflow?: string[];
 }
 
-export class SocialNetworkService extends Model<string> {
-  id!: string;
-  type!: string;
+export interface SocialNetworkService extends Model<string> {
+  type: string;
 }
 
-export class SocialNetwork extends Model<string> {
-  id!: string;
-  userId!: string;
-  url!: string;
-  service!: SocialNetworkService;
+export interface SocialNetwork extends Model<string> {
+  userId: string;
+  url: string;
+  service: SocialNetworkService;
 }
 
-export class Industry extends Model<string> {
-  id!: string;
-  title!: string;
+export interface Industry extends Model<string> {
+  title: string;
 }
 
-export class EducationalExp extends Model<string> {
-  school!: string;
-  userId!: string;
+export interface Education extends Model<string> {
+  school: string;
+  userId: string;
   degree?: string;
-  id!: string;
   startYear?: string;
-  field!: string;
+  field: string;
   endYear?: string;
 }
 
-export class WorkExp extends Model<string> {
-  location!: string;
+export interface Experience extends Model<string> {
+  location: string;
   responsibilities?: string[];
-  endDate!: string;
-  id!: string;
-  startDate!: string;
-  title!: string;
-  userId!: string;
-  companyName!: string;
-  industry!: Industry[];
+  endDate: string;
+  startDate: string;
+  title: string;
+  userId: string;
+  companyName: string;
+  industry: Industry[];
   headline?: string;
 }
 
-export class User extends Model<string> {
-  id!: string;
+export interface User extends Model<string> {
   emailAddress?: string;
-  education?: EducationalExp[];
-  firstName!: string;
+  education?: Education[];
+  firstName: string;
   projects?: Project[];
-  experiences?: WorkExp[];
-  lastName!: string;
+  experiences?: Experience[];
+  lastName: string;
   social?: SocialNetwork[];
   skill?: Skill;
   avatarUrl?: string;
