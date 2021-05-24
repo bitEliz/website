@@ -130,9 +130,7 @@
         <div v-else class="section__wrapper">
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <ul class="list--unstyled">
-            <li v-for="(skill, index) in mdl.list" :key="index">
-              {{ skill }}
-            </li>
+            <li v-for="(skill, index) in mdl.list" :key="index" :inner-html.prop="skill | markup"></li>
           </ul>
         </div>
       </section>
