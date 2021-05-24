@@ -63,10 +63,10 @@ export class WorkExp extends Model<string> {
 export class User extends Model<string> {
   id!: string;
   emailAddress?: string;
-  eduExps?: EducationalExp[];
+  education?: EducationalExp[];
   firstName!: string;
   projects?: Project[];
-  workExps?: WorkExp[];
+  experiences?: WorkExp[];
   lastName!: string;
   social?: SocialNetwork[];
   skill?: Skill;

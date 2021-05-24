@@ -94,12 +94,12 @@ const _fillList = (arg?: User) => {
   }
 
   const exp: ListGroup<any>[] = [];
-  if (user.workExps?.length) {
-    exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.workExps));
+  if (user.experiences?.length) {
+    exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.experiences));
   }
 
-  if (user.eduExps?.length) {
-    exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.eduExps));
+  if (user.education?.length) {
+    exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.education));
   }
 
   if (exp.length) {
