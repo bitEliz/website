@@ -59,6 +59,11 @@ export default class PureMDFileView extends Vue {
       hr {
         margin-bottom: 1rem;
       }
+
+      em {
+        font-size: 0.8em;
+        color: inherit
+      }
     }
   }
 }

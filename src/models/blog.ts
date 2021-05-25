@@ -1,9 +1,9 @@
 import { Article } from "./article";
 import { Model } from "./model";
 
-export class Blog extends Model<string> implements Article {
-  id!: string;
-  alias!: string;
+export interface Blog extends Model<string>, Article {
+  id: string;
+  alias: string;
   artworkUrl?: string;
   title?: string;
   updatedAt?: string;
