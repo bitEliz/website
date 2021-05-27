@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt-ts",
-    "build": "nuxt-ts build",
-    "start": "nuxt-ts start",
-    "generate": "nuxt-ts generate",
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{vue,css,scss}\" --ignore-path .gitignore",
     "lint": "yarn lint:js && yarn lint:style"
@@ -19,7 +19,6 @@
     "*.{css,scss,vue}": "stylelint"
   },
   "dependencies": {
-    "@nuxt/typescript-runtime": "^2.1.0",
     "@nuxtjs/axios": "^5.13.5",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.13.0",
@@ -30,13 +29,13 @@
     "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "7.14.3",
     "@nuxt/types": "^2.15.6",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/eslint-config-typescript": "^6.0.1",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
-    "@babel/eslint-parser": "7.14.3",
     "babel-plugin-component": "^1.1.1",
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
@@ -47,7 +46,7 @@
     "prettier": "^2.3.0",
     "prettify": "git+https://github.com/littlerkie/prettify.git",
     "sass": "^1.34.0",
-    "sass-loader": "^11.1.1",
+    "sass-loader": "^10.1.0",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0",
