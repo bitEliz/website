@@ -263,6 +263,8 @@ export default class ResumeView extends Vue {
 
     &.profile {
       .section__wrapper {
+        padding-top: 2rem;
+        
         & > div:not(:first-child) {
           margin-left: 0;
           margin-top: $spacing;
@@ -314,7 +316,7 @@ export default class ResumeView extends Vue {
             padding: 2rem;
             padding-bottom: 1rem;
             color: inherit;
-            height: 100%;
+            // height: 100%;
 
             .tile__media img {
               width: 5rem;
