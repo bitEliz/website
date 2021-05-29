@@ -1,12 +1,13 @@
 # ================================
 # Build image
 # ================================
-FROM node:alpine as builder
+FROM node:latest as builder
 
 # Install OS updates
-RUN apk --update add git less openssh \
-    && apk upgrade \
-    && rm -rf /var/cache/apk/*
+RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
+    && apt-get -q update \
+    && apt-get -q dist-upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set up a build area
 WORKDIR /build
@@ -36,26 +37,25 @@ RUN mv /build/.nuxt . \
 # ================================
 # Run image
 # ================================
-FROM node:alpine
+FROM node:slim
 
 # Make sure all system packages are up to date.
-RUN apk update \
-    && apk upgrade \
-    && rm -rf /var/cache/apk/*
-
-# Create a nuxtjs user and group with /app as its home directory
-# RUN useradd --user-group --create-home --system --skel /dev/null --home-dir /app nuxtjs
-RUN addgroup --system nuxtjs \
-    && adduser --system -k /dev/null --home /app nuxtjs
+# RUN apk update \
+#     && apk upgrade \
+#     && rm -rf /var/cache/apk/*
+RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
+    && apt-get -q update \
+    && apt-get -q dist-upgrade -y \
+    && rm -r /var/lib/apt/lists/*
 
 # Switch to the new home directory
 WORKDIR /app
 
 # Copy built executable and any staged resources from builder
-COPY --from=builder --chown=nuxtjs:nuxtjs /staging /app
+COPY --from=builder --chown=node:node /staging /app
 
 # Ensure all further commands run as the nuxtjs user
-USER nuxtjs:nuxtjs
+USER node:node
 
 # Let Docker bind to port 3000
 EXPOSE 3000
