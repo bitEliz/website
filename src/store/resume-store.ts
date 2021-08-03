@@ -1,5 +1,5 @@
 import { Context } from "@nuxt/types";
-import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
+import { Module, VuexAction, VuexModule, VuexMutation } from "nuxt-property-decorator";
 import { ListGroup, MDL_ID } from "~/models/list-group";
 import { Project, User } from "~/models/resume";
 import { Loadable } from "~/utils/loadable";
@@ -23,17 +23,17 @@ export default class ResumeStore extends VuexModule implements Loadable {
     return lastName + firstName;
   }
 
-  @Mutation
+  @VuexMutation
   setUser(user?: User) {
     this._user = user;
   }
 
-  @Mutation
+  @VuexMutation
   setLoadingState(isLoading: boolean) {
     this.isLoading = isLoading;
   }
 
-  @Action({ rawError: true })
+  @VuexAction({ rawError: true })
   async onLoading(context: Context) {
     this.setLoadingState(true);
     try {

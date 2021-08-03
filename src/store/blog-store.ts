@@ -1,7 +1,7 @@
 import { Context } from "@nuxt/types";
-import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { Loadable } from "../utils/loadable";
 import { Blog } from "~/models/blog";
+import { Module, VuexAction, VuexModule, VuexMutation } from "nuxt-property-decorator";
 
 @Module({ name: "blog-store", stateFactory: true, namespaced: true })
 export default class BlogStore extends VuexModule implements Loadable {
@@ -14,18 +14,18 @@ export default class BlogStore extends VuexModule implements Loadable {
   }
 
   // MARK: Mutations
-  @Mutation
+  @VuexMutation
   setLoadingState(isLoading: boolean) {
     this.isLoading = isLoading;
   }
 
-  @Mutation
+  @VuexMutation
   setBlog(newValue?: Blog) {
     this._blog = newValue;
   }
 
   // MARK: Actions
-  @Action({ rawError: true })
+  @VuexAction({ rawError: true })
   async onLoading(ctx: Context): Promise<void> {
     this.setLoadingState(true);
     try {
