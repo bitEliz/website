@@ -2,15 +2,16 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true,
+    node: true
   },
   extends: [
     "@nuxtjs/eslint-config-typescript",
-    "prettier",
-    "plugin:prettier/recommended",
     "plugin:nuxt/recommended",
+    "prettier"
   ],
-  plugins: ["prettier"],
+  plugins: ["vue", "nuxt", "prettier"],
   // add your custom rules here
-  rules: {},
-};
+  rules: {
+    "quotes": [1, "double"]
+  }
+}

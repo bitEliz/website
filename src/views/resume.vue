@@ -140,10 +140,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
+import { MetaInfo } from "vue-meta"
 import darkModeEnabled from "~/utils/dark-mode";
 import ProjectTileView from "~/components/proj-tile-view.vue";
 import { ListGroup, MDL_ID } from "~/models/list-group";
-import { MetaInfo } from 'vue-meta'
 import { Project, User } from "~/models/resume";
 
 @Component({

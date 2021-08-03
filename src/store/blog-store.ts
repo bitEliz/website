@@ -1,7 +1,7 @@
 import { Context } from "@nuxt/types";
+import { Module, VuexAction, VuexModule, VuexMutation } from "nuxt-property-decorator";
 import { Loadable } from "../utils/loadable";
 import { Blog } from "~/models/blog";
-import { Module, VuexAction, VuexModule, VuexMutation } from "nuxt-property-decorator";
 
 @Module({ name: "blog-store", stateFactory: true, namespaced: true })
 export default class BlogStore extends VuexModule implements Loadable {
