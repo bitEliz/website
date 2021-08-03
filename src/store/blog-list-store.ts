@@ -1,7 +1,7 @@
 import { Context } from "@nuxt/types";
-import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { Loadable } from "../utils/loadable";
 import { Blog, BlogGroup } from "~/models/blog";
+import { Module, VuexAction, VuexModule, VuexMutation } from "nuxt-property-decorator";
 
 @Module({ name: "blog-list-store", stateFactory: true, namespaced: true })
 export default class BlogListStore extends VuexModule implements Loadable {
@@ -12,28 +12,28 @@ export default class BlogListStore extends VuexModule implements Loadable {
   trunkedBlog: Array<Blog> = [];
 
   // MARK: Mutations
-  @Mutation
+  @VuexMutation
   setLoadingState(isLoading: boolean) {
     this.isLoading = isLoading;
   }
 
-  @Mutation
+  @VuexMutation
   setLatestBlog(list?: Array<Blog>) {
     this.latestBlog = list ?? [];
   }
 
-  @Mutation
+  @VuexMutation
   setFeaturedBlog(list?: Array<Blog>) {
     this.featuredBlog = list ?? [];
   }
 
-  @Mutation
+  @VuexMutation
   setTrunkedBlog(list?: Array<Blog>) {
     this.trunkedBlog = list ?? [];
   }
 
   // MARK: Actions
-  @Action({ rawError: true })
+  @VuexAction({ rawError: true })
   async onLoading(context: Context): Promise<void> {
     this.setLoadingState(true);
     try {

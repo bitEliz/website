@@ -19,7 +19,7 @@ export interface Skill extends Model<string> {
 }
 
 export interface SocialNetworkService extends Model<string> {
-  type: string;
+  name: string;
 }
 
 export interface SocialNetwork extends Model<string> {

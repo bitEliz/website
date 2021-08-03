@@ -1,5 +1,5 @@
 import { Context } from "@nuxt/types";
-import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
+import { Module, VuexAction, VuexModule, VuexMutation } from "nuxt-property-decorator";
 import { isString } from "~/utils/inspect";
 import { Loadable } from "~/utils/loadable";
 
@@ -8,17 +8,17 @@ export default class PureMDFileStore extends VuexModule implements Loadable {
   isLoading = false;
   markdown: string = "";
 
-  @Mutation
+  @VuexMutation
   setMarkdown(md?: string) {
     this.markdown = isString(md) ? md! : "";
   }
 
-  @Mutation
+  @VuexMutation
   setLoadingState(isLoading: boolean) {
     this.isLoading = isLoading;
   }
 
-  @Action({ rawError: true })
+  @VuexAction({ rawError: true })
   async onLoading(ctx: Context) {
     this.setLoadingState(true);
     try {
