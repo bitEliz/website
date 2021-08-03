@@ -45,7 +45,7 @@ const nuxtConfig: NuxtConfig = {
   },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ["~/plugins/filters", "~/plugins/http"],
+  plugins: ["~/plugins/filters", "~/plugins/http", "~/plugins/antd"],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -91,7 +91,13 @@ const nuxtConfig: NuxtConfig = {
       configFile: true,
       compact: true,
     },
+
+    loaders: {
+      less: {
+        javascriptEnabled: true,
+      }
+    }
   },
 };
 
-module.exports = nuxtConfig;
+module.exports = nuxtConfig;            
