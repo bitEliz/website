@@ -28,11 +28,11 @@
           class="section__wrapper d--flex flex--column sm:flex--row align-i--center"
         >
           <div class="profile__me txt-a--center">
-            <b-img-lazy
+            <a-avatar
               class="profile__avatar"
               :src="mdl.list[0].avatarUrl"
               alt="User Avatar"
-            />
+            ></a-avatar>
             <h1 class="txt-t--uppercase">{{ formattedName }}</h1>
             <ul v-if="mdl.list[0].social" class="list--unstyled m-b--0">
               <li
@@ -40,10 +40,10 @@
                 :key="index"
                 class="d--inline-flex align-i--center justify-c--center"
               >
-                <a :href="social.service.type === 'Mail' ? 'mailto:' + social.url : social.url">
+                <a :href="social.service.name === 'Mail' ? 'mailto:' + social.url : social.url">
                   <i
                     class="ali"
-                    :class="social.service.type.toLowerCase()"
+                    :class="social.service.name.toLowerCase()"
                     style="font-size: 2rem"
                   />
                 </a>

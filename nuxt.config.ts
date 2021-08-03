@@ -1,8 +1,6 @@
-import { NuxtConfig } from "@nuxt/types";
-
 const __url = process.env.BASE_URL || "http://localhost:8080";
 
-const nuxtConfig: NuxtConfig = {
+const nuxtConfig = {
   globalName: "rt",
   srcDir: "src/",
   dir: {
@@ -45,7 +43,8 @@ const nuxtConfig: NuxtConfig = {
   },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ["~/plugins/filters", "~/plugins/http", "~/plugins/antd"],
+  plugins: [
+    {src: "~/plugins/filters"}, {src: "~/plugins/http"}, {src: "~/plugins/antd"}],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -76,7 +75,7 @@ const nuxtConfig: NuxtConfig = {
     css: false,
     bvCSS: false,
     icons: false,
-    componentPlugins: ["AvatarPlugin", "CollapsePlugin", "ImagePlugin"],
+    componentPlugins: ["CollapsePlugin"],
     directivePlugins: ["VBScrollspyPlugin"],
   },
 
@@ -91,13 +90,15 @@ const nuxtConfig: NuxtConfig = {
       configFile: true,
       compact: true,
     },
-
     loaders: {
       less: {
-        javascriptEnabled: true,
+        lessOptions: {
+          javascriptEnabled: true,
+        }
       }
-    }
+    },
+    transpile: [/ant-design-vue/],
   },
 };
 
-module.exports = nuxtConfig;            
+module.exports = nuxtConfig;
