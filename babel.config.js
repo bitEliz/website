@@ -5,4 +5,4 @@ module.exports = {
       { libraryName: "ant-design-vue", libraryDirectory: "es", style: true }
     ]
   ]
-};
+}

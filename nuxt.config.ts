@@ -13,7 +13,7 @@ const nuxtConfig = {
   privateRuntimeConfig: {},
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: `%s`,
+    titleTemplate: "%s",
     htmlAttrs: {
       lang: "zh-CN",
     },

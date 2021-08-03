@@ -1,21 +1,21 @@
-import Vue from "vue";
-import marked from "marked";
-import PR from "highlight.js";
+import Vue from "vue"
+import marked from "marked"
+import PR from "highlight.js"
 
 PR.configure({
-  classPrefix: "prettyprint__",
-});
+  classPrefix: "prettyprint__"
+})
 
-function markup(markdown) {
+function markup (markdown) {
   const options = {
-    highlight(code, lang) {
-      return PR.highlight(lang, code).value;
+    highlight (code, lang) {
+      return PR.highlight(lang, code).value
     },
     langPrefix: "hljs prettyprint language-",
-    smartLists: true,
-  };
+    smartLists: true
+  }
 
-  return marked(markdown, options);
+  return marked(markdown, options)
 }
 
-Vue.filter("markup", markup);
+Vue.filter("markup", markup)
