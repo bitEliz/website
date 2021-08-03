@@ -2,7 +2,7 @@
   <div id="__cv">
     <nav class="nav sm:nav--expand">
       <div class="wrapper--fluid">
-        <div class="nav__logo">{{ formattedName }}</div>
+        <div class="nav__logo">{{ fullname }}</div>
         <button v-b-toggle.collapse class="nav__menu-toggle"></button>
         <b-collapse id="collapse" class="nav__collapse justify--flex-end">
           <ul v-b-scrollspy="44" class="nav__item-list">
@@ -33,7 +33,7 @@
               :src="mdl.list[0].avatarUrl"
               alt="User Avatar"
             ></a-avatar>
-            <h1 class="txt-t--uppercase">{{ formattedName }}</h1>
+            <h1 class="txt-t--uppercase">{{ fullname }}</h1>
             <ul v-if="mdl.list[0].social" class="list--unstyled m-b--0">
               <li
                 v-for="(social, index) in mdl.list[0].social"
@@ -66,7 +66,7 @@
                   :key="proj.id"
                   class="project__list-item"
                 >
-                  <v-proj-tile-view :content="proj" />
+                  <ProjTileView :content="proj" />
                 </li>
               </ul>
             </div>
@@ -140,49 +140,116 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import { Context } from "@nuxt/types";
 import darkModeEnabled from "~/utils/dark-mode";
-import { resumeStore } from "~/store";
 import ProjectTileView from "~/components/proj-tile-view.vue";
 import { ListGroup, MDL_ID } from "~/models/list-group";
+import { MetaInfo } from 'vue-meta'
+import { Project, User } from "~/models/resume";
 
 @Component({
+  fetchOnServer: false,
   layout: "copyright",
   components: {
-    "v-proj-tile-view": ProjectTileView,
+    ProjectTileView,
   },
+  head(this: ResumeView): MetaInfo {
+    return {
+      title: this.title,
+      htmlAttrs: {
+        lang: "zh-CN",
+      },
+    };
+  },
+  async asyncData({$axios, $config}) {
+    const user = await $axios.$get(`/users/${$config.uid}/resume`);
+    return { user }
+  }
 })
 export default class ResumeView extends Vue {
   MDL_ID = MDL_ID;
 
   get modules(): Array<ListGroup<any>> {
-    return resumeStore.list;
+    return this._fillList(this.user);
   }
 
-  get formattedName(): string {
-    return resumeStore.formattedName;
+  get fullname(): string {
+    const lastName = this.user?.lastName ?? "";
+    const firstName = this.user?.firstName ?? "";
+    return lastName + firstName;
   }
 
-  head() {
-    return {
-      title: resumeStore.formattedTitle,
-      htmlAttrs: {
-        lang: "zh-CN",
-      },
-    };
+  get title(): string {
+    return this.user?.username?.toUpperCase() ?? ""
   }
+
+  user?: User;
 
   mounted() {
     darkModeEnabled();
   }
 
-  async asyncData(context: Context) {
-    try {
-      await resumeStore.onLoading(context);
-    } catch (error) {
-      context.error(error);
+  _fillList(arg?: User) {
+    const result: ListGroup<any>[] = [];
+
+    if (!arg) {
+      return result;
     }
-  }
+
+
+    const PROJ_VISIBILITY_PUBLIC = "public";
+    const GITHUB = "github.com";
+    
+    const user = arg!;
+
+    result.push(new ListGroup(MDL_ID.PROFILE, "简介", [arg]));
+
+    // Filter visible proj.
+    const githubList: Project[] = [];
+    const otherList: Project[] = [];
+    user.projects?.forEach((proj) => {
+      // Only `proj.visibility` marked as `public` can pass filter.
+      if (proj.visibility === PROJ_VISIBILITY_PUBLIC) {
+        // All github repo project are marked as open source proj.
+        if (proj.trackViewUrl && proj.trackViewUrl?.indexOf(GITHUB) !== -1) {
+          githubList.push(proj);
+        } else {
+          otherList.push(proj);
+        }
+      }
+    });
+
+    const proj: ListGroup<Project>[] = [];
+
+    if (githubList.length) {
+      proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", githubList));
+    }
+
+    if (otherList.length) {
+      proj.push(new ListGroup(MDL_ID.DEFAULT, "精选项目", otherList));
+    }
+
+    if (proj.length) {
+      result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj));
+    }
+
+    const exp: ListGroup<any>[] = [];
+    if (user.experiences?.length) {
+      exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.experiences));
+    }
+
+    if (user.education?.length) {
+      exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.education));
+    }
+
+    if (exp.length) {
+      result.push(new ListGroup(MDL_ID.EXPERIENCE, "经历", exp));
+    }
+
+    if (user.skill?.professional?.length) {
+      result.push(new ListGroup(MDL_ID.SKILL, "技能", user.skill!.professional));
+    }
+    return result;
+  };
 }
 </script>
 
