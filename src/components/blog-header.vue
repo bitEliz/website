@@ -4,7 +4,7 @@
     :class="blog.artworkUrl ? 'd--flex flex--column sm:flex--row' : ''"
   >
     <div v-if="blog.artworkUrl" class="blog__media" style="padding-bottom: 25%">
-      <b-img-lazy :src="blog.artworkUrl" fit="contain" />
+      <img :src="blog.artworkUrl" />
     </div>
 
     <div class="blog__description">
