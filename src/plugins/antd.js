@@ -1,4 +1,5 @@
-import { Button } from "ant-design-vue";
+import { Avatar, Button } from "ant-design-vue";
 import Vue from "vue";
 
-Vue.use(Button.name, Button)
+Vue.use(Avatar)
+    .use(Button)
