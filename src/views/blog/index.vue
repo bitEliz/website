@@ -33,11 +33,7 @@
             style="margin-bottom: 0"
           >
             <li v-for="blog in trunkedBlog" :key="blog.id" class="blog__item">
-              <BlogTileView
-                :blog="blog"
-                :vertical="false"
-                :aspect-ratio="'padding-top: 28.88%'"
-              />
+              <BlogTileView :blog="blog" :vertical="false" :aspect-ratio="'padding-top: 28.88%'" />
             </li>
           </ul>
         </div>
@@ -47,35 +43,35 @@
 </template>
 
 <script lang="ts">
-import { Context } from "@nuxt/types/app";
-import { Component, Vue } from "nuxt-property-decorator";
-import BlogTileView from "~/components/blog-tile.vue";
-import { Blog } from "~/models/blog";
-import { blogListStore } from "~/store";
+import { Context } from "@nuxt/types/app"
+import { Component, Vue } from "nuxt-property-decorator"
+import BlogTileView from "~/components/blog-tile.vue"
+import { Blog } from "~/models/blog"
+import { blogListStore } from "~/store"
 
 @Component({
   components: {
-    BlogTileView,
-  },
+    BlogTileView
+  }
 })
 export default class BlogListView extends Vue {
   get latestBlog(): Array<Blog> {
-    return blogListStore.latestBlog;
+    return blogListStore.latestBlog
   }
 
   get featuredBlog(): Array<Blog> {
-    return blogListStore.featuredBlog;
+    return blogListStore.featuredBlog
   }
 
   get trunkedBlog(): Array<Blog> {
-    return blogListStore.trunkedBlog;
+    return blogListStore.trunkedBlog
   }
 
   async asyncData(context: Context): Promise<void> {
     try {
-      await blogListStore.onLoading(context);
+      await blogListStore.onLoading(context)
     } catch (error) {
-      context.error(error);
+      context.error(error)
     }
   }
 }

@@ -1,6 +1,6 @@
-import { TileAttributes } from "./tile-attributes";
+import { TileAttributes } from "./tile-attributes"
 
 export interface Article extends TileAttributes {
-  excerpt?: string;
-  content?: string;
+  excerpt?: string
+  content?: string
 }

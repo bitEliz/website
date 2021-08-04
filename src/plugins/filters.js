@@ -6,9 +6,9 @@ PR.configure({
   classPrefix: "prettyprint__"
 })
 
-function markup (markdown) {
+function markup(markdown) {
   const options = {
-    highlight (code, lang) {
+    highlight(code, lang) {
       return PR.highlight(lang, code).value
     },
     langPrefix: "hljs prettyprint language-",

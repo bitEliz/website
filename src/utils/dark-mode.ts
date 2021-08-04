@@ -2,10 +2,8 @@
 const darkModeEnabled = () => {
   const forceSetting = localStorage.getItem("forceDarkModeOn")
   const browserPrefersDark =
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  const darkModeEnabled =
-    forceSetting === "true" || (!forceSetting && browserPrefersDark)
+    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+  const darkModeEnabled = forceSetting === "true" || (!forceSetting && browserPrefersDark)
 
   if (browserPrefersDark) {
     document.body.classList.toggle("has-darkmode", darkModeEnabled)

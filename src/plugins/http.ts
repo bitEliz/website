@@ -1,9 +1,9 @@
-import { Context } from "@nuxt/types";
-import { Inject } from "@nuxt/types/app";
-import { NuxtAxiosInstance } from "@nuxtjs/axios";
+import { Context } from "@nuxt/types"
+import { Inject } from "@nuxt/types/app"
+import { NuxtAxiosInstance } from "@nuxtjs/axios"
 
 export default (ctx: Context, inject: Inject) => {
-  const http = ctx.$axios.create() as NuxtAxiosInstance;
+  const http = ctx.$axios.create() as NuxtAxiosInstance
 
   // http.onRequest((config) => {
   // console.log(`${config.method?.toUpperCase()} ${config.url}`);
@@ -14,9 +14,9 @@ export default (ctx: Context, inject: Inject) => {
     /* eslint-disable-next-line prefer-promise-reject-errors */
     Promise.reject({
       message: error.message,
-      statusCode: error.response?.status,
+      statusCode: error.response?.status
     })
-  );
+  )
 
-  inject("http", http);
-};
+  inject("http", http)
+}

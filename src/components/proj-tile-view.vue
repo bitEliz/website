@@ -10,22 +10,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "nuxt-property-decorator";
-import { Project } from "~/models/resume";
+import { Component, Prop, Vue } from "nuxt-property-decorator"
+import { Project } from "~/models/resume"
 
 @Component
 export default class ProjectTileView extends Vue {
-  @Prop() content!: Project;
-  
-  get link() : string|undefined {
+  @Prop() content!: Project
+
+  get link(): string | undefined {
     return this.content.trackViewUrl
   }
 
-  get imageUrl() : string|undefined {
+  get imageUrl(): string | undefined {
     return this.content.artworkUrl
   }
-  
-  get excerpt() : string|undefined {
+
+  get excerpt(): string | undefined {
     return this.content.summary
   }
 }

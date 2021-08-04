@@ -2,37 +2,33 @@
   <main role="main">
     <article v-if="blog" class="blog">
       <v-blog-header-view :blog="blog" />
-      <div
-        v-if="blog.content"
-        class="blog__body"
-        :inner-html.prop="blog.content | markup"
-      ></div>
+      <div v-if="blog.content" class="blog__body" :inner-html.prop="blog.content | markup"></div>
     </article>
   </main>
 </template>
 
 <script lang="ts">
-import { Context } from "@nuxt/types/app";
-import { Component, Vue } from "nuxt-property-decorator";
-import BlogHeaderView from "~/components/blog-header.vue";
-import { Blog } from "~/models/blog";
-import { blogStore } from "~/store";
+import { Context } from "@nuxt/types/app"
+import { Component, Vue } from "nuxt-property-decorator"
+import BlogHeaderView from "~/components/blog-header.vue"
+import { Blog } from "~/models/blog"
+import { blogStore } from "~/store"
 
 @Component({
   components: {
-    "v-blog-header-view": BlogHeaderView,
-  },
+    "v-blog-header-view": BlogHeaderView
+  }
 })
 export default class BlogView extends Vue {
   get blog(): Blog | undefined {
-    return blogStore.blog;
+    return blogStore.blog
   }
 
   async asyncData(context: Context) {
     try {
-      await blogStore.onLoading(context);
+      await blogStore.onLoading(context)
     } catch (error) {
-      context.error(error);
+      context.error(error)
     }
   }
 }
