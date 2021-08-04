@@ -1,17 +1,19 @@
-module.exports = {
+export default {
   root: true,
   env: {
     browser: true,
-    node: true
+    node: true,
+    es6: true
+  },
+  parser: "vue-eslint-parser",
+  parserOptions: {
+    parser: "@typescript-eslint/parser"
   },
   extends: [
     "@nuxtjs/eslint-config-typescript",
     "plugin:nuxt/recommended",
-    "prettier"
-  ],
-  plugins: ["vue", "nuxt", "prettier"],
-  // add your custom rules here
-  rules: {
-    "quotes": [1, "double"]
-  }
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
+  ]
 }
