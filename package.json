@@ -7,8 +7,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint:js": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore .",
-    "lint": "yarn lint:js"
+    "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -49,6 +48,6 @@
     "prettier": "^2.3.2",
     "prettify": "git+https://github.com/littlerkie/prettify.git",
     "sass": "^1.34.0",
-    "sass-loader": "^10.1.0"
+    "stylelint": "^13.13.1",
   }
 }
