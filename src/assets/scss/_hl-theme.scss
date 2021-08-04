@@ -1,52 +1,52 @@
 // Colors from Xcode 12.2
 
-$hl-plain-txt: #3D3D3D;
-$hl-dark-mode-plain-txt: #DFDFE0;
+$hl-plain-txt: #3d3d3d;
+$hl-dark-mode-plain-txt: #dfdfe0;
 
-$hl-comments: #71808C;
+$hl-comments: #71808c;
 $hl-dark-mode-comments: #798590;
 
 $hl-doc-markup: $hl-comments;
 $hl-dark-mode-doc-markup: $hl-dark-mode-comments;
 
-$hl-doc-markup-keywords: #5C6873;
-$hl-dark-mode-doc-markup-keywords: #A3B1BE;
+$hl-doc-markup-keywords: #5c6873;
+$hl-dark-mode-doc-markup-keywords: #a3b1be;
 
 $hl-marks: $hl-doc-markup-keywords;
 $hl-dark-mode-marks: $hl-dark-mode-doc-markup-keywords;
 
-$hl-strings: #D1392D;
-$hl-dark-mode-strings: #DF7569;
+$hl-strings: #d1392d;
+$hl-dark-mode-strings: #df7569;
 
-$hl-characters: #3943D7;
-$hl-dark-mode-characters: #D1C17D;
+$hl-characters: #3943d7;
+$hl-dark-mode-characters: #d1c17d;
 
 $hl-numbers: $hl-characters;
 $hl-dark-mode-numbers: $hl-characters;
 
-$hl-keywords: #AB42A2;
-$hl-dark-mode-keywords: #FD7CB2;
+$hl-keywords: #ab42a2;
+$hl-dark-mode-keywords: #fd7cb2;
 
-$hl-preprocessory-statements: #80543A;
-$hl-dark-mode-preprocessory-statements: #FDA157;
+$hl-preprocessory-statements: #80543a;
+$hl-dark-mode-preprocessory-statements: #fda157;
 
-$hl-urls: #2B4FFB;
-$hl-dark-mode-urls: #6899F8;
+$hl-urls: #2b4ffb;
+$hl-dark-mode-urls: #6899f8;
 
 $hl-attributes: #987822;
-$hl-dark-mode-attributes: #C9976B;
+$hl-dark-mode-attributes: #c9976b;
 
-$hl-type-declarations: #1A6B90;
-$hl-dark-mode-type-declarations: #6CD4F1;
+$hl-type-declarations: #1a6b90;
+$hl-dark-mode-type-declarations: #6cd4f1;
 
-$hl-other-declarations: #2888B5;
-$hl-dark-mode-other-declarations: #52AFC8;
+$hl-other-declarations: #2888b5;
+$hl-dark-mode-other-declarations: #52afc8;
 
-$hl-proj-class-names: #3D696D;
-$hl-dark-mode-proj-class-names: #AEF2E4;
+$hl-proj-class-names: #3d696d;
+$hl-dark-mode-proj-class-names: #aef2e4;
 
-$hl-proj-func-and-method-names: #48848A;
-$hl-dark-mode-proj-func-and-method-names: #7AC2B3;
+$hl-proj-func-and-method-names: #48848a;
+$hl-dark-mode-proj-func-and-method-names: #7ac2b3;
 
 $hl-proj-constants: $hl-proj-func-and-method-names;
 $hl-dark-mode-proj-constants: $hl-dark-mode-proj-func-and-method-names;
@@ -60,11 +60,11 @@ $hl-dark-mode-proj-instance-variables-and-globals: $hl-dark-mode-proj-func-and-m
 $hl-proj-preprocessory-macros: $hl-preprocessory-statements;
 $hl-dark-mode-proj-preprocessory-macros: $hl-dark-mode-preprocessory-statements;
 
-$hl-other-class-names: #5F41B6;
-$hl-dark-mode-other-class-names: #D9BCFD;
+$hl-other-class-names: #5f41b6;
+$hl-dark-mode-other-class-names: #d9bcfd;
 
-$hl-other-func-and-method-names: #926CC1;
-$hl-dark-mode-other-func-and-method-names: #A37BD7;
+$hl-other-func-and-method-names: #926cc1;
+$hl-dark-mode-other-func-and-method-names: #a37bd7;
 
 $hl-other-constans: $hl-other-func-and-method-names;
 $hl-dark-mode-other-constans: $hl-dark-mode-other-func-and-method-names;
@@ -78,5 +78,5 @@ $hl-dark-mode-other-instance-variables-and-globals: $hl-dark-mode-other-func-and
 $hl-other-preprocessor-macros: $hl-preprocessory-statements;
 $hl-dark-mode-other-preprocessor-macros: $hl-dark-mode-preprocessory-statements;
 
-$hl-heading: #BB3AA4;
+$hl-heading: #bb3aa4;
 $hl-dark-mode-heading: #993189;
