@@ -3,6 +3,7 @@ import { Model } from "./model";
 export interface Project extends Model<string> {
   summary: string;
   trackViewUrl?: string;
+  artworkUrl?: string;
   note?: string;
   startDate: string;
   endDate: string;

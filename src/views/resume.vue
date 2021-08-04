@@ -195,7 +195,6 @@ export default class ResumeView extends Vue {
       return result;
     }
 
-
     const PROJ_VISIBILITY_PUBLIC = "public";
     const GITHUB = "github.com";
     
@@ -256,10 +255,6 @@ export default class ResumeView extends Vue {
 <style lang="scss">
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
 
-:lang(zh) {
-  line-height: 1.6;
-}
-
 #__cv {
   .nav {
     top: 0;
@@ -315,7 +310,6 @@ export default class ResumeView extends Vue {
   }
 
   section {
-    font-size: 85%;
     color: var(--black-700);
 
     .section__wrapper {
