@@ -1,14 +1,10 @@
 <template>
-  <a
-    class="tile d--flex flex--column"
-    :href="content.trackViewUrl"
-    target="_blank"
-  >
+  <a class="tile" :href="link" target="_blank">
     <div class="tile__media">
-      <img :src="content.artworkUrl" />
+      <img :src="imageUrl" alt="" />
     </div>
-    <div class="tile__description d--flex flex--column justfy--space-between">
-      <div class="tile__excerpt" :inner-html.prop="content.summary | markup" />
+    <div class="tile__description">
+      <div class="tile__excerpt" :inner-html.prop="excerpt | markup" />
     </div>
   </a>
 </template>
@@ -20,12 +16,25 @@ import { Project } from "~/models/resume";
 @Component
 export default class ProjectTileView extends Vue {
   @Prop() content!: Project;
+  
+  get link() : string|undefined {
+    return this.content.trackViewUrl
+  }
+
+  get imageUrl() : string|undefined {
+    return this.content.artworkUrl
+  }
+  
+  get excerpt() : string|undefined {
+    return this.content.summary
+  }
 }
 </script>
 
 <style lang="scss">
 .tile {
   width: 100%;
+  display: block;
   background: var(--white);
   border-radius: 0.5rem;
 
