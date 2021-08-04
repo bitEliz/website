@@ -1,3 +1,3 @@
 export interface Model<ID> {
-  id: ID;
+  id: ID
 }

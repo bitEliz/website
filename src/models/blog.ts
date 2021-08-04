@@ -1,19 +1,19 @@
-import { Article } from "./article";
-import { Model } from "./model";
+import { Article } from "./article"
+import { Model } from "./model"
 
 export interface Blog extends Model<string>, Article {
-  id: string;
-  alias: string;
-  artworkUrl?: string;
-  title?: string;
-  updatedAt?: string;
-  tags?: Array<string>;
-  excerpt?: string;
-  content?: string;
+  id: string
+  alias: string
+  artworkUrl?: string
+  title?: string
+  updatedAt?: string
+  tags?: Array<string>
+  excerpt?: string
+  content?: string
 }
 
 export class BlogGroup {
-  latestBlog?: Array<Blog>;
-  featuredBlog?: Array<Blog>;
-  trunkedBlog?: Array<Blog>;
+  latestBlog?: Array<Blog>
+  featuredBlog?: Array<Blog>
+  trunkedBlog?: Array<Blog>
 }

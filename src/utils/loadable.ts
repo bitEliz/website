@@ -1,9 +1,9 @@
-import { Context } from "@nuxt/types";
+import { Context } from "@nuxt/types"
 
 export interface Loadable {
-  isLoading: boolean;
+  isLoading: boolean
 
-  setLoadingState(isLoading: boolean): void;
+  setLoadingState(isLoading: boolean): void
 
-  onLoading(context?: Context): Promise<void>;
+  onLoading(context?: Context): Promise<void>
 }

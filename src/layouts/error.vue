@@ -12,10 +12,7 @@
         </ul>
       </div>
     </nav> -->
-    <main
-      role="main"
-      class="main localized-error d--flex flex--column justify--center"
-    >
+    <main role="main" class="main localized-error d--flex flex--column justify--center">
       <div class="txt-a--center">
         <h1 class="localized-error__name">Whoops, {{ error.message }}.</h1>
         <p class="localized-error__description"></p>
@@ -26,12 +23,12 @@
 </template>
 
 <script lang="ts">
-import { NuxtError } from "@nuxt/types";
-import { Component, Prop, Vue } from "nuxt-property-decorator";
+import { NuxtError } from "@nuxt/types"
+import { Component, Prop, Vue } from "nuxt-property-decorator"
 
 @Component
 export default class ErrorView extends Vue {
-  @Prop() error!: NuxtError;
+  @Prop() error!: NuxtError
 }
 </script>
 

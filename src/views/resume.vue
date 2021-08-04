@@ -7,9 +7,7 @@
         <b-collapse id="collapse" class="nav__collapse justify--flex-end">
           <ul v-b-scrollspy="44" class="nav__item-list">
             <li v-for="mdl in modules" :key="mdl.id" class="nav__item nav-item">
-              <a class="nav__link nav-link" :href="'#' + mdl.id">{{
-                mdl.title
-              }}</a>
+              <a class="nav__link nav-link" :href="'#' + mdl.id">{{ mdl.title }}</a>
             </li>
           </ul>
         </b-collapse>
@@ -17,12 +15,7 @@
     </nav>
 
     <main>
-      <section
-        v-for="mdl in modules"
-        :id="mdl.id"
-        :key="mdl.id"
-        :class="mdl.id"
-      >
+      <section v-for="mdl in modules" :id="mdl.id" :key="mdl.id" :class="mdl.id">
         <div
           v-if="mdl.id === MDL_ID.PROFILE"
           class="section__wrapper d--flex flex--column sm:flex--row align-i--center"
@@ -61,11 +54,7 @@
             <h1 class="txt-t--uppercase">{{ g.title }}</h1>
             <div class="project__list-wrapper">
               <ul class="project__list list--unstyled">
-                <li
-                  v-for="proj in g.list"
-                  :key="proj.id"
-                  class="project__list-item"
-                >
+                <li v-for="proj in g.list" :key="proj.id" class="project__list-item">
                   <ProjTileView :content="proj" />
                 </li>
               </ul>
@@ -76,18 +65,10 @@
           v-else-if="mdl.id === MDL_ID.EXPERIENCE"
           class="section__wrapper d--flex flex--column sm:flex--row"
         >
-          <ul
-            v-for="m in mdl.list"
-            :key="m.id"
-            class="exp__list list--unstyled"
-          >
+          <ul v-for="m in mdl.list" :key="m.id" class="exp__list list--unstyled">
             <h1 class="txt-t--uppercase">{{ m.title }}</h1>
             <template v-if="m.id === MDL_ID.EXPERIENCE">
-              <li
-                v-for="(exp, index) in m.list"
-                :key="index"
-                class="exp__list-item"
-              >
+              <li v-for="(exp, index) in m.list" :key="index" class="exp__list-item">
                 <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
                 <time
                   class="d--inline-block"
@@ -96,21 +77,14 @@
                   >{{ exp.startDate + " - " + exp.endDate }}</time
                 >
                 <ul v-if="exp.responsibilities" class="list--circle-inside">
-                  <li
-                    v-for="(responsibility, idx) in exp.responsibilities"
-                    :key="idx"
-                  >
+                  <li v-for="(responsibility, idx) in exp.responsibilities" :key="idx">
                     {{ responsibility }}
                   </li>
                 </ul>
               </li>
             </template>
             <template v-if="m.id === MDL_ID.EDUCATIONAL">
-              <li
-                v-for="(exp, index) in m.list"
-                :key="index"
-                class="exp__list-item"
-              >
+              <li v-for="(exp, index) in m.list" :key="index" class="exp__list-item">
                 <h4>
                   <i class="ali degree icon" />
                   {{ exp.field }} • {{ exp.degree }}
@@ -130,7 +104,11 @@
         <div v-else class="section__wrapper">
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <ul class="list--unstyled">
-            <li v-for="(skill, index) in mdl.list" :key="index" :inner-html.prop="skill | markup"></li>
+            <li
+              v-for="(skill, index) in mdl.list"
+              :key="index"
+              :inner-html.prop="skill | markup"
+            ></li>
           </ul>
         </div>
       </section>
@@ -139,116 +117,116 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "nuxt-property-decorator";
+import { Component, Vue } from "nuxt-property-decorator"
 import { MetaInfo } from "vue-meta"
-import darkModeEnabled from "~/utils/dark-mode";
-import ProjectTileView from "~/components/proj-tile-view.vue";
-import { ListGroup, MDL_ID } from "~/models/list-group";
-import { Project, User } from "~/models/resume";
+import darkModeEnabled from "~/utils/dark-mode"
+import ProjectTileView from "~/components/proj-tile-view.vue"
+import { ListGroup, MDL_ID } from "~/models/list-group"
+import { Project, User } from "~/models/resume"
 
 @Component({
   fetchOnServer: false,
   layout: "copyright",
   components: {
-    ProjectTileView,
+    ProjectTileView
   },
   head(this: ResumeView): MetaInfo {
     return {
       title: this.title,
       htmlAttrs: {
-        lang: "zh-CN",
-      },
-    };
+        lang: "zh-CN"
+      }
+    }
   },
-  async asyncData({$axios, $config}) {
-    const user = await $axios.$get(`/users/${$config.uid}/resume`);
+  async asyncData({ $axios, $config }) {
+    const user = await $axios.$get(`/users/${$config.uid}/resume`)
     return { user }
   }
 })
 export default class ResumeView extends Vue {
-  MDL_ID = MDL_ID;
+  MDL_ID = MDL_ID
 
   get modules(): Array<ListGroup<any>> {
-    return this._fillList(this.user);
+    return this._fillList(this.user)
   }
 
   get fullname(): string {
-    const lastName = this.user?.lastName ?? "";
-    const firstName = this.user?.firstName ?? "";
-    return lastName + firstName;
+    const lastName = this.user?.lastName ?? ""
+    const firstName = this.user?.firstName ?? ""
+    return lastName + firstName
   }
 
   get title(): string {
     return this.user?.username?.toUpperCase() ?? ""
   }
 
-  user?: User;
+  user?: User
 
   mounted() {
-    darkModeEnabled();
+    darkModeEnabled()
   }
 
   _fillList(arg?: User) {
-    const result: ListGroup<any>[] = [];
+    const result: ListGroup<any>[] = []
 
     if (!arg) {
-      return result;
+      return result
     }
 
-    const PROJ_VISIBILITY_PUBLIC = "public";
-    const GITHUB = "github.com";
-    
-    const user = arg!;
+    const PROJ_VISIBILITY_PUBLIC = "public"
+    const GITHUB = "github.com"
 
-    result.push(new ListGroup(MDL_ID.PROFILE, "简介", [arg]));
+    const user = arg!
+
+    result.push(new ListGroup(MDL_ID.PROFILE, "简介", [arg]))
 
     // Filter visible proj.
-    const githubList: Project[] = [];
-    const otherList: Project[] = [];
+    const githubList: Project[] = []
+    const otherList: Project[] = []
     user.projects?.forEach((proj) => {
       // Only `proj.visibility` marked as `public` can pass filter.
       if (proj.visibility === PROJ_VISIBILITY_PUBLIC) {
         // All github repo project are marked as open source proj.
         if (proj.trackViewUrl && proj.trackViewUrl?.indexOf(GITHUB) !== -1) {
-          githubList.push(proj);
+          githubList.push(proj)
         } else {
-          otherList.push(proj);
+          otherList.push(proj)
         }
       }
-    });
+    })
 
-    const proj: ListGroup<Project>[] = [];
+    const proj: ListGroup<Project>[] = []
 
     if (githubList.length) {
-      proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", githubList));
+      proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", githubList))
     }
 
     if (otherList.length) {
-      proj.push(new ListGroup(MDL_ID.DEFAULT, "精选项目", otherList));
+      proj.push(new ListGroup(MDL_ID.DEFAULT, "精选项目", otherList))
     }
 
     if (proj.length) {
-      result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj));
+      result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj))
     }
 
-    const exp: ListGroup<any>[] = [];
+    const exp: ListGroup<any>[] = []
     if (user.experiences?.length) {
-      exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.experiences));
+      exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.experiences))
     }
 
     if (user.education?.length) {
-      exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.education));
+      exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.education))
     }
 
     if (exp.length) {
-      result.push(new ListGroup(MDL_ID.EXPERIENCE, "经历", exp));
+      result.push(new ListGroup(MDL_ID.EXPERIENCE, "经历", exp))
     }
 
     if (user.skill?.professional?.length) {
-      result.push(new ListGroup(MDL_ID.SKILL, "技能", user.skill!.professional));
+      result.push(new ListGroup(MDL_ID.SKILL, "技能", user.skill!.professional))
     }
-    return result;
-  };
+    return result
+  }
 }
 </script>
 
@@ -325,7 +303,7 @@ export default class ResumeView extends Vue {
     &.profile {
       .section__wrapper {
         padding-top: 2rem;
-        
+
         & > div:not(:first-child) {
           margin-left: 0;
           margin-top: $spacing;

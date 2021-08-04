@@ -32,7 +32,7 @@ const nuxtConfig = {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ["prettify/scss/prettify.scss", "~/assets/scss/hl.scss"],
+  css: ["prettify/scss/prettify.scss"],
 
   styleResources: {
     scss: [

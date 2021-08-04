@@ -4,17 +4,17 @@ export enum MDL_ID {
   PROFILE = "profile",
   EXPERIENCE = "experience",
   EDUCATIONAL = "educational",
-  SKILL = "skills",
+  SKILL = "skills"
 }
 
 export class ListGroup<T> {
-  id: MDL_ID;
-  title: string;
-  list: Array<T>;
+  id: MDL_ID
+  title: string
+  list: Array<T>
 
   constructor(id?: MDL_ID, title?: string, list?: Array<T>) {
-    this.id = id ?? MDL_ID.DEFAULT;
-    this.title = title ?? "";
-    this.list = list ?? [];
+    this.id = id ?? MDL_ID.DEFAULT
+    this.title = title ?? ""
+    this.list = list ?? []
   }
 }

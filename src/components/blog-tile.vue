@@ -4,18 +4,11 @@
     :class="!vertical ? 'sm:flex--row' : ''"
     :href="'/blog/' + blog.alias"
   >
-    <div
-      v-if="blog.artworkUrl"
-      class="tile__media"
-      :style="aspectRatio ? aspectRatio : ''"
-    >
+    <div v-if="blog.artworkUrl" class="tile__media" :style="aspectRatio ? aspectRatio : ''">
       <img :src="blog.artworkUrl" />
     </div>
 
-    <div
-      class="tile__description d--flex flex--column justify--space-between"
-      aria-hidden="true"
-    >
+    <div class="tile__description d--flex flex--column justify--space-between" aria-hidden="true">
       <div class="tile__head">
         <div class="tile__category txt-t--uppercase">{{ blog.category }}</div>
         <div class="tile__headline">
@@ -31,17 +24,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "nuxt-property-decorator";
-import { Blog } from "~/models/blog";
+import { Component, Prop, Vue } from "nuxt-property-decorator"
+import { Blog } from "~/models/blog"
 
 @Component
 export default class BlogTileView extends Vue {
-  @Prop({ required: true }) blog!: Blog;
+  @Prop({ required: true }) blog!: Blog
   // Default aspect ratio is 16/9.
   // set value with formmat `padding-top: value`,
   // `value = (height / width) * 100%`.
-  @Prop() aspectRatio?: string;
-  @Prop({ default: true }) vertical!: boolean;
+  @Prop() aspectRatio?: string
+  @Prop({ default: true }) vertical!: boolean
 }
 </script>
 
