@@ -13,7 +13,7 @@
               class="blog__item"
               :class="index === 0 ? 'f-b--100' : index > 2 ? 'f-b--1/3' : ''"
             >
-              <BlogTileView
+              <BlogListItem
                 :blog="blog"
                 :vertical="index !== 0"
                 :aspect-ratio="index === 0 ? 'padding-top: 37.5%' : undefined"
@@ -33,7 +33,7 @@
             style="margin-bottom: 0"
           >
             <li v-for="blog in trunkedBlog" :key="blog.id" class="blog__item">
-              <BlogTileView :blog="blog" :vertical="false" :aspect-ratio="'padding-top: 28.88%'" />
+              <BlogListItem :blog="blog" :vertical="false" :aspect-ratio="'padding-top: 28.88%'" />
             </li>
           </ul>
         </div>
@@ -43,38 +43,40 @@
 </template>
 
 <script lang="ts">
-import { Context } from "@nuxt/types/app"
-import { Component, Vue } from "nuxt-property-decorator"
-import BlogTileView from "~/components/blog-tile.vue"
-import { Blog } from "~/models/blog"
-import { blogListStore } from "~/store"
+import { BlogGroup } from "../../types/blog"
+import BlogListItem from "../../components/BlogListItem.vue"
+import { computed, defineComponent, ref, unref } from "vue"
 
-@Component({
+export default defineComponent({
   components: {
-    BlogTileView
-  }
-})
-export default class BlogListView extends Vue {
-  get latestBlog(): Array<Blog> {
-    return blogListStore.latestBlog
-  }
+    BlogListItem
+  },
+  setup() {
+    const blogGroup = ref<BlogGroup>({})
 
-  get featuredBlog(): Array<Blog> {
-    return blogListStore.featuredBlog
-  }
+    const latestBlog = computed(() => unref(blogGroup).latestBlog)
+    const featuredBlog = computed(() => unref(blogGroup).featuredBlog)
+    const trunkedBlog = computed(() => unref(blogGroup).trunkedBlog)
 
-  get trunkedBlog(): Array<Blog> {
-    return blogListStore.trunkedBlog
-  }
+    const loadData = async () => {
+      try {
+        const response = await fetch(`/users/${import.meta.env.USER}/blog`)
+        blogGroup.value = await response.json()
+      } catch (error) {
+        handleError(error)
+      }
+    }
 
-  async asyncData(context: Context): Promise<void> {
-    try {
-      await blogListStore.onLoading(context)
-    } catch (error) {
-      context.error(error)
+    const handleError = (e: any) => void 0
+
+    return {
+      latestBlog,
+      featuredBlog,
+      trunkedBlog,
+      loadData
     }
   }
-}
+})
 </script>
 
 <style lang="scss">
