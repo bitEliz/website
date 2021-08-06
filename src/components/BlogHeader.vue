@@ -19,17 +19,22 @@
           <time pubdate :datetime="blog.createdAt">{{ blog.createdAt }}</time>
         </div>
       </div>
-      <div v-if="blog.excerpt" class="blog__excerpt" :inner-html.prop="blog.excerpt | markup"></div>
+      <div v-if="blog.excerpt" class="blog__excerpt" :inner-html.prop="blog.excerpt"></div>
     </div>
   </header>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "nuxt-property-decorator"
-import { Blog } from "~/models/blog"
+import { defineComponent, PropType, toRef } from "vue"
+import { Blog } from "../types/blog"
 
-@Component
-export default class BlogHeaderView extends Vue {
-  @Prop({ required: true }) blog!: Blog
-}
+export default defineComponent({
+  props: {
+    blog: Object as PropType<Blog>
+  },
+  setup(props) {
+    const blog = toRef(props, "blog")
+    return { blog }
+  }
+})
 </script>

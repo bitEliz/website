@@ -64,7 +64,7 @@
             <div class="project__list-wrapper">
               <ul class="project__list list--unstyled">
                 <li v-for="proj in g.list" :key="proj.id" class="project__list-item">
-                  <ProjTileView :content="proj" />
+                  <ProjectListItem :content="proj" />
                 </li>
               </ul>
             </div>
@@ -122,19 +122,17 @@
 </template>
 
 <script lang="ts">
-// import { MetaInfo } from "vue-meta"
-import darkModeEnabled from "~/utils/dark-mode"
-import ProjectTileView from "/@/components/proj-tile-view.vue"
-import { Project, User } from "/@/models/resume"
-import { computed, defineComponent, onMounted, onUnmounted, ref, unref } from "vue"
+import ProjectListItem from "../components/ProjectListItem.vue"
+import { Project, User } from "../types/resume"
 import { useRoute } from "vue-router"
-import { ListGroup, MDL_ID } from "/@/models/list-group"
-import markup from "/@/utils/markup"
+import { ListGroup, MDL_ID } from "../types/list-group"
+import markup from "../utils/markup"
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
+import { defineComponent, ref, computed, unref, onMounted } from "vue"
 
 export default defineComponent({
   components: {
-    ProjectTileView,
+    ProjectListItem,
     CloseOutlined,
     MenuOutlined
   },
