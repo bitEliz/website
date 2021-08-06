@@ -1,5 +1,6 @@
 import { Directive, DirectiveBinding } from "vue"
 import { BVScrollSpy } from "./scrollspy"
+import { onlyDigitsRE } from "./utils"
 
 const HAS_WINDOW_SUPPORT = typeof window !== "undefined"
 const HAS_DOCUMENT_SUPPORT = typeof document !== "undefined"
@@ -14,41 +15,36 @@ const BV_SCROLLSPY = "__BV_ScrollSpy__"
 // Arguments and modifiers take precedence over passed value config object
 /* istanbul ignore next: not easy to test */
 const parseBindings = (binding: DirectiveBinding) => /* istanbul ignore next: not easy to test */ {
-  const config = BVScrollSpy.DefaultConfig
+  let config = BVScrollSpy.defaultConfig
 
-  console.log("Parsing binding: ", binding)
-
-  // // If argument, assume element ID
+  // If argument, assume element ID
   if (binding.arg) {
-    //   // Element ID specified as arg
-    //   // We must prepend '#' to become a CSS selector
+    // Element ID specified as arg
+    // We must prepend '#' to become a CSS selector
     config.scroller = `#${binding.arg}`
   }
 
-  // // Process modifiers
-  // Object.keys(bindings.modifiers).forEach((mod) => {
-  //   if (onlyDigitsRE.test(mod)) {
-  //     // Offset value
-  //     config.offset = toInteger(mod, 0)
-  //   }
-  // })
+  // Process modifiers
+  Object.keys(binding.modifiers).forEach((modifier) => {
+    if (onlyDigitsRE.test(modifier)) {
+      // Offset value
+      const integer = parseInt(modifier, 10)
+      config.offset = isNaN(integer) ? config.offset : integer
+    }
+  })
 
-  // // Process value
-  // if (typeof bindings.value === "string") {
-  //   // Value is a CSS ID or selector
-  //   config.element = bindings.value
-  // } else if (typeof bindings.value === "number") {
-  //   // Value is offset
-  //   config.offset = Math.round(bindings.value)
-  // } else if (isObject(bindings.value)) {
-  //   // Value is config object
-  //   // Filter the object based on our supported config options
-  //   Object.keys(bindings.value)
-  //     .filter((k) => !!BVScrollSpy.DefaultType[k])
-  //     .forEach((k) => {
-  //       config[k] = bindings.value[k]
-  //     })
-  // }
+  // Process value
+  if (typeof binding.value === "string") {
+    // Value is a CSS ID or selector
+    config.scroller = binding.value
+  } else if (typeof binding.value === "number") {
+    // Value is offset
+    config.offset = Math.round(binding.value)
+  } else if (binding.value !== null && typeof binding.value === "object") {
+    // Value is config object
+    // Filter the object based on our supported config options
+    config = binding.value
+  }
 
   return config
 }

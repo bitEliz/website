@@ -1,45 +1,22 @@
 // HREFs must end with a hash followed by at least one non-hash character
 import { ComponentPublicInstance } from "vue"
-
-const RX_HREF = /^.*(#[^#]+)$/
-const RX_BV_PREFIX = /^(BV?)/
-const RX_HYPHENATE = /\B([A-Z])/g
+import { RX_HREF, ROOT_EVENT_NAME_ACTIVATE, hasClass } from "./utils"
 
 const SELECTOR_NAV_ITEMS = ".nav-item"
 const SELECTOR_NAV_LINKS = ".nav-link"
 
-const ROOT_EVENT_NAME_PREFIX = "bv"
-const ROOT_EVENT_NAME_SEPARATOR = "::"
-
-// --- Utilities ---
-
-// Converts PascalCase or camelCase to kebab-case
-const kebabCase = (str: string) => {
-  return str.replace(RX_HYPHENATE, "-$1").toLowerCase()
+export interface IConfig {
+  offset?: number
+  activeClass?: string
+  scroller?: HTMLElement | string | null
+  throttle?: number
+  selector?: string
 }
-
-// Helper method to convert a component/directive name to a base event name
-// `getBaseEventName('BNavigationItem')` => 'navigation-item'
-// `getBaseEventName('BVToggle')` => 'toggle'
-const getBaseEventName = (value: string) => kebabCase(value.replace(RX_BV_PREFIX, ""))
-
-// Get a root event name by component/directive and event name
-// `getBaseEventName('BModal', 'show')` => 'bv::modal::show'
-const getRootEventName = (name: string, eventName: string) =>
-  [ROOT_EVENT_NAME_PREFIX, getBaseEventName(name), eventName].join(ROOT_EVENT_NAME_SEPARATOR)
-
-const ROOT_EVENT_NAME_ACTIVATE = getRootEventName("BVScrollspy", "activate")
 
 export class BVScrollSpy {
   $el: HTMLElement
   $scroller: HTMLElement | Window | null
-  $config: {
-    offset: number
-    activeClass: string
-    scroller: HTMLElement | string | null
-    throttle: number
-    selector: string | null
-  }
+  $config: IConfig
   $activeTarget: string | null
   $offsets: number[]
   $targets: string[]
@@ -47,10 +24,9 @@ export class BVScrollSpy {
   $resizeTimeout: NodeJS.Timeout | null
   $root: ComponentPublicInstance | null
 
-  static get DefaultConfig() {
+  static get defaultConfig(): IConfig {
     return {
       offset: 0,
-      hrefAttribute: "href",
       activeClass: "active",
       scroller: "body",
       throttle: 75,
@@ -58,30 +34,28 @@ export class BVScrollSpy {
     }
   }
 
-  constructor(element: HTMLElement, config = {}, $root: ComponentPublicInstance | null) {
+  constructor(element: HTMLElement, config: IConfig, $root: ComponentPublicInstance | null) {
     this.$el = element
     this.$scroller = null
-    this.$config = { ...BVScrollSpy.DefaultConfig, ...config }
     this.$offsets = []
     this.$targets = []
     this.$scrollHeight = 0
     this.$resizeTimeout = null
     this.$activeTarget = null
     this.$root = $root
+    this.$config = {}
     this.updateConfig(config, $root)
   }
 
-  private updateConfig(config: {}, $root: ComponentPublicInstance | null) {
+  private updateConfig(config: IConfig, $root: ComponentPublicInstance | null) {
     if (this.$scroller) {
       this.unlisten()
       this.$scroller = null
     }
-    const cfg = { ...BVScrollSpy.DefaultConfig, ...config }
     if ($root) {
       this.$root = $root
     }
-    this.$config = cfg
-
+    this.$config = Object.assign(BVScrollSpy.defaultConfig, config)
     if (this.$root) {
       const self = this
       this.$root!.$nextTick(() => {
@@ -147,7 +121,7 @@ export class BVScrollSpy {
     this.$scrollHeight = this.getScrollHeight()
 
     Array.from(
-      this.$el.querySelectorAll(this.$config.selector ?? BVScrollSpy.DefaultConfig.selector)
+      this.$el.querySelectorAll(this.$config.selector ?? BVScrollSpy.defaultConfig.selector!)
     )
       // Get HREF value
       .map((link) => link.getAttribute("href"))
@@ -188,9 +162,10 @@ export class BVScrollSpy {
   }
 
   private process() {
-    const scrollTop = this.getScrollTop() + this.$config.offset
+    const scrollTop =
+      this.getScrollTop() + (this.$config.offset ?? BVScrollSpy.defaultConfig.offset!)
     const scrollHeight = this.getScrollHeight()
-    const maxScroll = this.$config.offset + scrollHeight - this.getOffsetHeight()
+    const maxScroll = this.$config.offset! + scrollHeight - this.getOffsetHeight()
 
     if (this.$scrollHeight != scrollHeight) {
       this.refresh()
@@ -272,7 +247,7 @@ export class BVScrollSpy {
     // Grab the list of target links (<a href="{$target}">)
     const links = Array.from(
       this.$el.querySelectorAll(
-        (this.$config.selector ?? BVScrollSpy.DefaultConfig.selector)
+        (this.$config.selector ?? BVScrollSpy.defaultConfig.selector!)
           // Split out the base selectors
           .split(",")
           // Map to a selector that matches links with HREF ending in the ID (including '#')
@@ -292,19 +267,15 @@ export class BVScrollSpy {
 
   private clear() {
     Array.from(this.$el.querySelectorAll(`${this.$config.selector}`))
-      .filter((el) => this.hasClass(el, this.$config.activeClass))
+      .filter((el) => hasClass(el, this.$config.activeClass!))
       .forEach((el) => this.setActiveState(el, false))
   }
 
   private setActiveState(el: Element, active: boolean) {
     if (active) {
-      el.classList.add(this.$config.activeClass)
+      el.classList.add(this.$config.activeClass!)
     } else {
-      el.classList.remove(this.$config.activeClass)
+      el.classList.remove(this.$config.activeClass!)
     }
-  }
-
-  private hasClass(el: Element, className: string) {
-    return el.classList.contains(className)
   }
 }
