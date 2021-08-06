@@ -3,7 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 const routes: RouteRecordRaw[] = [
   {
     path: "/blog",
-    component: () => import("../views/blog/index.vue" /* webpackChunkName: "views/blog/index" */),
+    component: () => import("../views/blog/Index.vue" /* webpackChunkName: "views/blog/index" */),
     name: "blog"
   },
   {
