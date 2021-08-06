@@ -1,4 +1,4 @@
-import { Model } from "./model"
+import Model from "./model"
 
 export interface Project extends Model<string> {
   summary: string
