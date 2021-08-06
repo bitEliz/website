@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   Col,
+  Collapse,
   ConfigProvider,
   Image,
   List,
@@ -29,6 +30,7 @@ async function main() {
     .use(Button)
     .use(Card)
     .use(Col)
+    .use(Collapse)
     .use(ConfigProvider)
     .use(Image)
     .use(List)

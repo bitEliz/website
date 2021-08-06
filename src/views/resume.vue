@@ -1,21 +1,30 @@
 <template>
   <div id="__cv">
-    <nav class="nav sm:nav--expand">
-      <div class="wrapper--fluid">
-        <div class="nav__logo">{{ fullname }}</div>
-        <button v-b-toggle.collapse class="nav__menu-toggle"></button>
-        <b-collapse id="collapse" class="nav__collapse justify--flex-end">
-          <ul v-b-scrollspy="44" class="nav__item-list">
-            <li v-for="mdl in modules" :key="mdl.id" class="nav__item nav-item">
-              <a class="nav__link nav-link" :href="'#' + mdl.id">{{ mdl.title }}</a>
-            </li>
-          </ul>
-        </b-collapse>
-      </div>
+    <nav class="nav">
+      <a-row align="top" justify="space-between" style="width: 100%">
+        <div class="nav__logo">{{ getFullname }}</div>
+        <a-collapse
+          v-model:activeKey="state.active"
+          :bordered="false"
+          :accordion="true"
+          expand-icon-position="right"
+        >
+          <template #expandIcon="{ isActive }">
+            <CloseOutlined class="nav__menu-toggle" v-if="isActive" />
+            <MenuOutlined class="nav__menu-toggle" v-else />
+          </template>
+          <a-collapse-panel key="__nav_pannel__">
+            <ul class="nav__item-list" v-bk-scrollspy:body.14="12">
+              <li v-for="mdle in getMdles" :key="mdle.id" class="nav__item nav-item">
+                <a class="nav__link nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
+              </li>
+            </ul>
+          </a-collapse-panel>
+        </a-collapse>
+      </a-row>
     </nav>
-
     <main>
-      <section v-for="mdl in modules" :id="mdl.id" :key="mdl.id" :class="mdl.id">
+      <section v-for="mdl in getMdles" :id="mdl.id" :key="mdl.id" :class="mdl.id">
         <div
           v-if="mdl.id === MDL_ID.PROFILE"
           class="section__wrapper d--flex flex--column sm:flex--row align-i--center"
@@ -26,7 +35,7 @@
               :src="mdl.list[0].avatarUrl"
               alt="User Avatar"
             ></a-avatar>
-            <h1 class="txt-t--uppercase">{{ fullname }}</h1>
+            <h1 class="txt-t--uppercase">{{ getFullname }}</h1>
             <ul v-if="mdl.list[0].social" class="list--unstyled m-b--0">
               <li
                 v-for="(social, index) in mdl.list[0].social"
@@ -117,121 +126,124 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "nuxt-property-decorator"
-import { MetaInfo } from "vue-meta"
+// import { MetaInfo } from "vue-meta"
 import darkModeEnabled from "~/utils/dark-mode"
-import ProjectTileView from "~/components/proj-tile-view.vue"
-import { ListGroup, MDL_ID } from "~/models/list-group"
-import { Project, User } from "~/models/resume"
+import ProjectTileView from "/@/components/proj-tile-view.vue"
+import { Project, User } from "/@/models/resume"
+import { computed, defineComponent, onMounted, onUnmounted, ref, unref } from "vue"
+import { useRoute } from "vue-router"
+import { ListGroup, MDL_ID } from "/@/models/list-group"
+import markup from "/@/utils/markup"
+import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
 
-@Component({
-  fetchOnServer: false,
-  layout: "copyright",
+export default defineComponent({
   components: {
-    ProjectTileView
+    ProjectTileView,
+    CloseOutlined,
+    MenuOutlined
   },
-  head(this: ResumeView): MetaInfo {
-    return {
-      title: this.title,
-      htmlAttrs: {
-        lang: "zh-CN"
+  setup() {
+    const user = ref<User | undefined>()
+
+    const state = ref({ active: "__nav_pannel__" })
+
+    const getMdles = computed(() => _getMdles(unref(user)))
+
+    const getFullname = computed(() => {
+      const $user = unref(user)
+      const lastName = $user?.lastName ?? ""
+      const firstName = $user?.firstName ?? ""
+      return lastName + firstName
+    })
+
+    const getAboutMeHtmlLiteral = computed(() => markup(unref(user)?.aboutMe))
+
+    const getTitle = computed(() => unref(user)?.username?.toUpperCase() ?? "")
+
+    function _getMdles(arg?: User) {
+      const result: ListGroup<any>[] = []
+
+      if (!arg) {
+        return result
       }
-    }
-  },
-  async asyncData({ $axios, $config }) {
-    const user = await $axios.$get(`/users/${$config.uid}/resume`)
-    return { user }
-  }
-})
-export default class ResumeView extends Vue {
-  MDL_ID = MDL_ID
 
-  get modules(): Array<ListGroup<any>> {
-    return this._fillList(this.user)
-  }
+      const user = arg!
 
-  get fullname(): string {
-    const lastName = this.user?.lastName ?? ""
-    const firstName = this.user?.firstName ?? ""
-    return lastName + firstName
-  }
+      result.push(new ListGroup(MDL_ID.PROFILE, "简介", [arg]))
 
-  get title(): string {
-    return this.user?.username?.toUpperCase() ?? ""
-  }
+      const PROJ_VISIBILITY_PUBLIC = "public"
+      const GITHUB = "github.com"
 
-  user?: User
+      // Filter visible projects
+      const repositories = user.projects?.filter(
+        (e) =>
+          e.visibility === PROJ_VISIBILITY_PUBLIC &&
+          e.trackViewUrl &&
+          e.trackViewUrl?.indexOf(GITHUB) !== -1
+      )
+      const apps = user.projects?.filter(
+        (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.trackViewUrl?.indexOf(GITHUB) === -1
+      )
 
-  mounted() {
-    darkModeEnabled()
-  }
+      const proj: ListGroup<Project>[] = []
+      proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", repositories))
+      proj.push(new ListGroup(MDL_ID.DEFAULT, "精选项目", apps))
+      result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj))
 
-  _fillList(arg?: User) {
-    const result: ListGroup<any>[] = []
+      const exp: ListGroup<any>[] = []
+      exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.experiences))
+      exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.education))
+      result.push(new ListGroup(MDL_ID.EXPERIENCE, "经历", exp))
 
-    if (!arg) {
+      result.push(new ListGroup(MDL_ID.SKILL, "技能", user.skill!.professional))
+
       return result
     }
 
-    const PROJ_VISIBILITY_PUBLIC = "public"
-    const GITHUB = "github.com"
+    const route = useRoute()
 
-    const user = arg!
-
-    result.push(new ListGroup(MDL_ID.PROFILE, "简介", [arg]))
-
-    // Filter visible proj.
-    const githubList: Project[] = []
-    const otherList: Project[] = []
-    user.projects?.forEach((proj) => {
-      // Only `proj.visibility` marked as `public` can pass filter.
-      if (proj.visibility === PROJ_VISIBILITY_PUBLIC) {
-        // All github repo project are marked as open source proj.
-        if (proj.trackViewUrl && proj.trackViewUrl?.indexOf(GITHUB) !== -1) {
-          githubList.push(proj)
-        } else {
-          otherList.push(proj)
-        }
+    async function loadUser() {
+      try {
+        const response = await fetch("http://localhost:8080/users/paul/resume")
+        user.value = await response.json()
+      } catch (error) {
+        handleError(error)
       }
+    }
+
+    function handleError(error: Error) {
+      console.log(error)
+    }
+
+    function handleResize() {
+      if (window.innerWidth > 576) state.value.active = "__nav_pannel__"
+    }
+
+    onMounted(loadUser)
+    // onMounted(() => window.addEventListener("resize", handleResize))
+    // onUnmounted(() => window.removeEventListener("resize", handleResize))
+    onMounted(() => {
+      window.onresize = handleResize
     })
 
-    const proj: ListGroup<Project>[] = []
-
-    if (githubList.length) {
-      proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", githubList))
+    return {
+      state,
+      getMdles,
+      getFullname,
+      getAboutMeHtmlLiteral,
+      getTitle,
+      MDL_ID,
+      markup
     }
-
-    if (otherList.length) {
-      proj.push(new ListGroup(MDL_ID.DEFAULT, "精选项目", otherList))
-    }
-
-    if (proj.length) {
-      result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj))
-    }
-
-    const exp: ListGroup<any>[] = []
-    if (user.experiences?.length) {
-      exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.experiences))
-    }
-
-    if (user.education?.length) {
-      exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.education))
-    }
-
-    if (exp.length) {
-      result.push(new ListGroup(MDL_ID.EXPERIENCE, "经历", exp))
-    }
-
-    if (user.skill?.professional?.length) {
-      result.push(new ListGroup(MDL_ID.SKILL, "技能", user.skill!.professional))
-    }
-    return result
   }
-}
+})
 </script>
 
 <style lang="scss">
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
+@import "node_modules/prettify/scss/_functions.scss";
+@import "node_modules/prettify/scss/_variables.scss";
+@import "node_modules/prettify/scss/_mixins.scss";
 
 #__cv {
   .nav {
@@ -243,24 +255,40 @@ export default class ResumeView extends Vue {
     backdrop-filter: blur(10px);
     box-shadow: var(--shadow-sm);
     // border-bottom: 1px solid rgb(230, 230, 230);
-    z-index: $zindex-sticky;
+    z-index: 1000;
 
     .nav__logo {
       padding: 9.5px 0;
     }
 
-    .nav__menu-toggle {
-      width: 21px;
-      height: 21px;
-      background: no-repeat url(~@/assets/img/close.svg);
-      border-color: transparent;
+    .ant {
+      &-collapse {
+        @include media-breakpoint-down(xs) {
+          flex: 1 1 auto;
+        }
 
-      &.collapsed {
-        background: no-repeat url(~@/assets/img/menu.svg);
+        &-item {
+          border-bottom: none;
+        }
+
+        &-content-box {
+          padding: 9.5px 0;
+        }
+
+        &-header {
+          height: 44px;
+          @include media-breakpoint-up(sm) {
+            display: none;
+          }
+        }
       }
     }
 
     .nav__item-list {
+      @include media-breakpoint-up(sm) {
+        flex-direction: row;
+      }
+
       & > :not(:last-child) {
         border-right-color: transparent;
         @include media-breakpoint-up(sm) {
