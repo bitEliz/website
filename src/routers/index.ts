@@ -6,12 +6,12 @@ const routes: RouteRecordRaw[] = [
     component: () => import("../views/blog/index.vue" /* webpackChunkName: "views/blog/index" */),
     name: "blog"
   },
-  //   {
-  //     path: "/pure-md-resume",
-  //     component: () =>
-  //       import("../views/pure-md-resume.ts" /* webpackChunkName: "views/pure-md-resume" */),
-  //     name: "pure-md-resume"
-  //   },
+  {
+    path: "/pure-md-resume",
+    component: () =>
+      import("../views/static/PureMDFile.vue" /* webpackChunkName: "views/static/PureMDFile" */),
+    name: "pure-md-resume"
+  },
   {
     path: "/resume",
     component: () => import("../views/Resume.vue" /* webpackChunkName: "views/resume" */),
@@ -23,8 +23,9 @@ const routes: RouteRecordRaw[] = [
     name: "blog-id"
   },
   {
-    path: "/static/:id?",
-    component: () => import("../views/static/_id.vue" /* webpackChunkName: "views/static/_id" */),
+    path: "/static/:id",
+    component: () =>
+      import("../views/static/PureMDFile.vue" /* webpackChunkName: "views/static/PureMDFile" */),
     name: "static-id"
   }
 ]
