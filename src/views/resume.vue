@@ -14,7 +14,7 @@
             <MenuOutlined class="nav__menu-toggle" v-else />
           </template>
           <a-collapse-panel key="__nav_pannel__">
-            <ul class="nav__item-list" v-bk-scrollspy:body.14="12">
+            <ul class="nav__item-list" v-bk-scrollspy.44>
               <li v-for="mdle in getMdles" :key="mdle.id" class="nav__item nav-item">
                 <a class="nav__link nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
               </li>
