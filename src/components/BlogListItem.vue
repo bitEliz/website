@@ -24,18 +24,30 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "nuxt-property-decorator"
-import { Blog } from "~/models/blog"
+import { defineComponent, PropType, toRef } from "vue"
+import { Blog } from "../types/blog"
 
-@Component
-export default class BlogTileView extends Vue {
-  @Prop({ required: true }) blog!: Blog
-  // Default aspect ratio is 16/9.
-  // set value with formmat `padding-top: value`,
-  // `value = (height / width) * 100%`.
-  @Prop() aspectRatio?: string
-  @Prop({ default: true }) vertical!: boolean
-}
+export default defineComponent({
+  props: {
+    blog: Object as PropType<Blog>,
+    // Default aspect ratio is 16/9.
+    // set value with formmat `padding-top: value`,
+    // `value = (height / width) * 100%`.
+    aspectRatio: String,
+    vertical: Boolean
+  },
+  setup(props) {
+    const blog = toRef(props, "blog")
+    const aspectRatio = toRef(props, "aspectRatio")
+    const vertical = toRef(props, "vertical")
+
+    return {
+      blog,
+      aspectRatio,
+      vertical
+    }
+  }
+})
 </script>
 
 <style lang="scss">
