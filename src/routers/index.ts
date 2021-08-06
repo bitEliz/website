@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
   //   },
   {
     path: "/resume",
-    component: () => import("../views/resume.vue" /* webpackChunkName: "views/resume" */),
+    component: () => import("../views/Resume.vue" /* webpackChunkName: "views/resume" */),
     name: "resume"
   },
   {
