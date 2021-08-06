@@ -55,7 +55,7 @@
           <div
             v-if="mdl.list[0].aboutMe"
             class="profile__about"
-            :inner-html.prop="mdl.list[0].aboutMe | markup"
+            v-html="getAboutMeHtmlLiteral"
           ></div>
         </div>
         <template v-else-if="mdl.id === MDL_ID.PROJECT">
@@ -113,11 +113,7 @@
         <div v-else class="section__wrapper">
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <ul class="list--unstyled">
-            <li
-              v-for="(skill, index) in mdl.list"
-              :key="index"
-              :inner-html.prop="skill | markup"
-            ></li>
+            <li v-for="(skill, index) in mdl.list" :key="index" v-html="markup(skill)"></li>
           </ul>
         </div>
       </section>
