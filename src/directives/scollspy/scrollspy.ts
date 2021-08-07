@@ -109,7 +109,6 @@ export class BVScrollSpy {
   }
 
   private refresh() {
-    console.log("BVScrollSpy refreshing...")
     const scroller = this.getScroller()
     if (!scroller) {
       return
