@@ -21,7 +21,7 @@ export class BVScrollSpy {
   $offsets: number[]
   $targets: string[]
   $scrollHeight: number
-  $resizeTimeout: NodeJS.Timeout | null
+  $resizeTimeout: any
   $root: ComponentPublicInstance | null
 
   static get defaultConfig(): IConfig {
