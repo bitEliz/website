@@ -1,5 +1,5 @@
 import { Article } from "./article"
-import { Model } from "./model"
+import Model from "./model"
 
 export interface Blog extends Model<string>, Article {
   id: string
@@ -10,6 +10,7 @@ export interface Blog extends Model<string>, Article {
   tags?: Array<string>
   excerpt?: string
   content?: string
+  createdAt?: string
 }
 
 export class BlogGroup {

@@ -2,22 +2,22 @@
   <a
     class="tile d--flex flex--column"
     :class="!vertical ? 'sm:flex--row' : ''"
-    :href="'/blog/' + blog.alias"
+    :href="'/blog/' + blog?.alias ?? ''"
   >
-    <div v-if="blog.artworkUrl" class="tile__media" :style="aspectRatio ? aspectRatio : ''">
-      <img :src="blog.artworkUrl" />
+    <div v-if="blog?.artworkUrl" class="tile__media" :style="aspectRatio ? aspectRatio : ''">
+      <img :src="blog?.artworkUrl" />
     </div>
 
     <div class="tile__description d--flex flex--column justify--space-between" aria-hidden="true">
       <div class="tile__head">
-        <div class="tile__category txt-t--uppercase">{{ blog.category }}</div>
+        <div class="tile__category txt-t--uppercase">{{ blog?.tags }}</div>
         <div class="tile__headline">
-          {{ blog.title }}
+          {{ blog?.title }}
         </div>
       </div>
 
-      <time class="tile__timestamp txt-t--uppercase" :datatime="blog.createdAt">
-        {{ blog.createdAt }}
+      <time class="tile__timestamp txt-t--uppercase" :datatime="blog?.createdAt">
+        {{ blog?.createdAt }}
       </time>
     </div>
   </a>

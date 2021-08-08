@@ -38,8 +38,8 @@
             <h1 class="txt-t--uppercase">{{ getFullname }}</h1>
             <ul v-if="mdl.list[0].social" class="list--unstyled m-b--0">
               <li
-                v-for="(social, index) in mdl.list[0].social"
-                :key="index"
+                v-for="social in mdl.list[0].social"
+                :key="social.id"
                 class="d--inline-flex align-i--center justify-c--center"
               >
                 <a :href="social.service.name === 'Mail' ? 'mailto:' + social.url : social.url">
@@ -58,6 +58,32 @@
             v-html="getAboutMeHtmlLiteral"
           ></div>
         </div>
+        <a-row align="middle" class="section__wrapper" v-if="mdl.id === MDL_ID.PROFILE">
+          <a-col>
+            <a-avatar
+              class="profile__avatar"
+              :src="mdl.list[0].avatarUrl"
+              alt="User Avatar"
+            ></a-avatar>
+            <h1 class="txt-t--uppercase">{{ getFullname }}</h1>
+            <a-row v-if="mdl.list[0].social" align="middle" justify="space-evenly">
+              <template v-for="social in mdl.list[0].social" :key="social.id">
+                <a :href="social.service.name === 'Mail' ? 'mailto:' + social.url : social.url">
+                  <i
+                    class="ali"
+                    :class="social.service.name.toLowerCase()"
+                    style="font-size: 2rem"
+                  />
+                </a>
+              </template>
+            </a-row>
+          </a-col>
+          <div
+            v-if="mdl.list[0].aboutMe"
+            class="profile__about"
+            v-html="getAboutMeHtmlLiteral"
+          ></div>
+        </a-row>
         <template v-else-if="mdl.id === MDL_ID.PROJECT">
           <div v-for="g in mdl.list" :key="g.id" class="section__wrapper">
             <h1 class="txt-t--uppercase">{{ g.title }}</h1>
@@ -77,7 +103,7 @@
           <ul v-for="m in mdl.list" :key="m.id" class="exp__list list--unstyled">
             <h1 class="txt-t--uppercase">{{ m.title }}</h1>
             <template v-if="m.id === MDL_ID.EXPERIENCE">
-              <li v-for="(exp, index) in m.list" :key="index" class="exp__list-item">
+              <li v-for="exp in m.list" :key="exp.id" class="exp__list-item">
                 <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
                 <time
                   class="d--inline-block"
@@ -86,14 +112,14 @@
                   >{{ exp.startDate + " - " + exp.endDate }}</time
                 >
                 <ul v-if="exp.responsibilities" class="list--circle-inside">
-                  <li v-for="(responsibility, idx) in exp.responsibilities" :key="idx">
+                  <li v-for="responsibility in exp.responsibilities" :key="responsibility">
                     {{ responsibility }}
                   </li>
                 </ul>
               </li>
             </template>
             <template v-if="m.id === MDL_ID.EDUCATIONAL">
-              <li v-for="(exp, index) in m.list" :key="index" class="exp__list-item">
+              <li v-for="exp in m.list" :key="exp.id" class="exp__list-item">
                 <h4>
                   <i class="ali degree icon" />
                   {{ exp.field }} • {{ exp.degree }}
@@ -113,7 +139,7 @@
         <div v-else class="section__wrapper">
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
           <ul class="list--unstyled">
-            <li v-for="(skill, index) in mdl.list" :key="index" v-html="markup(skill)"></li>
+            <li v-for="skill in mdl.list" :key="skill" v-html="markup(skill)"></li>
           </ul>
         </div>
       </section>
@@ -124,11 +150,10 @@
 <script lang="ts">
 import ProjectListItem from "../components/ProjectListItem.vue"
 import { Project, User } from "../types/resume"
-import { useRoute } from "vue-router"
 import { ListGroup, MDL_ID } from "../types/list-group"
 import markup from "../utils/markup"
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
-import { defineComponent, ref, computed, unref, onMounted } from "vue"
+import { defineComponent, ref, computed, unref, onMounted, onUnmounted, reactive } from "vue"
 
 export default defineComponent({
   components: {
@@ -137,9 +162,9 @@ export default defineComponent({
     MenuOutlined
   },
   setup() {
-    const user = ref<User | undefined>()
+    const user = ref<User>()
 
-    const state = ref({ active: "__nav_pannel__" })
+    const state = reactive({ active: "__nav_pannel__" })
 
     const getMdles = computed(() => _getMdles(unref(user)))
 
@@ -154,7 +179,11 @@ export default defineComponent({
 
     const getTitle = computed(() => unref(user)?.username?.toUpperCase() ?? "")
 
-    function _getMdles(arg?: User) {
+    // const getMeta = computed(() => ({
+    //   title: unref(user)?.username?.toUpperCase()
+    // }))
+
+    const _getMdles = (arg?: User) => {
       const result: ListGroup<any>[] = []
 
       if (!arg) {
@@ -194,9 +223,7 @@ export default defineComponent({
       return result
     }
 
-    const route = useRoute()
-
-    async function loadUser() {
+    const loadUser = async () => {
       try {
         const response = await fetch("http://localhost:8080/users/paul/resume")
         user.value = await response.json()
@@ -205,20 +232,15 @@ export default defineComponent({
       }
     }
 
-    function handleError(error: Error) {
+    const handleError = (error: Error) => {
       console.log(error)
     }
 
-    function handleResize() {
-      if (window.innerWidth > 576) state.value.active = "__nav_pannel__"
-    }
+    const handleResize = () => (state.active = window.innerWidth > 576 ? "__nav_pannel__" : "")
 
     onMounted(loadUser)
-    // onMounted(() => window.addEventListener("resize", handleResize))
-    // onUnmounted(() => window.removeEventListener("resize", handleResize))
-    onMounted(() => {
-      window.onresize = handleResize
-    })
+    onMounted(() => window.addEventListener("resize", handleResize))
+    onUnmounted(() => window.removeEventListener("resize", handleResize))
 
     return {
       state,

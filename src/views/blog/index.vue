@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="blog">
     <main role="main">
-      <section v-if="latestBlog.length" class="blog__lastest">
+      <section v-if="latestBlog?.length" class="blog__lastest">
         <div class="wrapper">
           <h1>Latest Blog</h1>
           <ul
@@ -22,10 +22,10 @@
           </ul>
         </div>
       </section>
-      <section v-if="featuredBlog.length" class="blog__featured">
+      <section v-if="featuredBlog?.length" class="blog__featured">
         <h1>Featured Blog</h1>
       </section>
-      <section v-if="trunkedBlog.length" class="blog__more--trunked">
+      <section v-if="trunkedBlog?.length" class="blog__more--trunked">
         <div class="wrapper">
           <h1>More Blog</h1>
           <ul
