@@ -23,13 +23,16 @@
 </template>
 
 <script lang="ts">
-import { NuxtError } from "@nuxt/types"
-import { Component, Prop, Vue } from "nuxt-property-decorator"
+import { defineComponent } from "vue"
 
-@Component
-export default class ErrorView extends Vue {
-  @Prop() error!: NuxtError
-}
+export default defineComponent({
+  props: {
+    error: {
+      type: Object,
+      default: {}
+    }
+  }
+})
 </script>
 
 <style lang="scss">

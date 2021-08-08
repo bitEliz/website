@@ -1,31 +1,32 @@
 <template>
   <header
     class="header blog__summary"
-    :class="blog.artworkUrl ? 'd--flex flex--column sm:flex--row' : ''"
+    :class="artworkUrl ? 'd--flex flex--column sm:flex--row' : ''"
   >
-    <div v-if="blog.artworkUrl" class="blog__media" style="padding-bottom: 25%">
-      <img :src="blog.artworkUrl" />
+    <div v-if="artworkUrl" class="blog__media" style="padding-bottom: 25%">
+      <img :src="artworkUrl" />
     </div>
 
     <div class="blog__description">
       <div class="blog__head">
-        <h1 class="blog__headline">{{ blog.title }}</h1>
+        <h1 class="blog__headline">{{ title }}</h1>
         <div class="blog__category txt-t--uppercase" style="margin-bottom: 1rem">
           <div class="tag__list">
-            <span v-for="tag in blog.tags" :key="tag" class="tag" style="margin-right: 0.5rem">{{
+            <span v-for="tag in tags" :key="tag" class="tag" style="margin-right: 0.5rem">{{
               tag
             }}</span>
           </div>
-          <time pubdate :datetime="blog.createdAt">{{ blog.createdAt }}</time>
+          <time pubdate :datetime="datetime">{{ datetime }}</time>
         </div>
       </div>
-      <div v-if="blog.excerpt" class="blog__excerpt" :inner-html.prop="blog.excerpt"></div>
+      <div v-if="excerpt" class="blog__excerpt" v-html="excerpt"></div>
     </div>
   </header>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, toRef } from "vue"
+import { computed, defineComponent, PropType, toRef, unref } from "vue"
+import markup from "~/utils/markup"
 import { Blog } from "../types/blog"
 
 export default defineComponent({
@@ -34,7 +35,13 @@ export default defineComponent({
   },
   setup(props) {
     const blog = toRef(props, "blog")
-    return { blog }
+    const title = computed(() => unref(blog)?.title)
+    const excerpt = computed(() => markup(unref(blog)?.excerpt))
+    const datetime = computed(() => unref(blog)?.createdAt)
+    const tags = computed(() => unref(blog)?.tags)
+    const artworkUrl = computed(() => unref(blog)?.artworkUrl)
+
+    return { artworkUrl, title, excerpt, datetime, tags }
   }
 })
 </script>
