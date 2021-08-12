@@ -15,7 +15,6 @@ import { Project } from "../types/resume"
 import markup from "../utils/markup"
 
 export default defineComponent({
-  name: "ProjectListItem",
   props: {
     content: Object as PropType<Project>
   },
