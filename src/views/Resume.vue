@@ -90,7 +90,7 @@
             <div class="project__list-wrapper">
               <ul class="project__list list--unstyled">
                 <li v-for="proj in g.list" :key="proj.id" class="project__list-item">
-                  <ProjectListItem :content="proj" />
+                  <ProjectGridItem :content="proj" />
                 </li>
               </ul>
             </div>
@@ -148,7 +148,7 @@
 </template>
 
 <script lang="ts">
-import ProjectListItem from "../components/ProjectListItem.vue"
+import ProjectGridItem from "../components/ProjectGridItem.vue"
 import { Project, User } from "../types/resume"
 import { ListGroup, MDL_ID } from "../types/list-group"
 import markup from "../utils/markup"
@@ -157,7 +157,7 @@ import { defineComponent, ref, computed, unref, onMounted, onUnmounted, reactive
 
 export default defineComponent({
   components: {
-    ProjectListItem,
+    ProjectGridItem,
     CloseOutlined,
     MenuOutlined
   },
