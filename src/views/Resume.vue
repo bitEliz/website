@@ -58,36 +58,10 @@
             v-html="getAboutMeHtmlLiteral"
           ></div>
         </div>
-        <a-row align="middle" class="section__wrapper" v-if="mdl.id === MDL_ID.PROFILE">
-          <a-col>
-            <a-avatar
-              class="profile__avatar"
-              :src="mdl.list[0].avatarUrl"
-              alt="User Avatar"
-            ></a-avatar>
-            <h1 class="txt-t--uppercase">{{ getFullname }}</h1>
-            <a-row v-if="mdl.list[0].social" align="middle" justify="space-evenly">
-              <template v-for="social in mdl.list[0].social" :key="social.id">
-                <a :href="social.service.name === 'Mail' ? 'mailto:' + social.url : social.url">
-                  <i
-                    class="ali"
-                    :class="social.service.name.toLowerCase()"
-                    style="font-size: 2rem"
-                  />
-                </a>
-              </template>
-            </a-row>
-          </a-col>
-          <div
-            v-if="mdl.list[0].aboutMe"
-            class="profile__about"
-            v-html="getAboutMeHtmlLiteral"
-          ></div>
-        </a-row>
         <template v-else-if="mdl.id === MDL_ID.PROJECT">
-          <div v-for="g in mdl.list" :key="g.id" class="section__wrapper">
-            <h1 class="txt-t--uppercase">{{ g.title }}</h1>
-            <div class="project__list-wrapper">
+          <div class="section__wrapper">
+            <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
+            <div class="project__list-wrapper" v-for="g in mdl.list" :key="g.id">
               <ul class="project__list list--unstyled">
                 <li v-for="proj in g.list" :key="proj.id" class="project__list-item">
                   <ProjectGridItem :content="proj" />
@@ -154,6 +128,7 @@ import { ListGroup, MDL_ID } from "../types/list-group"
 import markup from "../utils/markup"
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
 import { defineComponent, ref, computed, unref, onMounted, onUnmounted, reactive } from "vue"
+import { useFetch } from "~/composables/fetch"
 
 export default defineComponent({
   components: {
@@ -162,7 +137,7 @@ export default defineComponent({
     MenuOutlined
   },
   setup() {
-    const user = ref<User>()
+    const { result: user } = useFetch("/api/users/paul/resume")
 
     const state = reactive({ active: "__nav_pannel__" })
 
@@ -179,9 +154,9 @@ export default defineComponent({
 
     const getTitle = computed(() => unref(user)?.username?.toUpperCase() ?? "")
 
-    // const getMeta = computed(() => ({
-    //   title: unref(user)?.username?.toUpperCase()
-    // }))
+    const getMeta = computed(() => ({
+      title: unref(user)?.username?.toUpperCase()
+    }))
 
     const _getMdles = (arg?: User) => {
       const result: ListGroup<any>[] = []
@@ -192,7 +167,7 @@ export default defineComponent({
 
       const user = arg!
 
-      result.push(new ListGroup(MDL_ID.PROFILE, "简介", [arg]))
+      result.push(new ListGroup(MDL_ID.PROFILE, "简介", [user]))
 
       const PROJ_VISIBILITY_PUBLIC = "public"
       const GITHUB = "github.com"
@@ -209,9 +184,17 @@ export default defineComponent({
       )
 
       const proj: ListGroup<Project>[] = []
-      proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", repositories))
-      proj.push(new ListGroup(MDL_ID.DEFAULT, "精选项目", apps))
-      result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj))
+      if (repositories?.length) {
+        proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", repositories))
+      }
+
+      if (apps?.length) {
+        proj.push(new ListGroup(MDL_ID.DEFAULT, "精选项目", apps))
+      }
+
+      if (proj.length) {
+        result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj))
+      }
 
       const exp: ListGroup<any>[] = []
       exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.experiences))
@@ -223,22 +206,8 @@ export default defineComponent({
       return result
     }
 
-    const loadUser = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/users/paul/resume")
-        user.value = await response.json()
-      } catch (error) {
-        handleError(error)
-      }
-    }
-
-    const handleError = (error: Error) => {
-      console.log(error)
-    }
-
     const handleResize = () => (state.active = window.innerWidth > 576 ? "__nav_pannel__" : "")
 
-    onMounted(loadUser)
     onMounted(() => window.addEventListener("resize", handleResize))
     onUnmounted(() => window.removeEventListener("resize", handleResize))
 
@@ -249,7 +218,8 @@ export default defineComponent({
       getAboutMeHtmlLiteral,
       getTitle,
       MDL_ID,
-      markup
+      markup,
+      user
     }
   }
 })
