@@ -1,9 +1,8 @@
 import { ref, onMounted, Ref, unref, onUnmounted } from "vue"
 
-export function useFetch(url: RequestInfo, init?: RequestInit) {
+export function useFetch(url: RequestInfo, baseUrl: string = "", init?: RequestInit) {
   const response = ref<Response>()
   const result = ref<any>()
-
   const isLoading = ref(false)
   const isSuccess = ref(false)
   const isCancelled = ref(false)
@@ -16,7 +15,7 @@ export function useFetch(url: RequestInfo, init?: RequestInit) {
     isLoading.value = true
 
     try {
-      const _response = await window.fetch(url, { signal, ...init })
+      const _response = await fetch(baseUrl + url, { signal, ...init })
       response.value = _response
       isLoading.value = false
       isSuccess.value = _response.ok
@@ -33,6 +32,7 @@ export function useFetch(url: RequestInfo, init?: RequestInit) {
       }
       result.value = await _response.text()
     } catch (e) {
+      isSuccess.value = false
       isLoading.value = false
     }
   }
@@ -51,6 +51,7 @@ export function useFetch(url: RequestInfo, init?: RequestInit) {
   onUnmounted(cancel)
 
   return {
+    response,
     result,
     status,
     isLoading,
