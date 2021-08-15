@@ -58,18 +58,22 @@
             v-html="getAboutMeHtmlLiteral"
           ></div>
         </div>
-        <template v-else-if="mdl.id === MDL_ID.PROJECT">
-          <div class="section__wrapper">
-            <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
-            <div class="project__list-wrapper" v-for="g in mdl.list" :key="g.id">
-              <ul class="project__list list--unstyled">
-                <li v-for="proj in g.list" :key="proj.id" class="project__list-item">
+        <div v-else-if="mdl.id === MDL_ID.PROJECT" class="section__wrapper">
+          <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
+          <div class="project__list-wrapper" v-for="g in mdl.list" :key="g.id">
+            <a-list
+              :grid="{ gutter: 16, md: 2, lg: 3, xl: 3, xxl: 3 }"
+              :data-source="g.list"
+              class="project__list"
+            >
+              <template #renderItem="{ item: proj }">
+                <a-list-item class="project__list-item">
                   <ProjectGridItem :content="proj" />
-                </li>
-              </ul>
-            </div>
+                </a-list-item>
+              </template>
+            </a-list>
           </div>
-        </template>
+        </div>
         <div
           v-else-if="mdl.id === MDL_ID.EXPERIENCE"
           class="section__wrapper d--flex flex--column sm:flex--row"
@@ -354,63 +358,33 @@ export default defineComponent({
       width: 100%;
 
       .project__list {
-        margin-left: 0;
-        margin-bottom: -2.25rem;
-        margin-right: -2.25rem;
-        display: flex;
-        flex-flow: row wrap;
-
         .project__list-item {
-          margin-bottom: 2.25rem;
-          margin-right: 2.25rem;
-          width: calc(100% / 3 - 2.25rem);
-
           .tile {
             padding: 2rem;
             padding-bottom: 1rem;
             color: inherit;
-            // height: 100%;
 
             .tile__media img {
               width: 5rem;
               height: 5rem;
               border-radius: 8px;
             }
+
+            .tile__media svg {
+              width: 5rem;
+              height: 5rem;
+            }
           }
         }
       }
 
-      @media (max-width: 1068px) {
+      @media (max-width: 991px) {
         width: 692px;
-
-        .project__list {
-          margin-bottom: -1.5rem;
-          margin-right: -1.5rem;
-          flex-flow: row wrap;
-
-          .project__list-item {
-            margin-bottom: 1.5rem;
-            margin-right: 1.5rem;
-            width: calc(50% - 1.5rem);
-          }
-        }
       }
 
-      @media (max-width: 734px) {
+      @media (max-width: 767px) {
         max-width: 366px;
         width: 87.5%;
-
-        .project__list {
-          margin-bottom: -1.5rem;
-          margin-right: 0;
-          display: flex;
-          flex-flow: column nowrap;
-
-          .project__list-item {
-            margin-right: 0;
-            width: 100%;
-          }
-        }
       }
     }
 
