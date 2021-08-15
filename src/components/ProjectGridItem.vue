@@ -1,5 +1,10 @@
 <template>
-  <a class="tile" :href="link" target="_blank">
+  <a
+    class="tile"
+    :href="link"
+    target="_blank"
+    :style="content.trackViewUrl ? 'cursor: pointer;' : 'cursor: default;'"
+  >
     <div class="tile__media">
       <GithubFilled v-if="content.isOpenSource && !imageUrl" />
       <img v-else :src="imageUrl" alt="artwork" />
@@ -43,6 +48,8 @@ export default defineComponent({
   display: block;
   background: var(--white);
   border-radius: 0.5rem;
+  padding: 2rem;
+  padding-bottom: 1rem;
 
   %margin-bottom {
     margin-bottom: 1.5rem;
@@ -50,6 +57,13 @@ export default defineComponent({
 
   & &__media {
     @extend %margin-bottom;
+  }
+
+  img,
+  svg {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 8px;
   }
 }
 </style>
