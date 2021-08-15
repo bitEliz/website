@@ -74,45 +74,44 @@
             </a-list>
           </div>
         </div>
-        <div
-          v-else-if="mdl.id === MDL_ID.EXPERIENCE"
-          class="section__wrapper d--flex flex--column sm:flex--row"
-        >
-          <ul v-for="m in mdl.list" :key="m.id" class="exp__list list--unstyled">
-            <h1 class="txt-t--uppercase">{{ m.title }}</h1>
-            <template v-if="m.id === MDL_ID.EXPERIENCE">
-              <li v-for="exp in m.list" :key="exp.id" class="exp__list-item">
-                <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
-                <time
-                  class="d--inline-block"
-                  style="margin-bottom: 0.5rem"
-                  :datetime="exp.startDate + '/' + exp.endDate"
-                  >{{ exp.startDate + " - " + exp.endDate }}</time
-                >
-                <ul v-if="exp.responsibilities" class="list--circle-inside">
-                  <li v-for="responsibility in exp.responsibilities" :key="responsibility">
-                    {{ responsibility }}
-                  </li>
-                </ul>
-              </li>
-            </template>
-            <template v-if="m.id === MDL_ID.EDUCATIONAL">
-              <li v-for="exp in m.list" :key="exp.id" class="exp__list-item">
-                <h4>
-                  <i class="ali degree icon" />
-                  {{ exp.field }} • {{ exp.degree }}
-                </h4>
+        <div v-else-if="mdl.id === MDL_ID.EXPERIENCE" class="section__wrapper">
+          <a-row :gutter="32">
+            <a-col span="12" style="min-width: 400px" v-for="m in mdl.list" :key="m.id">
+              <ul class="exp__list list--unstyled">
+                <h1 class="txt-t--uppercase">{{ m.title }}</h1>
+                <li v-for="exp in m.list" :key="exp.id" class="exp__list-item">
+                  <template v-if="m.id === MDL_ID.EXPERIENCE">
+                    <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
+                    <time
+                      class="d--inline-block"
+                      style="margin-bottom: 0.5rem"
+                      :datetime="exp.startDate + '/' + exp.endDate"
+                      >{{ exp.startDate + " - " + exp.endDate }}</time
+                    >
+                    <ul v-if="exp.responsibilities" class="list--circle-inside">
+                      <li v-for="responsibility in exp.responsibilities" :key="responsibility">
+                        {{ responsibility }}
+                      </li>
+                    </ul>
+                  </template>
+                  <template v-if="m.id === MDL_ID.EDUCATIONAL">
+                    <h4>
+                      <i class="ali degree icon" />
+                      {{ exp.field }} • {{ exp.degree }}
+                    </h4>
 
-                <time
-                  class="d--inline-block"
-                  style="margin-bottom: 0.5rem"
-                  :datetime="exp.startYear + '/' + exp.endYear"
-                  >{{ exp.startYear + " - " + exp.endYear }}</time
-                >
-                <h5>{{ exp.school }}</h5>
-              </li>
-            </template>
-          </ul>
+                    <time
+                      class="d--inline-block"
+                      style="margin-bottom: 0.5rem"
+                      :datetime="exp.startYear + '/' + exp.endYear"
+                      >{{ exp.startYear + " - " + exp.endYear }}</time
+                    >
+                    <h5>{{ exp.school }}</h5>
+                  </template>
+                </li>
+              </ul>
+            </a-col>
+          </a-row>
         </div>
         <div v-else class="section__wrapper">
           <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
@@ -354,25 +353,8 @@ export default defineComponent({
       margin: 0 auto;
       width: 100%;
 
-      .project__list {
-        .project__list-item {
-          .tile {
-            padding: 2rem;
-            padding-bottom: 1rem;
-            color: inherit;
-
-            .tile__media img {
-              width: 5rem;
-              height: 5rem;
-              border-radius: 8px;
-            }
-
-            .tile__media svg {
-              width: 5rem;
-              height: 5rem;
-            }
-          }
-        }
+      .project__list-item .tile {
+        color: inherit;
       }
 
       @media (max-width: 991px) {
@@ -386,23 +368,7 @@ export default defineComponent({
     }
 
     .exp__list {
-      flex-basis: 50%;
-
-      &:not(:first-child) {
-        padding-top: $spacing * 2;
-        @include media-breakpoint-up(sm) {
-          padding-top: 0;
-          padding-left: $spacing * 2;
-        }
-      }
-
-      &:not(:last-child) {
-        margin-bottom: $spacing;
-        @include media-breakpoint-up(sm) {
-          margin-bottom: 0;
-          margin-right: $spacing * 2;
-        }
-      }
+      min-width: 300px;
 
       .exp__list-item {
         &:not(:last-child) {
