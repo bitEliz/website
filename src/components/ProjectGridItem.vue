@@ -1,7 +1,8 @@
 <template>
   <a class="tile" :href="link" target="_blank">
     <div class="tile__media">
-      <img :src="imageUrl" alt="" />
+      <GithubFilled v-if="content.isOpenSource && !imageUrl" />
+      <img v-else :src="imageUrl" alt="artwork" />
     </div>
     <div class="tile__description">
       <div class="tile__excerpt" v-html="excerpt" />
@@ -13,10 +14,14 @@
 import { computed, defineComponent, PropType, toRef, unref } from "vue"
 import { Project } from "../types/resume"
 import markup from "../utils/markup"
+import { GithubFilled } from "@ant-design/icons-vue"
 
 export default defineComponent({
   props: {
     content: Object as PropType<Project>
+  },
+  components: {
+    GithubFilled
   },
   setup(props) {
     const content = toRef(props, "content")

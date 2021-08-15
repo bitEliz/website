@@ -178,13 +178,10 @@ export default defineComponent({
 
       // Filter visible projects
       const repositories = user.projects?.filter(
-        (e) =>
-          e.visibility === PROJ_VISIBILITY_PUBLIC &&
-          e.trackViewUrl &&
-          e.trackViewUrl?.indexOf(GITHUB) !== -1
+        (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.isOpenSource == true
       )
       const apps = user.projects?.filter(
-        (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.trackViewUrl?.indexOf(GITHUB) === -1
+        (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.isOpenSource == false
       )
 
       const proj: ListGroup<Project>[] = []

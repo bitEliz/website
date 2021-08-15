@@ -1,6 +1,7 @@
 import Model from "./model"
 
 export interface Project extends Model<string> {
+  isOpenSource: boolean
   summary: string
   trackViewUrl?: string
   artworkUrl?: string
