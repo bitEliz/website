@@ -15,9 +15,15 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         javascriptEnabled: true
-      },
-      scss: {
-        additionalData: "@import 'node_modules/prettify/scss/prettify.scss';"
+      }
+    }
+  },
+  server: {
+    proxy: {
+      "^/api/": {
+        target: "https://api.akii.me",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, "")
       }
     }
   },
