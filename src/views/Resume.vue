@@ -14,7 +14,7 @@
             <MenuOutlined class="nav__menu-toggle" v-else />
           </template>
           <a-collapse-panel key="__nav_pannel__">
-            <ul class="nav__item-list" v-bk-scrollspy.44>
+            <ul class="nav__item-list list--unstyled" v-bk-scrollspy.44>
               <li v-for="mdle in getMdles" :key="mdle.id" class="nav__item nav-item">
                 <a class="nav__link nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
               </li>
@@ -25,41 +25,36 @@
     </nav>
     <main>
       <section v-for="mdl in getMdles" :id="mdl.id" :key="mdl.id" :class="mdl.id">
-        <div
-          v-if="mdl.id === MDL_ID.PROFILE"
-          class="section__wrapper d--flex flex--column sm:flex--row align-i--center"
-        >
-          <div class="profile__me txt-a--center">
-            <a-avatar
-              class="profile__avatar"
-              :src="mdl.list[0].avatarUrl"
-              alt="User Avatar"
-            ></a-avatar>
-            <h1 class="txt-t--uppercase">{{ getFullname }}</h1>
-            <ul v-if="mdl.list[0].social" class="list--unstyled m-b--0">
-              <li
-                v-for="social in mdl.list[0].social"
-                :key="social.id"
-                class="d--inline-flex align-i--center justify-c--center"
-              >
-                <a :href="social.service.name === 'Mail' ? 'mailto:' + social.url : social.url">
-                  <i
-                    class="ali"
-                    :class="social.service.name.toLowerCase()"
-                    style="font-size: 2rem"
-                  />
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div
-            v-if="mdl.list[0].aboutMe"
-            class="profile__about"
-            v-html="getAboutMeHtmlLiteral"
-          ></div>
+        <div v-if="mdl.id === MDL_ID.PROFILE" class="section__wrapper">
+          <a-row align="middle" :gutter="64">
+            <a-col class="profile__me">
+              <a-avatar
+                class="profile__avatar"
+                :src="mdl.list[0].avatarUrl"
+                alt="User Avatar"
+              ></a-avatar>
+              <h1>{{ getFullname }}</h1>
+              <a-row align="middle" justify="center" v-if="mdl.list[0].social" :gutter="16">
+                <a-col v-for="social in mdl.list[0].social" :key="social.id">
+                  <a :href="social.service.name === 'Mail' ? 'mailto:' + social.url : social.url">
+                    <i
+                      class="ali"
+                      :class="social.service.name.toLowerCase()"
+                      style="font-size: 2rem"
+                    />
+                  </a>
+                </a-col>
+              </a-row>
+            </a-col>
+            <a-col
+              v-if="mdl.list[0].aboutMe"
+              class="profile__about"
+              v-html="getAboutMeHtmlLiteral"
+            ></a-col>
+          </a-row>
         </div>
         <div v-else-if="mdl.id === MDL_ID.PROJECT" class="section__wrapper">
-          <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
+          <h1>{{ mdl.title }}</h1>
           <div class="project__list-wrapper" v-for="g in mdl.list" :key="g.id">
             <a-list
               :grid="{ gutter: 16, md: 2, lg: 3, xl: 3, xxl: 3 }"
@@ -78,12 +73,11 @@
           <a-row :gutter="32">
             <a-col span="12" style="min-width: 400px" v-for="m in mdl.list" :key="m.id">
               <ul class="exp__list list--unstyled">
-                <h1 class="txt-t--uppercase">{{ m.title }}</h1>
+                <h1>{{ m.title }}</h1>
                 <li v-for="exp in m.list" :key="exp.id" class="exp__list-item">
                   <template v-if="m.id === MDL_ID.EXPERIENCE">
                     <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
                     <time
-                      class="d--inline-block"
                       style="margin-bottom: 0.5rem"
                       :datetime="exp.startDate + '/' + exp.endDate"
                       >{{ exp.startDate + " - " + exp.endDate }}</time
@@ -101,7 +95,6 @@
                     </h4>
 
                     <time
-                      class="d--inline-block"
                       style="margin-bottom: 0.5rem"
                       :datetime="exp.startYear + '/' + exp.endYear"
                       >{{ exp.startYear + " - " + exp.endYear }}</time
@@ -114,7 +107,7 @@
           </a-row>
         </div>
         <div v-else class="section__wrapper">
-          <h1 class="txt-t--uppercase">{{ mdl.title }}</h1>
+          <h1>{{ mdl.title }}</h1>
           <ul class="list--unstyled">
             <li v-for="skill in mdl.list" :key="skill" v-html="markup(skill)"></li>
           </ul>
@@ -227,9 +220,6 @@ export default defineComponent({
 
 <style lang="scss">
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
-@import "node_modules/prettify/scss/_functions.scss";
-@import "node_modules/prettify/scss/_variables.scss";
-@import "node_modules/prettify/scss/_mixins.scss";
 
 #__cv {
   .nav {
@@ -237,10 +227,10 @@ export default defineComponent({
     position: sticky;
     min-width: 100%;
     padding: 0 1rem;
-    background: var(--black-025);
+    background: #fafafb;
     backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-sm);
-    // border-bottom: 1px solid rgb(230, 230, 230);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.05),
+      0 2px 8px rgba(0, 0, 0, 0.05);
     z-index: 1000;
 
     .nav__logo {
@@ -249,10 +239,6 @@ export default defineComponent({
 
     .ant {
       &-collapse {
-        @include media-breakpoint-down(xs) {
-          flex: 1 1 auto;
-        }
-
         &-item {
           border-bottom: none;
         }
@@ -263,7 +249,7 @@ export default defineComponent({
 
         &-header {
           height: 44px;
-          @include media-breakpoint-up(sm) {
+          @media (min-width: 567px) {
             display: none;
           }
         }
@@ -271,38 +257,44 @@ export default defineComponent({
     }
 
     .nav__item-list {
-      @include media-breakpoint-up(sm) {
-        flex-direction: row;
+      display: flex;
+      flex-flow: row nowrap;
+      list-style: none;
+      margin-bottom: 0;
+      padding-left: 0;
+      @media (max-width: 576px) {
+        flex-direction: column;
       }
 
       & > :not(:last-child) {
         border-right-color: transparent;
-        @include media-breakpoint-up(sm) {
-          border-right: 1px solid var(--black-100);
+        @media (min-width: 576px) {
+          border-right: 1px solid #d6d9dc;
         }
       }
 
       .nav__link {
+        padding: 0.5em 1rem;
         text-transform: uppercase;
-        @include media-breakpoint-up(sm) {
-          padding: 0 $nav-link-padding-x;
-        }
+        // @include media-breakpoint-up(sm) {
+        //   padding: 0 $nav-link-padding-x;
+        // }
 
-        color: var(--black-400);
+        color: #848d95;
 
         &:hover {
-          color: var(--powder-400);
+          color: #a0c7e4;
         }
 
         &.active {
-          color: var(--black);
+          color: black;
         }
       }
     }
   }
 
   section {
-    color: var(--black-700);
+    color: #2f3337;
 
     .section__wrapper {
       margin: 0 auto;
@@ -311,19 +303,16 @@ export default defineComponent({
     }
 
     &:nth-child(even) {
-      background: var(--black-025);
+      background: #fafafb;
     }
 
     &.profile {
       .section__wrapper {
         padding-top: 2rem;
 
-        & > div:not(:first-child) {
-          margin-left: 0;
-          margin-top: $spacing;
-          @include media-breakpoint-up(sm) {
-            margin-left: 4rem;
-            margin-top: 0;
+        @media (max-width: 767px) {
+          > .ant-row {
+            flex-direction: column;
           }
         }
       }
@@ -337,15 +326,7 @@ export default defineComponent({
       }
 
       .profile__me {
-        ul li {
-          &:not(:last-child) {
-            margin-right: $spacing;
-          }
-
-          &:hover {
-            color: var(--blue-500);
-          }
-        }
+        text-align: center;
       }
     }
 
@@ -372,7 +353,7 @@ export default defineComponent({
 
       .exp__list-item {
         &:not(:last-child) {
-          margin-bottom: $spacing * 2;
+          margin-bottom: 32px;
         }
       }
     }

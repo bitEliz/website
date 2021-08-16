@@ -46,7 +46,7 @@ export default defineComponent({
 .tile {
   width: 100%;
   display: block;
-  background: var(--white);
+  background: white;
   border-radius: 0.5rem;
   padding: 2rem;
   padding-bottom: 1rem;
