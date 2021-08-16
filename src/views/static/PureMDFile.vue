@@ -41,7 +41,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 #__file {
-  color: var(--black-700);
+  color: #3c4146;
   font-size: 85%;
 
   main {
@@ -56,7 +56,8 @@ export default defineComponent({
       }
 
       ul {
-        @include list-unstyled();
+        list-style: none;
+        padding-left: 0;
       }
 
       hr {

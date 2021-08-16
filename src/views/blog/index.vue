@@ -81,7 +81,7 @@ export default defineComponent({
 
 <style lang="scss">
 .blog {
-  background: var(--black-025);
+  background: #fafafb;
 
   .blog__item-list {
     $blog__item-padding: 2rem;

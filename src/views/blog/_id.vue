@@ -50,7 +50,7 @@ export default defineComponent({
 
 article {
   header {
-    border-bottom: 1px solid var(--black-075);
+    border-bottom: 1px solid #e4e6e8;
     margin-bottom: 2.5rem;
   }
 

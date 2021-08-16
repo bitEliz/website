@@ -53,7 +53,7 @@ export default defineComponent({
 <style lang="scss">
 .tile {
   width: 100%;
-  background: var(--white);
+  background: white;
   border-radius: 0.5rem;
 
   .tile__media {
