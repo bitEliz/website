@@ -40,7 +40,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="less">
 .blog {
   max-width: 798px;
   min-width: 320px;

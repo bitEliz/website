@@ -39,7 +39,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 #__file {
   color: #3c4146;
   font-size: 85%;
