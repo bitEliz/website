@@ -166,7 +166,6 @@ export default defineComponent({
       result.push(new ListGroup(MDL_ID.PROFILE, "简介", [user]))
 
       const PROJ_VISIBILITY_PUBLIC = "public"
-      const GITHUB = "github.com"
 
       // Filter visible projects
       const repositories = user.projects?.filter(
@@ -218,7 +217,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
 
 #__cv {
@@ -237,21 +236,19 @@ export default defineComponent({
       padding: 9.5px 0;
     }
 
-    .ant {
-      &-collapse {
-        &-item {
-          border-bottom: none;
-        }
+    .ant-collapse {
+      ::v-deep(.ant-collapse-item) {
+        border-bottom: none;
+      }
 
-        &-content-box {
-          padding: 9.5px 0;
-        }
+      ::v-deep(.ant-collapse-content-box) {
+        padding: 9.5px 0;
+      }
 
-        &-header {
-          height: 44px;
-          @media (min-width: 567px) {
-            display: none;
-          }
+      ::v-deep(.ant-collapse-header) {
+        height: 44px;
+        @media (min-width: 577px) {
+          display: none;
         }
       }
     }
