@@ -123,7 +123,7 @@ import { Project, User } from "../types/resume"
 import { ListGroup, MDL_ID } from "../types/list-group"
 import markup from "../utils/markup"
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
-import { defineComponent, ref, computed, unref, onMounted, onUnmounted, reactive } from "vue"
+import { defineComponent, computed, unref, onMounted, onUnmounted, reactive } from "vue"
 import { useFetch } from "~/composables/fetch"
 
 export default defineComponent({
@@ -218,7 +218,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="less">
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
 
 #__cv {
