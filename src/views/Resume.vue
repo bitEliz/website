@@ -1,5 +1,7 @@
 <template>
-  <div id="__cv">
+  <a-spin v-if="!getMdles.length" class="ps-abs-middle"></a-spin>
+
+  <div id="__cv" v-else>
     <nav class="nav">
       <a-row align="middle" justify="space-between" style="width: 100%">
         <a-col class="nav__logo">{{ getFullname }}</a-col>
@@ -221,6 +223,16 @@ export default defineComponent({
 
 <style lang="less" scoped>
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
+
+.ps-abs-middle {
+  position: absolute;
+  left: calc(50% - 27px);
+  top: calc(50% - 27px);
+
+  ::v-deep(span[role="img"]) {
+    font-size: 54px;
+  }
+}
 
 #__cv {
   .nav {
