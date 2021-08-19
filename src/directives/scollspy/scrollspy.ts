@@ -14,7 +14,7 @@ export interface IConfig {
 }
 
 export class BVScrollSpy {
-  $el: HTMLElement
+  $el: HTMLElement | null
   $scroller: HTMLElement | Window | null
   $config: IConfig
   $activeTarget: string | null
@@ -87,6 +87,19 @@ export class BVScrollSpy {
     window.removeEventListener("orientationchange", this)
   }
 
+  dispose() {
+    this.unlisten()
+    clearTimeout(this.$resizeTimeout)
+    this.$resizeTimeout = null
+    this.$el = null
+    this.$config = BVScrollSpy.defaultConfig
+    this.$scroller = null
+    this.$offsets = []
+    this.$targets = []
+    this.$activeTarget = null
+    this.$scrollHeight = 0
+  }
+
   handleEvent(event: Event | string) {
     const type = typeof event === "string" ? event : event.type
 
@@ -120,7 +133,7 @@ export class BVScrollSpy {
     this.$scrollHeight = this.getScrollHeight()
 
     Array.from(
-      this.$el.querySelectorAll(this.$config.selector ?? BVScrollSpy.defaultConfig.selector!)
+      this.$el?.querySelectorAll(this.$config.selector ?? BVScrollSpy.defaultConfig.selector!) ?? []
     )
       // Get HREF value
       .map((link) => link.getAttribute("href"))
@@ -245,7 +258,7 @@ export class BVScrollSpy {
 
     // Grab the list of target links (<a href="{$target}">)
     const links = Array.from(
-      this.$el.querySelectorAll(
+      this.$el?.querySelectorAll(
         (this.$config.selector ?? BVScrollSpy.defaultConfig.selector!)
           // Split out the base selectors
           .split(",")
@@ -253,7 +266,7 @@ export class BVScrollSpy {
           .map((selector) => `${selector}[href$="${target}"]`)
           // Join back into a single selector string
           .join(",")
-      )
+      ) ?? []
     )
 
     links.forEach((link) => this.setActiveState(link, true))
@@ -265,7 +278,7 @@ export class BVScrollSpy {
   }
 
   private clear() {
-    Array.from(this.$el.querySelectorAll(`${this.$config.selector}`))
+    Array.from(this.$el?.querySelectorAll(`${this.$config.selector}`) ?? [])
       .filter((el) => hasClass(el, this.$config.activeClass!))
       .forEach((el) => this.setActiveState(el, false))
   }
