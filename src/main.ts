@@ -13,12 +13,14 @@ import {
   Radio,
   Rate,
   Row,
+  Spin,
   Tag
 } from "ant-design-vue"
-import { createApp } from "vue"
+import { createApp, createVNode } from "vue"
 import App from "./App.vue"
 import router from "./routers"
 import { VBScrollspy } from "/@/directives/scollspy"
+import { LoadingOutlined } from "@ant-design/icons-vue"
 
 async function main() {
   const app = createApp(App)
@@ -26,6 +28,10 @@ async function main() {
   app.use(router)
 
   app.directive("bk-scrollspy", VBScrollspy)
+
+  Spin.setDefaultIndicator({
+    indicator: createVNode(LoadingOutlined)
+  })
 
   app
     .use(Anchor)
@@ -42,6 +48,7 @@ async function main() {
     .use(Radio)
     .use(Rate)
     .use(Row)
+    .use(Spin)
     .use(Tag)
 
   app.mount("#app")
