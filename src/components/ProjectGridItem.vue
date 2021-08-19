@@ -10,7 +10,7 @@
       <img v-else :src="imageUrl" alt="artwork" />
     </div>
     <div class="tile__description">
-      <div class="tile__excerpt" v-html="excerpt" />
+      <Markup class="tile__excerpt" :src="excerpt"></Markup>
     </div>
   </a>
 </template>
@@ -18,7 +18,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, toRef, unref } from "vue"
 import { Project } from "../types/resume"
-import markup from "../utils/markup"
+import Markup from "../components/markup"
 import { GithubFilled } from "@ant-design/icons-vue"
 
 export default defineComponent({
@@ -26,13 +26,14 @@ export default defineComponent({
     content: Object as PropType<Project>
   },
   components: {
-    GithubFilled
+    GithubFilled,
+    Markup
   },
   setup(props) {
     const content = toRef(props, "content")
     const link = computed(() => unref(content)?.trackViewUrl)
     const imageUrl = computed(() => unref(content)?.artworkUrl)
-    const excerpt = computed(() => markup(unref(content)?.summary))
+    const excerpt = computed(() => unref(content)?.summary)
     return {
       link,
       imageUrl,

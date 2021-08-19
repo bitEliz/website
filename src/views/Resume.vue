@@ -46,11 +46,9 @@
                 </a-col>
               </a-row>
             </a-col>
-            <a-col
-              v-if="mdl.list[0].aboutMe"
-              class="profile__about"
-              v-html="getAboutMeHtmlLiteral"
-            ></a-col>
+            <a-col v-if="mdl.list[0].aboutMe" class="profile__about">
+              <Markup :src="mdl.list[0].aboutMe"></Markup>
+            </a-col>
           </a-row>
         </div>
         <div v-else-if="mdl.id === MDL_ID.PROJECT" class="section__wrapper">
@@ -109,7 +107,7 @@
         <div v-else class="section__wrapper">
           <h1>{{ mdl.title }}</h1>
           <ul class="list--unstyled">
-            <li v-for="skill in mdl.list" :key="skill" v-html="markup(skill)"></li>
+            <li v-for="skill in mdl.list" :key="skill"><Markup :src="skill" /></li>
           </ul>
         </div>
       </section>
@@ -121,16 +119,17 @@
 import ProjectGridItem from "../components/ProjectGridItem.vue"
 import { Project, User } from "../types/resume"
 import { ListGroup, MDL_ID } from "../types/list-group"
-import markup from "../utils/markup"
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
 import { defineComponent, computed, unref, onMounted, onUnmounted, reactive } from "vue"
 import { useFetch } from "~/composables/fetch"
+import Markup from "~/components/markup"
 
 export default defineComponent({
   components: {
     ProjectGridItem,
     CloseOutlined,
-    MenuOutlined
+    MenuOutlined,
+    Markup
   },
   setup() {
     const { result: user } = useFetch("/api/users/paul/resume")
@@ -145,8 +144,6 @@ export default defineComponent({
       const firstName = $user?.firstName ?? ""
       return lastName + firstName
     })
-
-    const getAboutMeHtmlLiteral = computed(() => markup(unref(user)?.aboutMe))
 
     const getTitle = computed(() => unref(user)?.username?.toUpperCase() ?? "")
 
@@ -207,10 +204,8 @@ export default defineComponent({
       state,
       getMdles,
       getFullname,
-      getAboutMeHtmlLiteral,
       getTitle,
       MDL_ID,
-      markup,
       user
     }
   }
@@ -233,7 +228,7 @@ export default defineComponent({
     z-index: 1000;
 
     .nav__logo {
-      padding: 9.5px 0;
+      padding: 11px 0;
     }
 
     .ant-collapse {
@@ -242,7 +237,7 @@ export default defineComponent({
       }
 
       ::v-deep(.ant-collapse-content-box) {
-        padding: 9.5px 0;
+        padding: 11px 0;
       }
 
       ::v-deep(.ant-collapse-header) {

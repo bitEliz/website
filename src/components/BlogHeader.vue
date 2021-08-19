@@ -19,24 +19,27 @@
           <time pubdate :datetime="datetime">{{ datetime }}</time>
         </div>
       </div>
-      <div v-if="excerpt" class="blog__excerpt" v-html="excerpt"></div>
+      <Markup v-if="excerpt" class="blog__excerpt" :src="excerpt"></Markup>
     </div>
   </header>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType, toRef, unref } from "vue"
-import markup from "~/utils/markup"
+import Markup from "~/components/markup"
 import { Blog } from "../types/blog"
 
 export default defineComponent({
+  components: {
+    Markup
+  },
   props: {
     blog: Object as PropType<Blog>
   },
   setup(props) {
     const blog = toRef(props, "blog")
     const title = computed(() => unref(blog)?.title)
-    const excerpt = computed(() => markup(unref(blog)?.excerpt))
+    const excerpt = computed(() => unref(blog)?.excerpt)
     const datetime = computed(() => unref(blog)?.createdAt)
     const tags = computed(() => unref(blog)?.tags)
     const artworkUrl = computed(() => unref(blog)?.artworkUrl)
