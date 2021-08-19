@@ -1,27 +1,34 @@
 <template>
   <div id="__cv">
     <nav class="nav">
-      <a-row align="top" justify="space-between" style="width: 100%">
-        <div class="nav__logo">{{ getFullname }}</div>
-        <a-collapse
-          v-model:activeKey="state.active"
-          :bordered="false"
-          :accordion="true"
-          expand-icon-position="right"
-        >
-          <template #expandIcon="{ isActive }">
-            <CloseOutlined class="nav__menu-toggle" v-if="isActive" />
-            <MenuOutlined class="nav__menu-toggle" v-else />
-          </template>
-          <a-collapse-panel key="__nav_pannel__">
-            <ul class="nav__item-list list--unstyled" v-bk-scrollspy.44>
-              <li v-for="mdle in getMdles" :key="mdle.id" class="nav__item nav-item">
-                <a class="nav__link nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
-              </li>
-            </ul>
-          </a-collapse-panel>
-        </a-collapse>
+      <a-row align="middle" justify="space-between" style="width: 100%">
+        <a-col class="nav__logo">{{ getFullname }}</a-col>
+        <a-col v-if="lessThanOrEqualSmall" @click="activeKey = activeKey === '1' ? '0' : '1'">
+          <CloseOutlined class="menu-toggle" v-if="activeKey === '1'" />
+          <MenuOutlined class="menu-toggle" v-else />
+        </a-col>
+        <a-col v-else>
+          <ul class="nav__item-list" v-bk-scrollspy.44>
+            <li v-for="mdle in getMdles" :key="mdle.id" class="nav-item">
+              <a class="nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
+            </li>
+          </ul>
+        </a-col>
       </a-row>
+      <a-collapse
+        v-model:activeKey="activeKey"
+        :bordered="false"
+        :accordion="true"
+        v-if="lessThanOrEqualSmall"
+      >
+        <a-collapse-panel key="1">
+          <ul class="nav__item-list" v-bk-scrollspy.44>
+            <li v-for="mdle in getMdles" :key="mdle.id" class="nav-item">
+              <a class="nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
+            </li>
+          </ul>
+        </a-collapse-panel>
+      </a-collapse>
     </nav>
     <main>
       <section v-for="mdl in getMdles" :id="mdl.id" :key="mdl.id" :class="mdl.id">
@@ -120,8 +127,8 @@ import ProjectGridItem from "../components/ProjectGridItem.vue"
 import { Project, User } from "../types/resume"
 import { ListGroup, MDL_ID } from "../types/list-group"
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
-import { defineComponent, computed, unref, onMounted, onUnmounted, reactive } from "vue"
-import { useFetch } from "~/composables/fetch"
+import { defineComponent, computed, unref, ref } from "vue"
+import { useBreakpoints, useFetch } from "~/composables"
 import Markup from "~/components/markup"
 
 export default defineComponent({
@@ -134,7 +141,7 @@ export default defineComponent({
   setup() {
     const { result: user } = useFetch("/api/users/paul/resume")
 
-    const state = reactive({ active: "__nav_pannel__" })
+    const activeKey = ref("0")
 
     const getMdles = computed(() => _getMdles(unref(user)))
 
@@ -195,18 +202,18 @@ export default defineComponent({
       return result
     }
 
-    const handleResize = () => (state.active = window.innerWidth > 576 ? "__nav_pannel__" : "")
+    const { lessThanOrEqual } = useBreakpoints()
 
-    onMounted(() => window.addEventListener("resize", handleResize))
-    onUnmounted(() => window.removeEventListener("resize", handleResize))
+    const lessThanOrEqualSmall = lessThanOrEqual("sm")
 
     return {
-      state,
+      activeKey,
       getMdles,
       getFullname,
       getTitle,
       MDL_ID,
-      user
+      user,
+      lessThanOrEqualSmall
     }
   }
 })
@@ -219,6 +226,7 @@ export default defineComponent({
   .nav {
     top: 0;
     position: sticky;
+    min-height: 44px;
     min-width: 100%;
     padding: 0 1rem;
     background: #fafafb;
@@ -231,6 +239,10 @@ export default defineComponent({
       padding: 11px 0;
     }
 
+    .menu-toggle {
+      cursor: pointer;
+    }
+
     .ant-collapse {
       ::v-deep(.ant-collapse-item) {
         border-bottom: none;
@@ -241,37 +253,37 @@ export default defineComponent({
       }
 
       ::v-deep(.ant-collapse-header) {
-        height: 44px;
-        @media (min-width: 577px) {
-          display: none;
-        }
+        display: none;
       }
     }
 
     .nav__item-list {
       display: flex;
       flex-flow: row nowrap;
-      list-style: none;
       margin-bottom: 0;
+      list-style: none;
       padding-left: 0;
-      @media (max-width: 576px) {
+
+      @media screen and (max-width: 576px) {
         flex-direction: column;
       }
 
       & > :not(:last-child) {
         border-right-color: transparent;
-        @media (min-width: 576px) {
+        @media screen and (min-width: 576px) {
           border-right: 1px solid #d6d9dc;
         }
       }
 
-      .nav__link {
-        padding: 0.5em 1rem;
-        text-transform: uppercase;
-        // @include media-breakpoint-up(sm) {
-        //   padding: 0 $nav-link-padding-x;
-        // }
+      .nav-item {
+        padding: 0 1rem;
+        @media screen and (max-width: 576px) {
+          padding: 0.5em 0;
+        }
+      }
 
+      .nav-link {
+        text-transform: uppercase;
         color: #848d95;
 
         &:hover {
