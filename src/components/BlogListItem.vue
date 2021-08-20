@@ -25,11 +25,14 @@
 
 <script lang="ts">
 import { defineComponent, PropType, toRef } from "vue"
-import { Blog } from "../types/blog"
+import fluent from "~/types/fluent"
 
 export default defineComponent({
   props: {
-    blog: Object as PropType<Blog>,
+    blog: {
+      type: Object as PropType<fluent.Blog>,
+      required: true
+    },
     // Default aspect ratio is 16/9.
     // set value with formmat `padding-top: value`,
     // `value = (height / width) * 100%`.

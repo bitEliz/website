@@ -70,7 +70,7 @@
             >
               <template #renderItem="{ item: proj }">
                 <a-list-item class="project__list-item">
-                  <ProjectGridItem :content="proj" />
+                  <ProjectGridItem :data="proj"></ProjectGridItem>
                 </a-list-item>
               </template>
             </a-list>
@@ -126,12 +126,12 @@
 
 <script lang="ts">
 import ProjectGridItem from "../components/ProjectGridItem.vue"
-import { Project, User } from "../types/resume"
 import { ListGroup, MDL_ID } from "../types/list-group"
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
 import { defineComponent, computed, unref, ref } from "vue"
 import { useBreakpoints, useFetch } from "~/composables"
 import Markup from "~/components/markup"
+import fluent from "~/types/fluent"
 
 export default defineComponent({
   components: {
@@ -160,7 +160,7 @@ export default defineComponent({
       title: unref(user)?.username?.toUpperCase()
     }))
 
-    const _getMdles = (arg?: User) => {
+    const _getMdles = (arg?: fluent.User) => {
       const result: ListGroup<any>[] = []
 
       if (!arg) {
@@ -181,7 +181,7 @@ export default defineComponent({
         (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.isOpenSource == false
       )
 
-      const proj: ListGroup<Project>[] = []
+      const proj: ListGroup<fluent.Project>[] = []
       if (repositories?.length) {
         proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", repositories))
       }
