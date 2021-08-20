@@ -4,7 +4,7 @@
   <div id="__cv" v-else>
     <header>
       <nav class="nav">
-        <a-row align="middle" justify="space-between" style="width: 100%">
+        <a-row align="middle" justify="space-between" style="height: 44px">
           <a-col class="nav__logo">{{ getFullname }}</a-col>
           <a-col v-if="lessThanOrEqualSmall" @click="activeKey = activeKey === '1' ? '0' : '1'">
             <CloseOutlined class="menu-toggle" v-if="activeKey === '1'" />
@@ -229,75 +229,77 @@ export default defineComponent({
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
 
 #__cv {
-  .nav {
+  header {
     top: 0;
     position: sticky;
-    min-height: 44px;
-    min-width: 100%;
-    padding: 0 1rem;
-    background: #fafafb;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.05),
-      0 2px 8px rgba(0, 0, 0, 0.05);
-    z-index: 1000;
+    z-index: 9999;
 
-    .nav__logo {
-      padding: 11px 0;
-    }
-
-    .menu-toggle {
-      cursor: pointer;
-    }
-
-    .ant-collapse {
-      ::v-deep(.ant-collapse-item) {
-        border-bottom: none;
+    .nav {
+      min-height: 44px;
+      padding: 0 1rem;
+      background-color: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.05),
+        0 2px 8px rgba(0, 0, 0, 0.05);
+      @supports ((-webkit-backdrop-filter: initial) or (backdrop-filter: initial)) {
+        -webkit-backdrop-filter: saturate(180%) blur(40px);
+        backdrop-filter: saturate(180%) blur(40px);
       }
 
-      ::v-deep(.ant-collapse-content-box) {
-        padding: 11px 0;
+      .menu-toggle {
+        cursor: pointer;
       }
 
-      ::v-deep(.ant-collapse-header) {
-        display: none;
-      }
-    }
+      .ant-collapse {
+        ::v-deep(.ant-collapse-item) {
+          border-bottom: none;
+        }
 
-    .nav__item-list {
-      display: flex;
-      flex-flow: row nowrap;
-      margin-bottom: 0;
-      list-style: none;
-      padding-left: 0;
+        ::v-deep(.ant-collapse-header) {
+          display: none;
+        }
 
-      @media screen and (max-width: 576px) {
-        flex-direction: column;
-      }
-
-      & > :not(:last-child) {
-        border-right-color: transparent;
-        @media screen and (min-width: 576px) {
-          border-right: 1px solid #d6d9dc;
+        &,
+        &-borderless {
+          background-color: transparent;
         }
       }
 
-      .nav-item {
-        padding: 0 1rem;
+      .nav__item-list {
+        display: flex;
+        flex-flow: row nowrap;
+        margin-bottom: 0;
+        list-style: none;
+        padding-left: 0;
+
         @media screen and (max-width: 576px) {
-          padding: 0.5em 0;
-        }
-      }
-
-      .nav-link {
-        text-transform: uppercase;
-        color: #848d95;
-
-        &:hover {
-          color: #a0c7e4;
+          flex-direction: column;
         }
 
-        &.active {
-          color: black;
+        & > :not(:last-child) {
+          border-right-color: transparent;
+          @media screen and (min-width: 576px) {
+            border-right: 1px solid #d6d9dc;
+          }
+        }
+
+        .nav-item {
+          padding: 0 1rem;
+          @media screen and (max-width: 576px) {
+            padding: 0.5em 0;
+          }
+        }
+
+        .nav-link {
+          text-transform: uppercase;
+          color: #848d95;
+
+          &:hover {
+            color: #a0c7e4;
+          }
+
+          &.active {
+            color: black;
+          }
         }
       }
     }

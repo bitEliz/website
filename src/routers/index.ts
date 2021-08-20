@@ -7,6 +7,11 @@ const routes: RouteRecordRaw[] = [
     name: "blog"
   },
   {
+    path: "/blog/:id",
+    component: () => import("../views/blog/_id.vue" /* webpackChunkName: "views/blog/_id" */),
+    name: "blog-id"
+  },
+  {
     path: "/pure-md-resume",
     component: () =>
       import("../views/static/PureMDFile.vue" /* webpackChunkName: "views/static/PureMDFile" */),
@@ -16,15 +21,6 @@ const routes: RouteRecordRaw[] = [
     path: "/resume",
     component: () => import("../views/Resume.vue" /* webpackChunkName: "views/Resume" */),
     name: "resume"
-  },
-  {
-    path: "/blog",
-    component: () => import("../views/blog/Index.vue" /* webpackChunkName: "views/blog/Index" */)
-  },
-  {
-    path: "/blog/:id",
-    component: () => import("../views/blog/_id.vue" /* webpackChunkName: "views/blog/_id" */),
-    name: "blog-id"
   },
   {
     path: "/static/:id",
