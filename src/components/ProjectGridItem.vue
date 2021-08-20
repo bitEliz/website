@@ -1,43 +1,40 @@
-<template>
-  <a
-    class="tile"
-    :href="link"
-    target="_blank"
-    :style="content.trackViewUrl ? 'cursor: pointer;' : 'cursor: default;'"
-  >
-    <div class="tile__media">
-      <GithubFilled v-if="content.isOpenSource && !imageUrl" />
-      <img v-else :src="imageUrl" alt="artwork" />
-    </div>
-    <div class="tile__description">
-      <Markup class="tile__excerpt" :src="excerpt"></Markup>
-    </div>
-  </a>
-</template>
-
 <script lang="ts">
-import { computed, defineComponent, PropType, toRef, unref } from "vue"
-import { Project } from "../types/resume"
+import { computed, createVNode, defineComponent, PropType, toRef } from "vue"
 import Markup from "../components/markup"
 import { GithubFilled } from "@ant-design/icons-vue"
+import fluent from "~/types/fluent"
 
 export default defineComponent({
   props: {
-    content: Object as PropType<Project>
+    data: {
+      type: Object as PropType<fluent.Project>,
+      required: true
+    }
   },
   components: {
     GithubFilled,
     Markup
   },
   setup(props) {
-    const content = toRef(props, "content")
-    const link = computed(() => unref(content)?.trackViewUrl)
-    const imageUrl = computed(() => unref(content)?.artworkUrl)
-    const excerpt = computed(() => unref(content)?.summary)
-    return {
-      link,
-      imageUrl,
-      excerpt
+    const data = toRef(props, "data")
+    const trackViewUrl = computed(() => data.value.trackViewUrl)
+    const imageUrl = computed(() => data.value.artworkUrl)
+    const excerpt = computed(() => data.value.summary)
+
+    return function () {
+      var children = [
+        createVNode("div", { class: "tile__media" }, [
+          data.value?.isOpenSource && !imageUrl.value
+            ? createVNode(GithubFilled)
+            : createVNode("img", { src: imageUrl.value, alt: "artwork" })
+        ]),
+        createVNode("div", { class: "tile__description" }, [
+          createVNode(Markup, { class: "tile__excerpt", src: excerpt.value })
+        ])
+      ]
+      return data.value?.trackViewUrl
+        ? createVNode("a", { class: "tile", href: trackViewUrl.value, target: "_blank" }, children)
+        : createVNode("div", { class: "tile" }, children)
     }
   }
 })

@@ -25,26 +25,28 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, toRef, unref } from "vue"
+import { computed, defineComponent, PropType, toRef } from "vue"
 import Markup from "~/components/markup"
-import { Blog } from "../types/blog"
+import fluent from "~/types/fluent"
 
 export default defineComponent({
   components: {
     Markup
   },
   props: {
-    blog: Object as PropType<Blog>
+    blog: {
+      type: Object as PropType<fluent.Blog>,
+      required: true
+    }
   },
   setup(props) {
     const blog = toRef(props, "blog")
-    const title = computed(() => unref(blog)?.title)
-    const excerpt = computed(() => unref(blog)?.excerpt)
-    const datetime = computed(() => unref(blog)?.createdAt)
-    const tags = computed(() => unref(blog)?.tags)
-    const artworkUrl = computed(() => unref(blog)?.artworkUrl)
+    const title = computed(() => blog.value.title)
+    const excerpt = computed(() => blog.value.excerpt)
+    const tags = computed(() => blog.value.tags)
+    const artworkUrl = computed(() => blog.value.artworkUrl)
 
-    return { artworkUrl, title, excerpt, datetime, tags }
+    return { artworkUrl, title, excerpt, tags }
   }
 })
 </script>
