@@ -1,8 +1,9 @@
-import { computed, createVNode, defineComponent, ref, PropType } from "vue"
+import { App, computed, createVNode, defineComponent, PropType, toRef } from "vue"
 import marked from "marked"
 import HL from "highlight.js"
 
-export default defineComponent({
+var Markup = defineComponent({
+  name: "VMarkup",
   props: {
     src: String,
     options: {
@@ -12,8 +13,8 @@ export default defineComponent({
       })
     }
   },
-  setup: function (props, context) {
-    const src = ref(props.src)
+  setup: function (props) {
+    const src = toRef(props, "src")
 
     marked.setOptions(props.options)
 
@@ -28,3 +29,9 @@ export default defineComponent({
     }
   }
 })
+
+Markup.install = function (app: App) {
+  app.component(Markup.name, Markup)
+  return app
+}
+export default Markup
