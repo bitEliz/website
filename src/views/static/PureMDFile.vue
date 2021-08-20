@@ -1,75 +1,65 @@
-<template>
-  <div id="__file">
-    <main>
-      <Markup :src="file"></Markup>
-    </main>
-  </div>
-</template>
-
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue"
+import { createVNode, defineComponent } from "vue"
 import { useRoute } from "vue-router"
-import Markup from "~/components/markup"
+import Markup from "../../components/markup"
+import Loading from "../../components/Loading.vue"
+import { useFetch } from "../../composables"
 
 export default defineComponent({
-  components: {
-    Markup
-  },
   setup() {
-    const file = ref<string | undefined>()
     const route = useRoute()
+    const path = route.path.startsWith("/static") ? route.path : `/static${route.path}`
+    const { result, isLoading } = useFetch(`/api/${path}.md`)
 
-    const loadFile = async () => {
-      try {
-        const path = route.path.startsWith("/static") ? route.path : `/static${route.path}`
-        console.log(path)
-        file.value = await (await fetch(path + ".md")).json()
-      } catch (error) {
-        handleError(error)
-      }
-    }
-
-    const handleError = (error: Error) => {}
-
-    onMounted(loadFile)
-
-    return {
-      file,
-      loadFile
+    return () => {
+      return isLoading.value
+        ? createVNode(Loading)
+        : createVNode("div", { id: "__file" }, [
+            createVNode("main", null, [createVNode(Markup, { src: result.value })])
+          ])
     }
   }
 })
 </script>
 
-<style lang="less" scoped>
-#__file {
-  color: #3c4146;
-  font-size: 85%;
+<style lang="less">
+@import "node_modules/ant-design-vue/lib/style/mixins/index.less";
+@import "node_modules/ant-design-vue/lib/style/core/base.less";
+@import "node_modules/ant-design-vue/lib/style/core/global.less";
 
+#__file {
   main {
     margin: 0 auto;
     max-width: 798px;
     min-width: 320px;
     padding: 5em 1.75rem 3em;
 
-    article {
-      h1 {
-        font-size: 2em; // Fix size in article.
-      }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
 
-      ul {
-        list-style: none;
-        padding-left: 0;
-      }
+    code {
+      font-size: 0.9em;
+      color: #242729;
+    }
 
-      hr {
-        margin-bottom: 1rem;
-      }
+    hr {
+      box-sizing: content-box;
+      height: 0;
+      overflow: visible;
+      border: none;
+      border-top: 1px solid #e4e6e8;
+      margin-bottom: 1em;
 
-      em {
-        font-size: 0.8em;
-        color: inherit;
+      &:last-child {
+        display: none;
       }
+    }
+
+    em {
+      font-size: 0.8em;
+      color: #848d95;
     }
   }
 }

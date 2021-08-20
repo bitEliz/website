@@ -1,37 +1,39 @@
 <template>
-  <a-spin v-if="!getMdles.length" class="ps-abs-middle"></a-spin>
+  <Loading v-if="!getMdles.length"></Loading>
 
   <div id="__cv" v-else>
-    <nav class="nav">
-      <a-row align="middle" justify="space-between" style="width: 100%">
-        <a-col class="nav__logo">{{ getFullname }}</a-col>
-        <a-col v-if="lessThanOrEqualSmall" @click="activeKey = activeKey === '1' ? '0' : '1'">
-          <CloseOutlined class="menu-toggle" v-if="activeKey === '1'" />
-          <MenuOutlined class="menu-toggle" v-else />
-        </a-col>
-        <a-col v-else>
-          <ul class="nav__item-list" v-bk-scrollspy.44>
-            <li v-for="mdle in getMdles" :key="mdle.id" class="nav-item">
-              <a class="nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
-            </li>
-          </ul>
-        </a-col>
-      </a-row>
-      <a-collapse
-        v-model:activeKey="activeKey"
-        :bordered="false"
-        :accordion="true"
-        v-if="lessThanOrEqualSmall"
-      >
-        <a-collapse-panel key="1">
-          <ul class="nav__item-list" v-bk-scrollspy.44>
-            <li v-for="mdle in getMdles" :key="mdle.id" class="nav-item">
-              <a class="nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
-            </li>
-          </ul>
-        </a-collapse-panel>
-      </a-collapse>
-    </nav>
+    <header>
+      <nav class="nav">
+        <a-row align="middle" justify="space-between" style="width: 100%">
+          <a-col class="nav__logo">{{ getFullname }}</a-col>
+          <a-col v-if="lessThanOrEqualSmall" @click="activeKey = activeKey === '1' ? '0' : '1'">
+            <CloseOutlined class="menu-toggle" v-if="activeKey === '1'" />
+            <MenuOutlined class="menu-toggle" v-else />
+          </a-col>
+          <a-col v-else>
+            <ul class="nav__item-list" v-bk-scrollspy.44>
+              <li v-for="mdle in getMdles" :key="mdle.id" class="nav-item">
+                <a class="nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
+              </li>
+            </ul>
+          </a-col>
+        </a-row>
+        <a-collapse
+          v-model:activeKey="activeKey"
+          :bordered="false"
+          :accordion="true"
+          v-if="lessThanOrEqualSmall"
+        >
+          <a-collapse-panel key="1">
+            <ul class="nav__item-list" v-bk-scrollspy.44>
+              <li v-for="mdle in getMdles" :key="mdle.id" class="nav-item">
+                <a class="nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
+              </li>
+            </ul>
+          </a-collapse-panel>
+        </a-collapse>
+      </nav>
+    </header>
     <main>
       <section v-for="mdl in getMdles" :id="mdl.id" :key="mdl.id" :class="mdl.id">
         <div v-if="mdl.id === MDL_ID.PROFILE" class="section__wrapper">
@@ -129,16 +131,18 @@ import ProjectGridItem from "../components/ProjectGridItem.vue"
 import { ListGroup, MDL_ID } from "../types/list-group"
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
 import { defineComponent, computed, unref, ref } from "vue"
-import { useBreakpoints, useFetch } from "~/composables"
-import Markup from "~/components/markup"
-import fluent from "~/types/fluent"
+import { useBreakpoints, useFetch } from "../composables"
+import Markup from "../components/markup"
+import Loading from "../components/Loading.vue"
+import fluent from "../types/fluent"
 
 export default defineComponent({
   components: {
     ProjectGridItem,
     CloseOutlined,
     MenuOutlined,
-    Markup
+    Markup,
+    Loading
   },
   setup() {
     const { result: user } = useFetch("/api/users/paul/resume")
@@ -223,16 +227,6 @@ export default defineComponent({
 
 <style lang="less" scoped>
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
-
-.ps-abs-middle {
-  position: absolute;
-  left: calc(50% - 27px);
-  top: calc(50% - 27px);
-
-  ::v-deep(span[role="img"]) {
-    font-size: 54px;
-  }
-}
 
 #__cv {
   .nav {
