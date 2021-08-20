@@ -53,14 +53,24 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="less">
 .tile {
   width: 100%;
   background: white;
   border-radius: 0.5rem;
 
   .tile__media {
-    @include aspect-ratio(16, 9);
+    position: relative;
+    width: 100%;
+    padding-top: percentage(1.7778);
+
+    & > :first-child {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
   }
 
   .tile__description {

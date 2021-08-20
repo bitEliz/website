@@ -45,8 +45,9 @@ export default defineComponent({
     const excerpt = computed(() => blog.value.excerpt)
     const tags = computed(() => blog.value.tags)
     const artworkUrl = computed(() => blog.value.artworkUrl)
+    const datetime = computed(() => blog.value.createdAt)
 
-    return { artworkUrl, title, excerpt, tags }
+    return { artworkUrl, title, excerpt, tags, datetime }
   }
 })
 </script>

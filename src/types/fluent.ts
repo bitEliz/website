@@ -4,15 +4,16 @@ declare namespace fluent {
   }
 
   export interface Blog extends Model<number> {
-    alias: String
-    title: String
-    excerpt: String
-    content?: String
-    artworkUrl?: String
-    tags?: Array<String>
+    alias: string
+    title: string
+    excerpt: string
+    content?: string
+    artworkUrl?: string
+    tags?: Array<string>
     user?: User
     userId?: number
     categories: Array<BlogCategory>
+    createdAt?: string
   }
 
   export interface BlogCategory extends Model<number> {

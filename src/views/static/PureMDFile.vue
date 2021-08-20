@@ -1,20 +1,22 @@
 <template>
   <div id="__file">
     <main>
-      <article v-html="innerHtml" />
+      <Markup :src="file"></Markup>
     </main>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, unref } from "vue"
+import { defineComponent, onMounted, ref } from "vue"
 import { useRoute } from "vue-router"
-import markup from "~/utils/markup"
+import Markup from "~/components/markup"
 
 export default defineComponent({
+  components: {
+    Markup
+  },
   setup() {
     const file = ref<string | undefined>()
-    const innerHtml = computed(() => markup(unref(file)))
     const route = useRoute()
 
     const loadFile = async () => {
@@ -32,7 +34,7 @@ export default defineComponent({
     onMounted(loadFile)
 
     return {
-      innerHtml,
+      file,
       loadFile
     }
   }
