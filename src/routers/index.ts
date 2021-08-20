@@ -18,6 +18,10 @@ const routes: RouteRecordRaw[] = [
     name: "resume"
   },
   {
+    path: "/blog",
+    component: () => import("../views/blog/Index.vue" /* webpackChunkName: "views/blog/Index" */)
+  },
+  {
     path: "/blog/:id",
     component: () => import("../views/blog/_id.vue" /* webpackChunkName: "views/blog/_id" */),
     name: "blog-id"

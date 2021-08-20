@@ -2,26 +2,27 @@
   <main role="main">
     <article v-if="blog" class="blog">
       <BlogHeader :blog="blog" />
-      <div v-if="blog.content" class="blog__body" v-html="innerHtml"></div>
+      <Markup class="blog__body" :src="innerHtml"></Markup>
     </article>
   </main>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, unref } from "vue"
+import { computed, defineComponent, ref } from "vue"
 import { useRoute } from "vue-router"
-import { Blog } from "../../types/blog"
-import BlogHeader from "../../components/BlogHeader.vue"
-import markup from "~/utils/markup"
+import fluent from "~/types/fluent"
+import BlogHeader from "~/components/BlogHeader.vue"
+import Markup from "~/components/markup"
 
 export default defineComponent({
   components: {
-    BlogHeader
+    BlogHeader,
+    Markup
   },
   setup() {
-    const blog = ref<Blog>()
+    const blog = ref<fluent.Blog>()
     const route = useRoute()
-    const innerHtml = computed(() => markup(unref(blog)?.content))
+    const innerHtml = computed(() => blog.value?.content)
     const loadData = async () => {
       try {
         const response = await fetch(`/blog/${route.params.id}`)
