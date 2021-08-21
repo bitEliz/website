@@ -1,18 +1,18 @@
 <template>
-  <Loading v-if="!getMdles.length"></Loading>
+  <Loading v-if="isLoading"></Loading>
 
   <div id="__cv" v-else>
     <header>
       <nav class="nav">
         <a-row align="middle" justify="space-between" style="height: 44px">
-          <a-col class="nav__logo">{{ getFullname }}</a-col>
-          <a-col v-if="lessThanOrEqualSmall" @click="activeKey = activeKey === '1' ? '0' : '1'">
+          <a-col class="nav__logo">{{ fullName }}</a-col>
+          <a-col v-if="isLessThanOrEqualSmall" @click="activeKey = activeKey === '1' ? '0' : '1'">
             <CloseOutlined class="menu-toggle" v-if="activeKey === '1'" />
             <MenuOutlined class="menu-toggle" v-else />
           </a-col>
           <a-col v-else>
-            <ul class="nav__item-list" v-bk-scrollspy.44>
-              <li v-for="mdle in getMdles" :key="mdle.id" class="nav-item">
+            <ul class="nav__item-list list--unstyled" v-bk-scrollspy.44>
+              <li v-for="mdle in mdles" :key="mdle.id" class="nav-item">
                 <a class="nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
               </li>
             </ul>
@@ -22,11 +22,11 @@
           v-model:activeKey="activeKey"
           :bordered="false"
           :accordion="true"
-          v-if="lessThanOrEqualSmall"
+          v-if="isLessThanOrEqualSmall"
         >
           <a-collapse-panel key="1">
-            <ul class="nav__item-list" v-bk-scrollspy.44>
-              <li v-for="mdle in getMdles" :key="mdle.id" class="nav-item">
+            <ul class="nav__item-list list--unstyled" v-bk-scrollspy.44>
+              <li v-for="mdle in mdles" :key="mdle.id" class="nav-item">
                 <a class="nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
               </li>
             </ul>
@@ -35,7 +35,7 @@
       </nav>
     </header>
     <main>
-      <section v-for="mdl in getMdles" :id="mdl.id" :key="mdl.id" :class="mdl.id">
+      <section v-for="mdl in mdles" :id="mdl.id" :key="mdl.id" :class="mdl.id">
         <div v-if="mdl.id === MDL_ID.PROFILE" class="section__wrapper">
           <a-row align="middle" :gutter="64">
             <a-col class="profile__me">
@@ -44,7 +44,7 @@
                 :src="mdl.list[0].avatarUrl"
                 alt="User Avatar"
               ></a-avatar>
-              <h1>{{ getFullname }}</h1>
+              <h1>{{ fullName }}</h1>
               <a-row align="middle" justify="center" v-if="mdl.list[0].social" :gutter="16">
                 <a-col v-for="social in mdl.list[0].social" :key="social.id">
                   <a :href="social.service.name === 'Mail' ? 'mailto:' + social.url : social.url">
@@ -130,7 +130,7 @@
 import ProjectGridItem from "../components/ProjectGridItem.vue"
 import { ListGroup, MDL_ID } from "../types/list-group"
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
-import { defineComponent, computed, unref, ref } from "vue"
+import { defineComponent, computed, ref, watch } from "vue"
 import { useBreakpoints, useFetch } from "../composables"
 import Markup from "../components/markup"
 import Loading from "../components/Loading.vue"
@@ -145,25 +145,11 @@ export default defineComponent({
     Loading
   },
   setup() {
-    const { result: user } = useFetch("/api/users/paul/resume")
+    const { result, isLoading } = useFetch("/api/users/paul/resume")
 
     const activeKey = ref("0")
 
-    const getMdles = computed(() => _getMdles(unref(user)))
-
-    const getFullname = computed(() => {
-      const $user = unref(user)
-      const lastName = $user?.lastName ?? ""
-      const firstName = $user?.firstName ?? ""
-      return lastName + firstName
-    })
-
-    const getTitle = computed(() => unref(user)?.username?.toUpperCase() ?? "")
-
-    const getMeta = computed(() => ({
-      title: unref(user)?.username?.toUpperCase()
-    }))
-
+    const mdles = computed(() => _getMdles(result.value))
     const _getMdles = (arg?: fluent.User) => {
       const result: ListGroup<any>[] = []
 
@@ -208,18 +194,31 @@ export default defineComponent({
       return result
     }
 
-    const { lessThanOrEqual } = useBreakpoints()
+    const fullName = computed(() => {
+      const lastName = result.value?.lastName ?? ""
+      const firstName = result.value?.firstName ?? ""
+      return lastName + firstName
+    })
 
-    const lessThanOrEqualSmall = lessThanOrEqual("sm")
+    const { lessThanOrEqual } = useBreakpoints()
+    const isLessThanOrEqualSmall = lessThanOrEqual("sm")
+
+    const meta = computed(() => ({
+      title: result.value?.username?.toUpperCase()
+    }))
+    watch(meta, (n, o) => {
+      if (n.title != o.title && document) {
+        document.title = n.title
+      }
+    })
 
     return {
       activeKey,
-      getMdles,
-      getFullname,
-      getTitle,
+      mdles,
+      fullName,
       MDL_ID,
-      user,
-      lessThanOrEqualSmall
+      isLoading,
+      isLessThanOrEqualSmall
     }
   }
 })
@@ -229,6 +228,11 @@ export default defineComponent({
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
 
 #__cv {
+  .list--unstyled {
+    list-style: none;
+    padding-left: 0;
+  }
+
   header {
     top: 0;
     position: sticky;
@@ -268,8 +272,6 @@ export default defineComponent({
         display: flex;
         flex-flow: row nowrap;
         margin-bottom: 0;
-        list-style: none;
-        padding-left: 0;
 
         @media screen and (max-width: 576px) {
           flex-direction: column;
@@ -360,13 +362,9 @@ export default defineComponent({
       }
     }
 
-    .exp__list {
-      min-width: 300px;
-
-      .exp__list-item {
-        &:not(:last-child) {
-          margin-bottom: 32px;
-        }
+    .exp__list .exp__list-item {
+      &:not(:last-child) {
+        margin-bottom: 32px;
       }
     }
   }
