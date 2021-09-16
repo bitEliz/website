@@ -228,6 +228,8 @@ export default defineComponent({
 @import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
 
 #__cv {
+  user-select: none;
+
   .list--unstyled {
     list-style: none;
     padding-left: 0;
