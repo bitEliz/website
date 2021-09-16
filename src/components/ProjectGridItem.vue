@@ -61,7 +61,7 @@ export default defineComponent({
   svg {
     width: 5rem;
     height: 5rem;
-    border-radius: 8px;
+    border-radius: 1rem;
   }
 }
 </style>
