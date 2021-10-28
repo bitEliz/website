@@ -126,100 +126,80 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import ProjectGridItem from "../components/ProjectGridItem.vue"
 import { ListGroup, MDL_ID } from "../types/list-group"
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
-import { defineComponent, computed, ref, watch } from "vue"
+import { computed, ref, watch } from "vue"
 import { useBreakpoints, useFetch } from "../composables"
 import Markup from "../components/markup"
 import Loading from "../components/Loading.vue"
 import fluent from "../types/fluent"
 
-export default defineComponent({
-  components: {
-    ProjectGridItem,
-    CloseOutlined,
-    MenuOutlined,
-    Markup,
-    Loading
-  },
-  setup() {
-    const { result, isLoading } = useFetch("/api/users/paul/resume")
+const { result, isLoading } = useFetch(`/api/users/${import.meta.env.VITE_MAINTAINER}/resume`)
 
-    const activeKey = ref("0")
+const activeKey = ref("0")
 
-    const mdles = computed(() => _getMdles(result.value))
-    const _getMdles = (arg?: fluent.User) => {
-      const result: ListGroup<any>[] = []
+const mdles = computed(() => _getMdles(result.value))
+const _getMdles = (arg?: fluent.User) => {
+  const result: ListGroup<any>[] = []
 
-      if (!arg) {
-        return result
-      }
+  if (!arg) {
+    return result
+  }
 
-      const user = arg!
+  const user = arg!
 
-      result.push(new ListGroup(MDL_ID.PROFILE, "简介", [user]))
+  result.push(new ListGroup(MDL_ID.PROFILE, "简介", [user]))
 
-      const PROJ_VISIBILITY_PUBLIC = "public"
+  const PROJ_VISIBILITY_PUBLIC = "public"
 
-      // Filter visible projects
-      const repositories = user.projects?.filter(
-        (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.isOpenSource == true
-      )
-      const apps = user.projects?.filter(
-        (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.isOpenSource == false
-      )
+  // Filter visible projects
+  const repositories = user.projects?.filter(
+    (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.isOpenSource == true
+  )
+  const apps = user.projects?.filter(
+    (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.isOpenSource == false
+  )
 
-      const proj: ListGroup<fluent.Project>[] = []
-      if (repositories?.length) {
-        proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", repositories))
-      }
+  const proj: ListGroup<fluent.Project>[] = []
+  if (repositories?.length) {
+    proj.push(new ListGroup(MDL_ID.DEFAULT, "开源项目", repositories))
+  }
 
-      if (apps?.length) {
-        proj.push(new ListGroup(MDL_ID.DEFAULT, "精选项目", apps))
-      }
+  if (apps?.length) {
+    proj.push(new ListGroup(MDL_ID.DEFAULT, "精选项目", apps))
+  }
 
-      if (proj.length) {
-        result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj))
-      }
+  if (proj.length) {
+    result.push(new ListGroup(MDL_ID.PROJECT, "项目", proj))
+  }
 
-      const exp: ListGroup<any>[] = []
-      exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.experiences))
-      exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.education))
-      result.push(new ListGroup(MDL_ID.EXPERIENCE, "经历", exp))
+  const exp: ListGroup<any>[] = []
+  exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.experiences))
+  exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.education))
+  result.push(new ListGroup(MDL_ID.EXPERIENCE, "经历", exp))
 
-      result.push(new ListGroup(MDL_ID.SKILL, "技能", user.skill!.professional))
+  result.push(new ListGroup(MDL_ID.SKILL, "技能", user.skill!.professional))
 
-      return result
-    }
+  return result
+}
 
-    const fullName = computed(() => {
-      const lastName = result.value?.lastName ?? ""
-      const firstName = result.value?.firstName ?? ""
-      return lastName + firstName
-    })
+const fullName = computed(() => {
+  const lastName = result.value?.lastName ?? ""
+  const firstName = result.value?.firstName ?? ""
+  return lastName + firstName
+})
 
-    const { lessThanOrEqual } = useBreakpoints()
-    const isLessThanOrEqualSmall = lessThanOrEqual("sm")
+const { lessThanOrEqual } = useBreakpoints()
+const isLessThanOrEqualSmall = lessThanOrEqual("sm")
 
-    const meta = computed(() => ({
-      title: result.value?.username?.toUpperCase()
-    }))
-    watch(meta, (n, o) => {
-      if (n.title != o.title && document) {
-        document.title = n.title
-      }
-    })
-
-    return {
-      activeKey,
-      mdles,
-      fullName,
-      MDL_ID,
-      isLoading,
-      isLessThanOrEqualSmall
-    }
+const meta = computed(() => ({
+  title: result.value?.username?.toUpperCase()
+}))
+watch(meta, (n, o) => {
+  if (n.title != o.title && document) {
+    document.title = n.title
   }
 })
 </script>
