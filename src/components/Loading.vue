@@ -52,6 +52,7 @@ export default Loading
 
   .loader {
     --duration: 3s;
+
     width: 44px;
     height: 44px;
     position: relative;
@@ -129,62 +130,79 @@ export default Loading
   33% {
     stroke-dashoffset: 74;
   }
+
   66% {
     stroke-dashoffset: 147;
   }
+
   to {
     stroke-dashoffset: 221;
   }
 }
+
 @keyframes dotTriangle {
   33% {
     transform: translate(0);
   }
+
   66% {
     transform: translate(10px, -18px);
   }
+
   to {
     transform: translate(-10px, -18px);
   }
 }
+
 @keyframes pathRect {
   25% {
     stroke-dashoffset: 64;
   }
+
   50% {
     stroke-dashoffset: 128;
   }
+
   75% {
     stroke-dashoffset: 192;
   }
+
   to {
     stroke-dashoffset: 256;
   }
 }
+
 @keyframes dotRect {
   25% {
     transform: translate(0);
   }
+
   50% {
     transform: translate(18px, -18px);
   }
+
   75% {
     transform: translateY(-36px);
   }
+
   to {
     transform: translate(-18px, -18px);
   }
 }
+
 @keyframes pathCircle {
   25% {
     stroke-dashoffset: 125;
   }
+
   50% {
     stroke-dashoffset: 175;
   }
+
   75% {
     stroke-dashoffset: 225;
   }
+
   to {
     stroke-dashoffset: 275;
   }

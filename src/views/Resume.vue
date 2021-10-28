@@ -246,6 +246,7 @@ export default defineComponent({
       background-color: rgba(255, 255, 255, 0.72);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.05),
         0 2px 8px rgba(0, 0, 0, 0.05);
+
       @supports ((-webkit-backdrop-filter: initial) or (backdrop-filter: initial)) {
         -webkit-backdrop-filter: saturate(180%) blur(40px);
         backdrop-filter: saturate(180%) blur(40px);
@@ -281,6 +282,7 @@ export default defineComponent({
 
         & > :not(:last-child) {
           border-right-color: transparent;
+
           @media screen and (min-width: 576px) {
             border-right: 1px solid #d6d9dc;
           }
@@ -288,6 +290,7 @@ export default defineComponent({
 
         .nav-item {
           padding: 0 1rem;
+
           @media screen and (max-width: 576px) {
             padding: 0.5em 0;
           }

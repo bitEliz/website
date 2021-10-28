@@ -49,6 +49,7 @@ export default defineComponent({
     &__code {
       font-size: 5rem;
       color: var(--black-500);
+
       @include media-breakpoint-up(sm) {
         font-size: 10rem;
       }
