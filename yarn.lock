@@ -2603,6 +2603,15 @@ please-upgrade-node@^3.2.0:
   dependencies:
     semver-compare "^1.0.0"
 
+postcss-html@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/postcss-html/-/postcss-html-1.1.1.tgz#76352e9147a6fbacd3a6978a4785f9be653b594e"
+  integrity sha512-Lo8YIAosY9ghizW1mqwETnq9U/LziFeTbZhGkH0b7yiPvuuwj7V5EuzFOOYUu8sxZHZq/GkN2b9ydPE9tftgvA==
+  dependencies:
+    htmlparser2 "^7.1.2"
+    postcss "^8.3.11"
+    postcss-safe-parser "^6.0.0"
+
 postcss-media-query-parser@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/postcss-media-query-parser/-/postcss-media-query-parser-0.2.3.tgz#27b39c6f4d94f81b1a73b8f76351c609e5cef244"
@@ -3188,6 +3197,18 @@ stylelint-config-prettier@^9.0.3:
   version "9.0.3"
   resolved "https://registry.yarnpkg.com/stylelint-config-prettier/-/stylelint-config-prettier-9.0.3.tgz#0dccebeff359dcc393c9229184408b08964d561c"
   integrity sha512-5n9gUDp/n5tTMCq1GLqSpA30w2sqWITSSEiAWQlpxkKGAUbjcemQ0nbkRvRUa0B1LgD3+hCvdL7B1eTxy1QHJg==
+
+stylelint-config-recommended@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-recommended/-/stylelint-config-recommended-6.0.0.tgz#fd2523a322836005ad9bf473d3e5534719c09f9d"
+  integrity sha512-ZorSSdyMcxWpROYUvLEMm0vSZud2uB7tX1hzBZwvVY9SV/uly4AvvJPPhCcymZL3fcQhEQG5AELmrxWqtmzacw==
+
+stylelint-config-standard@^23.0.0:
+  version "23.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-standard/-/stylelint-config-standard-23.0.0.tgz#4ad58c74804c544cb4d30667c21a30ab14d1c17d"
+  integrity sha512-8PDlk+nWuc1T66nVaODTdVodN0pjuE5TBlopi39Lt9EM36YJsRhqttMyUhnS78oc/59Q6n8iw2GJB4QcoFqtRg==
+  dependencies:
+    stylelint-config-recommended "^6.0.0"
 
 stylelint@^14.0.1:
   version "14.0.1"
