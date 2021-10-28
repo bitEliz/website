@@ -12,6 +12,9 @@ RUN apk update \
 # Set up a build area
 WORKDIR /build
 
+ARG VITE_API_SERVER
+ENV VITE_API_USER=$VITE_API_USER
+
 # First just resolve dependencies.
 COPY package.json .
 COPY yarn.lock .

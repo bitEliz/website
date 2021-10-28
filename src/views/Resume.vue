@@ -136,7 +136,7 @@ import Markup from "../components/markup"
 import Loading from "../components/Loading.vue"
 import fluent from "../types/fluent"
 
-const { result, isLoading } = useFetch(`/api/users/${import.meta.env.VITE_MAINTAINER}/resume`)
+const { result, isLoading } = useFetch(`/api/users/${import.meta.env.VITE_API_USER}/resume`)
 
 const activeKey = ref("0")
 

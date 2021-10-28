@@ -1,5 +1,5 @@
-interface ImportMetaEnv extends Readonly<Record<string, string>> {
-  readonly VITE_MAINTAINER: string
+interface ImportMetaEnv {
+  readonly VITE_API_USER: string
   readonly VITE_API_URL: string
 }
 
