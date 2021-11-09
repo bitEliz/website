@@ -35,22 +35,22 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="less">
 .__error {
-  $nav__bar-height: 4rem;
+  @nav__bar-height: 4rem;
 
   .nav {
-    height: $nav__bar-height;
+    height: @nav__bar-height;
   }
 
   .localized-error {
-    height: calc(100vh - #{$nav__bar-height});
+    height: calc(100vh - @nav__bar-height);
 
     &__code {
       font-size: 5rem;
-      color: var(--black-500);
+      color: grey;
 
-      @include media-breakpoint-up(sm) {
+      @media screen and (min-width: 576px) {
         font-size: 10rem;
       }
     }

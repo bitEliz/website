@@ -40,7 +40,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="less">
 .tile {
   width: 100%;
   display: block;
@@ -49,12 +49,8 @@ export default defineComponent({
   padding: 2rem;
   padding-bottom: 1rem;
 
-  %margin-bottom {
-    margin-bottom: 1.5rem;
-  }
-
   & &__media {
-    @extend %margin-bottom;
+    margin-bottom: 1.5rem;
   }
 
   img,

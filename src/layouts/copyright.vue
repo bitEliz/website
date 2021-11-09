@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="less">
 #__copyright footer[role="contentinfo"] {
   padding: 2.5rem 0 1.5rem 0;
 }
