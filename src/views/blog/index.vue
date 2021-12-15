@@ -79,27 +79,27 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="less">
 .blog {
   background: #fafafb;
 
   .blog__item-list {
-    $blog__item-padding: 2rem;
+    @blog__item-padding: 2rem;
 
-    margin-right: -$blog__item-padding;
+    margin-right: -@blog__item-padding;
 
     .blog__item {
       display: flex;
-      margin-right: $blog__item-padding;
-      margin-bottom: $blog__item-padding;
-      flex-basis: calc(50% - #{$blog__item-padding});
+      margin-right: @blog__item-padding;
+      margin-bottom: @blog__item-padding;
+      flex-basis: calc(50% - @blog__item-padding);
 
       &.f-b--100 {
         flex-basis: 100%;
       }
 
       &.f-b--1\/3 {
-        flex-basis: calc(100% / 3 - #{$blog__item-padding});
+        flex-basis: calc(100% / 3 - @blog__item-padding);
       }
     }
   }

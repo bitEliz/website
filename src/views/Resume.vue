@@ -199,7 +199,7 @@ const meta = computed(() => ({
 }))
 watch(meta, (n, o) => {
   if (n.title != o.title && document) {
-    document.title = n.title
+    document.title = n.title + " - RESUME"
   }
 })
 </script>
