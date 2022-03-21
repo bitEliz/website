@@ -31,17 +31,6 @@ export default ({ mode }: { mode: string }) =>
         }
       }
     },
-    build: {
-      target: "es2015",
-      terserOptions: {
-        compress: {
-          keep_infinity: true,
-          drop_console: true
-        }
-      },
-      brotliSize: false,
-      chunkSizeWarningLimit: 2000
-    },
     resolve: {
       alias: {
         "/@": path.resolve(__dirname, "./src"),

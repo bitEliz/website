@@ -12,7 +12,7 @@ import "./style/index.less"
 
 const Resume = defineComponent({
   setup() {
-    const { result, isLoading } = useFetch(`/api/users/${import.meta.env.VITE_API_USER}/resume`)
+    const { result, isLoading } = useFetch(`/api/users/paul/resume`)
 
     const user: ComputedRef<fluent.User | undefined> = computed(() => result.value)
 
