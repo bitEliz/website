@@ -26,6 +26,7 @@ export default defineComponent({
 @import "node_modules/ant-design-vue/lib/style/mixins/index.less";
 @import "node_modules/ant-design-vue/lib/style/core/base.less";
 @import "node_modules/ant-design-vue/lib/style/core/global.less";
+@import "node_modules/ant-design-vue/lib/style/variable.less";
 
 #__file {
   main {
