@@ -6,7 +6,6 @@ FROM node:alpine as builder
 # Install OS updates
 RUN apk update \
     && apk upgrade \
-    && apk add --no-cache git \
     && rm -rf /var/cache/apk/*
 
 # Set up a build area
