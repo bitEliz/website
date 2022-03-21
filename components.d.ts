@@ -12,6 +12,9 @@ declare module "vue" {
     AListItem: typeof import("ant-design-vue/es")["ListItem"]
     ARow: typeof import("ant-design-vue/es")["Row"]
     BlogHeader: typeof import("./src/components/BlogHeader.vue")["default"]
+    BlogListItem: typeof import("./src/components/BlogListItem.vue")["default"]
+    Loading: typeof import("./src/components/Loading.vue")["default"]
+    ProjectGridItem: typeof import("./src/components/ProjectGridItem.vue")["default"]
   }
 }
 
