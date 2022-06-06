@@ -7,13 +7,11 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/pure-md-resume",
-    component: () => import("../views/static/pure-md-file"),
-    name: "pure-md-resume"
+    component: () => import("../views/static/PureMDFile.vue")
   },
   {
     path: "/resume",
-    component: () => import("../views/Resume.vue"),
-    name: "resume"
+    component: () => import("../views/Resume.vue")
   }
 ]
 

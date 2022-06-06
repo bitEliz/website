@@ -40,7 +40,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less">
+<style lang="scss">
 .tile {
   width: 100%;
   display: block;
