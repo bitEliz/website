@@ -35,16 +35,16 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less">
+<style lang="scss">
 .__error {
-  @nav__bar-height: 4rem;
+  $nav__bar-height: 4rem;
 
   .nav {
-    height: @nav__bar-height;
+    height: $nav__bar-height;
   }
 
   .localized-error {
-    height: calc(100vh - @nav__bar-height);
+    height: calc(100vh - $nav__bar-height);
 
     &__code {
       font-size: 5rem;

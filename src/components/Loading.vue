@@ -41,7 +41,7 @@ Loading.install = function (app: App) {
 export default Loading
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .mtl-loading {
   position: absolute;
   left: 50%;
