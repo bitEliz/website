@@ -20,7 +20,10 @@ import { createApp, createVNode } from "vue"
 import App from "./App.vue"
 import router from "./routers"
 import { VBScrollspy } from "/@/directives/scollspy"
-import { LoadingOutlined } from "@ant-design/icons-vue"
+import { ImportOutlined, LoadingOutlined } from "@ant-design/icons-vue"
+
+import "bootstrap"
+import "./assets/styles/bootstrap.scss"
 
 async function main() {
   const app = createApp(App)
