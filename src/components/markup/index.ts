@@ -1,5 +1,5 @@
 import { App, computed, createVNode, defineComponent, PropType, toRef } from "vue"
-import marked from "marked"
+import { marked } from "marked"
 import HL from "highlight.js"
 
 var Markup = defineComponent({
