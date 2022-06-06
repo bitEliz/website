@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "useDefineForClassFields": true,
     "module": "esnext",
     "moduleResolution": "node",
     "lib": ["esnext", "ESNext.AsyncIterable", "DOM", "DOM.Iterable"],
@@ -9,6 +10,7 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "strict": true,
+    "jsx": "preserve",
     "noEmit": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
