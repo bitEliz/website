@@ -15,7 +15,6 @@
     "commit-msg": "commitlint -e -V"
   },
   "dependencies": {
-    "@ant-design/icons-vue": "^6.0.1",
     "@popperjs/core": "^2.11.5",
     "@vueuse/core": "^8.6.0",
     "bootstrap": "^5.1.3",

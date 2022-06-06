@@ -1,8 +1,7 @@
-import { createApp, createVNode } from "vue"
+import { createApp } from "vue"
 import App from "./App.vue"
 import router from "./routers"
 import { VBScrollspy } from "/@/directives/scollspy"
-import { ImportOutlined, LoadingOutlined } from "@ant-design/icons-vue"
 
 import "./assets/styles/bootstrap.scss"
 import "bootstrap"
