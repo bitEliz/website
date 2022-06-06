@@ -28,5 +28,20 @@ export default ({ mode }: { mode: string }) =>
         "/@": path.resolve(__dirname, "./src"),
         "~": path.resolve(__dirname, "./src")
       }
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          assetFileNames: (assetInfo) => {
+            let assets = assetInfo.name.split(".")[1]
+            if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(assets)) {
+              assets = "img"
+            }
+            return `assets/${assets}/[name]-[hash][extname]`
+          },
+          chunkFileNames: "assets/js/[name]-[hash].js",
+          entryFileNames: "assets/js/[name]-[hash].js"
+        }
+      }
     }
   })
