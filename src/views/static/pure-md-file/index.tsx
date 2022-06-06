@@ -4,8 +4,6 @@ import Markup from "../../../components/markup"
 import Loading from "../../../components/Loading.vue"
 import { useFetch } from "../../../composables"
 
-import "./style/index.less"
-
 const PureMDFile = defineComponent({
   setup() {
     const route = useRoute()

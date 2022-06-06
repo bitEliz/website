@@ -3,122 +3,127 @@
 
   <div id="__cv" v-else>
     <header>
-      <nav class="nav">
-        <a-row align="middle" justify="space-between" style="height: 44px">
-          <a-col class="nav__logo">{{ fullName }}</a-col>
-          <a-col v-if="isLessThanOrEqualSmall" @click="activeKey = activeKey === '1' ? '0' : '1'">
-            <CloseOutlined class="menu-toggle" v-if="activeKey === '1'" />
-            <MenuOutlined class="menu-toggle" v-else />
-          </a-col>
-          <a-col v-else>
-            <ul class="nav__item-list list--unstyled" v-bk-scrollspy.44>
-              <li v-for="mdle in mdles" :key="mdle.id" class="nav-item">
-                <a class="nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
+      <nav class="navbar navbar-expand-sm fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand">
+            {{ fullName }}
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#bs-collapse"
+            aria-controls="bs-collapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-list"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+              />
+            </svg>
+            }
+          </button>
+          <div class="collapse navbar-collapse" id="bs-collapse">
+            <ul class="nav navbar-nav ms-auto" v-bk-scrollspy.56>
+              <li class="nav-item" :key="mdl.id" v-for="(mdl, i) in mdles">
+                <a class="nav-link" :href="'#' + mdl.id">
+                  {{ mdl.title }}
+                </a>
               </li>
             </ul>
-          </a-col>
-        </a-row>
-        <a-collapse
-          v-model:activeKey="activeKey"
-          :bordered="false"
-          :accordion="true"
-          v-if="isLessThanOrEqualSmall"
-        >
-          <a-collapse-panel key="1">
-            <ul class="nav__item-list list--unstyled" v-bk-scrollspy.44>
-              <li v-for="mdle in mdles" :key="mdle.id" class="nav-item">
-                <a class="nav-link" :href="'#' + mdle.id">{{ mdle.title }}</a>
-              </li>
-            </ul>
-          </a-collapse-panel>
-        </a-collapse>
+          </div>
+        </div>
       </nav>
     </header>
     <main>
-      <section v-for="mdl in mdles" :id="mdl.id" :key="mdl.id" :class="mdl.id">
-        <div v-if="mdl.id === MDL_ID.PROFILE" class="section__wrapper">
-          <a-row align="middle" :gutter="64">
-            <a-col class="profile__me">
-              <a-avatar
-                class="profile__avatar"
+      <section v-for="mdl in mdles" :id="mdl.id" :key="mdl.id">
+        <div
+          class="container"
+          style="padding-top: 2rem; padding-bottom: var(--bs-gutter-x, 0.75rem)"
+        >
+          <h3 v-if="mdl.id != MDL_ID.PROFILE && mdl.id != MDL_ID.EXPERIENCE">{{ mdl.title }}</h3>
+          <div class="d-sm-flex flex-row align-items-center" v-if="mdl.id == MDL_ID.PROFILE">
+            <div class="profile__me" style="text-align: center">
+              <img
+                class="profile__avatar rounded-circle"
                 :src="mdl.list[0].avatarUrl"
-                alt="User Avatar"
-              ></a-avatar>
+                alt="user avatar"
+              />
               <h1>{{ fullName }}</h1>
-              <a-row align="middle" justify="center" v-if="mdl.list[0].social" :gutter="16">
-                <a-col v-for="social in mdl.list[0].social" :key="social.id">
-                  <a :href="social.service.name === 'Mail' ? 'mailto:' + social.url : social.url">
-                    <i
-                      class="ali"
-                      :class="social.service.name.toLowerCase()"
-                      style="font-size: 2rem"
-                    />
+
+              <div class="d-flex justify-content-center" v-if="mdl.list[0].social">
+                <div
+                  style="text-align: center; padding: 0 0.5rem"
+                  v-for="e in mdl.list[0].social"
+                  :key="e.id"
+                >
+                  <a :href="e.service?.name === 'Mail' ? 'mailto:' + e.url : e.url">
+                    <i :class="'ali ' + e.service?.name?.toLowerCase()" style="font-size: 2rem"></i>
                   </a>
-                </a-col>
-              </a-row>
-            </a-col>
-            <a-col v-if="mdl.list[0].aboutMe" class="profile__about">
-              <Markup :src="mdl.list[0].aboutMe"></Markup>
-            </a-col>
-          </a-row>
-        </div>
-        <div v-else-if="mdl.id === MDL_ID.PROJECT" class="section__wrapper">
-          <h1>{{ mdl.title }}</h1>
-          <div class="project__list-wrapper" v-for="g in mdl.list" :key="g.id">
-            <a-list
-              :grid="{ gutter: 16, md: 2, lg: 3, xl: 3, xxl: 3 }"
-              :data-source="g.list"
-              class="project__list"
-            >
-              <template #renderItem="{ item: proj }">
-                <a-list-item class="project__list-item">
-                  <ProjectGridItem :data="proj"></ProjectGridItem>
-                </a-list-item>
-              </template>
-            </a-list>
+                </div>
+              </div>
+            </div>
+            <div class="profile__about flex-grow-1">
+              <Markup :src="user?.aboutMe"></Markup>
+            </div>
           </div>
-        </div>
-        <div v-else-if="mdl.id === MDL_ID.EXPERIENCE" class="section__wrapper">
-          <a-row :gutter="32">
-            <a-col span="12" style="min-width: 400px" v-for="m in mdl.list" :key="m.id">
-              <ul class="exp__list list--unstyled">
-                <h1>{{ m.title }}</h1>
-                <li v-for="exp in m.list" :key="exp.id" class="exp__list-item">
-                  <template v-if="m.id === MDL_ID.EXPERIENCE">
-                    <h4>{{ exp.companyName }} • {{ exp.title }}</h4>
+          <template v-if="mdl.id == MDL_ID.PROJECT && mdl.list">
+            <div class="grid" style="--bs-gap: 1rem" v-for="g in mdl.list">
+              <div class="g-col-12 g-col-sm-6 g-col-md-4" v-for="e in g.list">
+                <ProjectGridItem class="card" :data="e"></ProjectGridItem>
+              </div>
+            </div>
+          </template>
+          <div class="row" v-if="mdl.id == MDL_ID.EXPERIENCE && mdl.list">
+            <div class="col" style="min-width: 400px" v-for="m in mdl.list">
+              <ul class="exp__list list-unstyled">
+                <h3>{{ m.title }}</h3>
+                <template v-for="exp in m.list">
+                  <li v-if="m.id == MDL_ID.EXPERIENCE">
+                    <h4>{{ exp.companyName + " • " + exp.title }}</h4>
                     <time
                       style="margin-bottom: 0.5rem"
                       :datetime="exp.startDate + '/' + exp.endDate"
-                      >{{ exp.startDate + " - " + exp.endDate }}</time
                     >
-                    <ul v-if="exp.responsibilities" class="list--circle-inside">
-                      <li v-for="responsibility in exp.responsibilities" :key="responsibility">
-                        {{ responsibility }}
-                      </li>
+                      {{ exp.startDate + " - " + exp.endDate }}
+                    </time>
+
+                    <ul class="list--circle-inside" v-if="exp.responsibilities">
+                      <li v-for="responsibility in exp.responsibilities">{{ responsibility }}</li>
                     </ul>
-                  </template>
-                  <template v-if="m.id === MDL_ID.EDUCATIONAL">
+                  </li>
+
+                  <li v-else>
                     <h4>
                       <i class="ali degree icon" />
-                      {{ exp.field }} • {{ exp.degree }}
+                      {{ exp.field + " • " + exp.degree }}
                     </h4>
-
                     <time
                       style="margin-bottom: 0.5rem"
                       :datetime="exp.startYear + '/' + exp.endYear"
-                      >{{ exp.startYear + " - " + exp.endYear }}</time
                     >
+                      {{ exp.startYear + " - " + exp.endYear }}
+                    </time>
                     <h5>{{ exp.school }}</h5>
-                  </template>
-                </li>
+                  </li>
+                </template>
               </ul>
-            </a-col>
-          </a-row>
-        </div>
-        <div v-else class="section__wrapper">
-          <h1>{{ mdl.title }}</h1>
-          <ul class="list--unstyled">
-            <li v-for="skill in mdl.list" :key="skill"><Markup :src="skill" /></li>
+            </div>
+          </div>
+          <ul class="list-unstyled" v-if="mdl.id == MDL_ID.SKILL && mdl.list">
+            <li v-for="e in mdl.list">
+              <Markup :src="e"></Markup>
+            </li>
           </ul>
         </div>
       </section>
@@ -126,39 +131,40 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import ProjectGridItem from "../components/ProjectGridItem.vue"
 import { ListGroup, MDL_ID } from "../types/list-group"
-import { CloseOutlined, MenuOutlined } from "@ant-design/icons-vue"
-import { computed, ref, watch } from "vue"
-import { useBreakpoints, useFetch } from "../composables"
+import { computed, watch } from "vue"
 import Markup from "../components/markup"
 import Loading from "../components/Loading.vue"
 import fluent from "../types/fluent"
+import { useFetch } from "@vueuse/core"
 
-const { result, isLoading } = useFetch(`/api/users/paul/resume`)
+const {
+  isFetching: isLoading,
+  error,
+  data: result
+} = useFetch(`/api/users/paul/resume`).get().json()
 
-const activeKey = ref("0")
+const user = computed(() => result.value)
 
 const mdles = computed(() => _getMdles(result.value))
-const _getMdles = (arg?: fluent.User) => {
+const _getMdles = (arg: fluent.User | null) => {
   const result: ListGroup<any>[] = []
 
   if (!arg) {
     return result
   }
 
-  const user = arg!
-
-  result.push(new ListGroup(MDL_ID.PROFILE, "简介", [user]))
+  result.push(new ListGroup(MDL_ID.PROFILE, "简介", [arg]))
 
   const PROJ_VISIBILITY_PUBLIC = "public"
 
   // Filter visible projects
-  const repositories = user.projects?.filter(
+  const repositories = arg.projects?.filter(
     (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.isOpenSource == true
   )
-  const apps = user.projects?.filter(
+  const apps = arg.projects?.filter(
     (e) => e.visibility === PROJ_VISIBILITY_PUBLIC && e.isOpenSource == false
   )
 
@@ -176,11 +182,11 @@ const _getMdles = (arg?: fluent.User) => {
   }
 
   const exp: ListGroup<any>[] = []
-  exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", user.experiences))
-  exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", user.education))
+  exp.push(new ListGroup(MDL_ID.EXPERIENCE, "工作经历", arg.experiences))
+  exp.push(new ListGroup(MDL_ID.EDUCATIONAL, "教育经历", arg.education))
   result.push(new ListGroup(MDL_ID.EXPERIENCE, "经历", exp))
 
-  result.push(new ListGroup(MDL_ID.SKILL, "技能", user.skill!.professional))
+  result.push(new ListGroup(MDL_ID.SKILL, "技能", arg.skill?.professional))
 
   return result
 }
@@ -191,12 +197,10 @@ const fullName = computed(() => {
   return lastName + firstName
 })
 
-const { lessThanOrEqual } = useBreakpoints()
-const isLessThanOrEqualSmall = lessThanOrEqual("sm")
-
 const meta = computed(() => ({
   title: result.value?.username?.toUpperCase()
 }))
+
 watch(meta, (n, o) => {
   if (n.title != o.title && document) {
     document.title = n.title + " - RESUME"
@@ -204,90 +208,36 @@ watch(meta, (n, o) => {
 })
 </script>
 
-<style lang="less" scoped>
-@import url("https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css");
+<style lang="scss">
+@import "https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css";
 
 #__cv {
   user-select: none;
 
-  .list--unstyled {
-    list-style: none;
-    padding-left: 0;
-  }
+  .navbar {
+    background-color: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.05),
+      0 2px 8px rgba(0, 0, 0, 0.05);
 
-  header {
-    top: 0;
-    position: sticky;
-    z-index: 9999;
+    @supports ((-webkit-backdrop-filter: initial) or (backdrop-filter: initial)) {
+      -webkit-backdrop-filter: saturate(180%) blur(40px);
+      backdrop-filter: saturate(180%) blur(40px);
+    }
 
-    .nav {
-      min-height: 44px;
-      padding: 0 1rem;
-      background-color: rgba(255, 255, 255, 0.72);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.05),
-        0 2px 8px rgba(0, 0, 0, 0.05);
+    .navbar-toggle {
+      border: none;
+    }
 
-      @supports ((-webkit-backdrop-filter: initial) or (backdrop-filter: initial)) {
-        -webkit-backdrop-filter: saturate(180%) blur(40px);
-        backdrop-filter: saturate(180%) blur(40px);
+    .nav-link {
+      text-transform: uppercase;
+      color: #848d95;
+
+      &:hover {
+        color: #a0c7e4;
       }
 
-      .menu-toggle {
-        cursor: pointer;
-      }
-
-      .ant-collapse {
-        ::v-deep(.ant-collapse-item) {
-          border-bottom: none;
-        }
-
-        ::v-deep(.ant-collapse-header) {
-          display: none;
-        }
-
-        &,
-        &-borderless {
-          background-color: transparent;
-        }
-      }
-
-      .nav__item-list {
-        display: flex;
-        flex-flow: row nowrap;
-        margin-bottom: 0;
-
-        @media screen and (max-width: 576px) {
-          flex-direction: column;
-        }
-
-        & > :not(:last-child) {
-          border-right-color: transparent;
-
-          @media screen and (min-width: 576px) {
-            border-right: 1px solid #d6d9dc;
-          }
-        }
-
-        .nav-item {
-          padding: 0 1rem;
-
-          @media screen and (max-width: 576px) {
-            padding: 0.5em 0;
-          }
-        }
-
-        .nav-link {
-          text-transform: uppercase;
-          color: #848d95;
-
-          &:hover {
-            color: #a0c7e4;
-          }
-
-          &.active {
-            color: black;
-          }
-        }
+      &.active {
+        color: black;
       }
     }
   }
@@ -295,61 +245,19 @@ watch(meta, (n, o) => {
   section {
     color: #2f3337;
 
-    .section__wrapper {
-      margin: 0 auto;
-      padding: 1rem;
-      max-width: 980px;
-    }
-
     &:nth-child(even) {
       background: #fafafb;
     }
 
-    &.profile {
-      .section__wrapper {
-        padding-top: 2rem;
-
-        @media (max-width: 767px) {
-          > .ant-row {
-            flex-direction: column;
-          }
-        }
-      }
-
-      .profile__avatar {
-        width: 160px;
-        height: 160px;
-        border: 4px solid white;
-        border-radius: 80px;
-        margin-bottom: 1rem;
-      }
-
-      .profile__me {
-        text-align: center;
-      }
+    .profile__avatar {
+      width: 160px;
+      border: 4px solid white;
+      margin-bottom: 1rem;
     }
 
-    .project__list-wrapper {
-      margin: 0 auto;
-      width: 100%;
-
-      .project__list-item .tile {
-        color: inherit;
-      }
-
-      @media (max-width: 991px) {
-        width: 692px;
-      }
-
-      @media (max-width: 767px) {
-        max-width: 366px;
-        width: 87.5%;
-      }
-    }
-
-    .exp__list .exp__list-item {
+    &#projects .grid {
       &:not(:last-child) {
-        margin-bottom: 32px;
+        padding-bottom: var(--bs-gap);
       }
     }
   }
