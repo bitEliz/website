@@ -22,10 +22,8 @@ const text = computed(() => data.value || "")
 
 <style lang="scss">
 #__file {
-  font-size: $font-size-sm;
-
   a {
-    color: black;
+    color: var(--#{$variable-prefix}body-color);
   }
 
   main {

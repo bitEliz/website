@@ -125,13 +125,6 @@ onUpdated(() => {
         </div>
       </nav>
     </header>
-    <!-- <main
-      data-bs-spy="scroll"
-      data-bs-target="navigation"
-      data-bs-root-margin="0px 0px -40%"
-      data-bs-smooth-scroll="true"
-      tabindex="0"
-    > -->
     <main>
       <section v-for="mdl in sections" :id="mdl.id" :key="mdl.id">
         <div
@@ -140,13 +133,13 @@ onUpdated(() => {
         >
           <h3 v-if="mdl.id != MDL_ID.PROFILE && mdl.id != MDL_ID.EXPERIENCE">{{ mdl.title }}</h3>
           <div class="d-sm-flex flex-row align-items-center" v-if="mdl.id == MDL_ID.PROFILE">
-            <div class="profile__me" style="text-align: center">
+            <div class="col-sm-4 profile__me" style="text-align: center">
               <img
-                class="profile__avatar rounded-circle"
+                class="profile__avatar rounded-circle mb-5"
                 :src="mdl.list[0].avatarUrl"
                 alt="user avatar"
               />
-              <h1>{{ fullName }}</h1>
+              <h1 class="mb-3">{{ fullName }}</h1>
 
               <div
                 class="social-networking hstack justify-content-center"
@@ -163,19 +156,27 @@ onUpdated(() => {
                 </div>
               </div>
             </div>
-            <div class="profile__about flex-grow-1">
+            <div class="col-sm-8 profile__about flex-grow-1">
               <Markup :src="introduction"></Markup>
             </div>
           </div>
           <template v-else-if="mdl.id == MDL_ID.PROJECT && mdl.list">
             <div class="grid" style="--bs-gap: 1rem" v-for="g in mdl.list">
-              <div class="g-col-12 g-col-sm-6 g-col-md-4" v-for="e in g.list">
-                <ProjectGridItem :data="e"></ProjectGridItem>
+              <div class="g-col-12 g-col-md-6 g-col-lg-4" v-for="e in g.list">
+                <a
+                  v-if="e.trackViewUrl"
+                  class="text-decoration-none"
+                  :href="e.trackViewUrl"
+                  target="_blank"
+                >
+                  <ProjectGridItem :data="e"></ProjectGridItem>
+                </a>
+                <ProjectGridItem v-else :data="e"></ProjectGridItem>
               </div>
             </div>
           </template>
           <div class="row" v-else-if="mdl.id == MDL_ID.EXPERIENCE && mdl.list">
-            <div class="col" style="min-width: 400px" v-for="m in mdl.list">
+            <div class="col-sm-6" v-for="m in mdl.list">
               <ul class="exp__list list-unstyled">
                 <h3>{{ m.title }}</h3>
                 <template v-for="exp in m.list">
@@ -225,7 +226,6 @@ onUpdated(() => {
 
 #__cv {
   user-select: none;
-  font-size: $font-size-sm;
 
   .navbar {
     background-color: rgba(255, 255, 255, 0.72);
@@ -276,14 +276,26 @@ onUpdated(() => {
     }
 
     .profile__avatar {
-      width: 160px;
+      width: 50%;
+      min-width: 100px;
+      max-width: 170px;
       border: 4px solid white;
-      margin-bottom: 1rem;
     }
 
     &#projects .grid {
       &:not(:last-child) {
         padding-bottom: var(--#{$variable-prefix}gap);
+      }
+    }
+  }
+
+  .grid {
+    a {
+      color: var(--#{$variable-prefix}body-color);
+
+      &:focus,
+      &:hover {
+        color: var(--#{$variable-prefix}body-color);
       }
     }
   }
