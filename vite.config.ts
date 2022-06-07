@@ -11,6 +11,9 @@ export default ({ mode }: { mode: string }) =>
       preprocessorOptions: {
         less: {
           javascriptEnabled: true
+        },
+        scss: {
+          additionalData: `@import "~/assets/styles/bootstrap";`
         }
       }
     },

@@ -1,9 +1,8 @@
 import { createApp } from "vue"
 import App from "./App.vue"
 import router from "./routers"
-import { VBScrollspy } from "/@/directives/scollspy"
 
-import "./assets/styles/bootstrap.scss"
+import "bootstrap/scss/bootstrap.scss"
 import "bootstrap"
 
 async function main() {

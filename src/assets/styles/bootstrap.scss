@@ -1,9 +1,11 @@
 // Functions first
+@import "/node_modules/bootstrap/scss/functions";
 
 // Variable overrides second
 $enable-cssgrid: true;
 
 // Required Bootstrap imports
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
 
 // Optional components
-@import "/node_modules/bootstrap/scss/bootstrap";
