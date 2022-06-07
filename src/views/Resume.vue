@@ -1,160 +1,23 @@
-<template>
-  <Loading v-if="isLoading"></Loading>
-
-  <div id="__cv" v-else>
-    <header>
-      <nav class="navbar navbar-expand-sm fixed-top">
-        <div class="container-fluid">
-          <a class="navbar-brand">
-            {{ fullName }}
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#bs-collapse"
-            aria-controls="bs-collapse"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            {
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-list"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-              />
-            </svg>
-            }
-          </button>
-          <div class="collapse navbar-collapse" id="bs-collapse">
-            <ul class="nav navbar-nav ms-auto" v-bk-scrollspy.56>
-              <li class="nav-item" :key="mdl.id" v-for="(mdl, i) in mdles">
-                <a class="nav-link" :href="'#' + mdl.id">
-                  {{ mdl.title }}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <main>
-      <section v-for="mdl in mdles" :id="mdl.id" :key="mdl.id">
-        <div
-          class="container"
-          style="padding-top: 2rem; padding-bottom: var(--bs-gutter-x, 0.75rem)"
-        >
-          <h3 v-if="mdl.id != MDL_ID.PROFILE && mdl.id != MDL_ID.EXPERIENCE">{{ mdl.title }}</h3>
-          <div class="d-sm-flex flex-row align-items-center" v-if="mdl.id == MDL_ID.PROFILE">
-            <div class="profile__me" style="text-align: center">
-              <img
-                class="profile__avatar rounded-circle"
-                :src="mdl.list[0].avatarUrl"
-                alt="user avatar"
-              />
-              <h1>{{ fullName }}</h1>
-
-              <div class="d-flex justify-content-center" v-if="mdl.list[0].social">
-                <div
-                  style="text-align: center; padding: 0 0.5rem"
-                  v-for="e in mdl.list[0].social"
-                  :key="e.id"
-                >
-                  <a :href="e.service?.name === 'Mail' ? 'mailto:' + e.url : e.url">
-                    <i :class="'ali ' + e.service?.name?.toLowerCase()" style="font-size: 2rem"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="profile__about flex-grow-1">
-              <Markup :src="user?.aboutMe"></Markup>
-            </div>
-          </div>
-          <template v-if="mdl.id == MDL_ID.PROJECT && mdl.list">
-            <div class="grid" style="--bs-gap: 1rem" v-for="g in mdl.list">
-              <div class="g-col-12 g-col-sm-6 g-col-md-4" v-for="e in g.list">
-                <ProjectGridItem class="card" :data="e"></ProjectGridItem>
-              </div>
-            </div>
-          </template>
-          <div class="row" v-if="mdl.id == MDL_ID.EXPERIENCE && mdl.list">
-            <div class="col" style="min-width: 400px" v-for="m in mdl.list">
-              <ul class="exp__list list-unstyled">
-                <h3>{{ m.title }}</h3>
-                <template v-for="exp in m.list">
-                  <li v-if="m.id == MDL_ID.EXPERIENCE">
-                    <h4>{{ exp.companyName + " • " + exp.title }}</h4>
-                    <time
-                      style="margin-bottom: 0.5rem"
-                      :datetime="exp.startDate + '/' + exp.endDate"
-                    >
-                      {{ exp.startDate + " - " + exp.endDate }}
-                    </time>
-
-                    <ul class="list--circle-inside" v-if="exp.responsibilities">
-                      <li v-for="responsibility in exp.responsibilities">{{ responsibility }}</li>
-                    </ul>
-                  </li>
-
-                  <li v-else>
-                    <h4>
-                      <i class="ali degree icon" />
-                      {{ exp.field + " • " + exp.degree }}
-                    </h4>
-                    <time
-                      style="margin-bottom: 0.5rem"
-                      :datetime="exp.startYear + '/' + exp.endYear"
-                    >
-                      {{ exp.startYear + " - " + exp.endYear }}
-                    </time>
-                    <h5>{{ exp.school }}</h5>
-                  </li>
-                </template>
-              </ul>
-            </div>
-          </div>
-          <ul class="list-unstyled" v-if="mdl.id == MDL_ID.SKILL && mdl.list">
-            <li v-for="e in mdl.list">
-              <Markup :src="e"></Markup>
-            </li>
-          </ul>
-        </div>
-      </section>
-    </main>
-  </div>
-</template>
-
 <script setup lang="ts">
 import ProjectGridItem from "../components/ProjectGridItem.vue"
 import { ListGroup, MDL_ID } from "../types/list-group"
-import { computed, watch } from "vue"
+import { computed, nextTick, onUpdated, watch } from "vue"
 import Markup from "../components/markup"
 import Loading from "../components/Loading.vue"
 import fluent from "../types/fluent"
 import { useFetch } from "@vueuse/core"
+import { ScrollSpy } from "bootstrap"
 
-const {
-  isFetching: isLoading,
-  error,
-  data: result
-} = useFetch(`/api/users/paul/resume`).get().json()
+const { isFetching: isLoading, error, data: json } = useFetch(`/api/users/paul/resume`).get().json()
 
-const user = computed(() => result.value)
-
-const mdles = computed(() => _getMdles(result.value))
-const _getMdles = (arg: fluent.User | null) => {
+const sections = computed(() => {
   const result: ListGroup<any>[] = []
 
-  if (!arg) {
+  if (!json.value) {
     return result
   }
+
+  const arg: fluent.User = json.value
 
   result.push(new ListGroup(MDL_ID.PROFILE, "简介", [arg]))
 
@@ -189,30 +52,180 @@ const _getMdles = (arg: fluent.User | null) => {
   result.push(new ListGroup(MDL_ID.SKILL, "技能", arg.skill?.professional))
 
   return result
-}
+})
+
+const introduction = computed(() => json.value.aboutMe)
 
 const fullName = computed(() => {
-  const lastName = result.value?.lastName ?? ""
-  const firstName = result.value?.firstName ?? ""
+  const lastName = json.value?.lastName ?? ""
+  const firstName = json.value?.firstName ?? ""
   return lastName + firstName
 })
 
-const meta = computed(() => ({
-  title: result.value?.username?.toUpperCase()
-}))
+watch(json, () => {
+  const documentTitle: string = json.value.username?.toUpperCase() || ""
+  document.title = documentTitle + " - RESUME"
+})
 
-watch(meta, (n, o) => {
-  if (n.title != o.title && document) {
-    document.title = n.title + " - RESUME"
-  }
+watch(sections, () => {
+  nextTick(() => {
+    const scrollspy = ScrollSpy.getOrCreateInstance(document.body, { target: "#navigation" })
+    scrollspy?.refresh()
+  })
+})
+
+onUpdated(() => {
+  ScrollSpy.getInstance(document.body)?.refresh()
 })
 </script>
+
+<template>
+  <Loading v-if="isLoading"></Loading>
+
+  <div id="__cv" v-else>
+    <header class="sticky-top" id="navigation">
+      <nav class="navbar navbar-expand-sm container-fluid" aria-label="navigation">
+        <a class="navbar-brand" aria-label="resume" href="#">{{ fullName }}</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapse"
+          aria-controls="collapse"
+          aria-expanded="false"
+          aria-label="collapse.toggle"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-list"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+            />
+          </svg>
+        </button>
+        <div class="collapse navbar-collapse" id="collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item" :key="mdl.id" v-for="(mdl, i) in sections">
+              <a
+                class="nav-link"
+                :class="i == 0 ? 'active' : ''"
+                :aria-current="i == 0 ? true : undefined"
+                :href="'#' + mdl.id"
+              >
+                {{ mdl.title }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- <main
+      data-bs-spy="scroll"
+      data-bs-target="navigation"
+      data-bs-root-margin="0px 0px -40%"
+      data-bs-smooth-scroll="true"
+      tabindex="0"
+    > -->
+    <main>
+      <section v-for="mdl in sections" :id="mdl.id" :key="mdl.id">
+        <div
+          class="container"
+          style="padding-top: 2rem; padding-bottom: var(--bs-gutter-x, 0.75rem)"
+        >
+          <h3 v-if="mdl.id != MDL_ID.PROFILE && mdl.id != MDL_ID.EXPERIENCE">{{ mdl.title }}</h3>
+          <div class="d-sm-flex flex-row align-items-center" v-if="mdl.id == MDL_ID.PROFILE">
+            <div class="profile__me" style="text-align: center">
+              <img
+                class="profile__avatar rounded-circle"
+                :src="mdl.list[0].avatarUrl"
+                alt="user avatar"
+              />
+              <h1>{{ fullName }}</h1>
+
+              <div
+                class="social-networking hstack justify-content-center"
+                v-if="mdl.list[0].social"
+              >
+                <div
+                  style="text-align: center; padding: 0 0.5rem"
+                  v-for="e in mdl.list[0].social"
+                  :key="e.id"
+                >
+                  <a :href="e.service?.name === 'Mail' ? 'mailto:' + e.url : e.url">
+                    <i :class="'ali ' + e.service?.name?.toLowerCase()" style="font-size: 2rem"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="profile__about flex-grow-1">
+              <Markup :src="introduction"></Markup>
+            </div>
+          </div>
+          <template v-else-if="mdl.id == MDL_ID.PROJECT && mdl.list">
+            <div class="grid" style="--bs-gap: 1rem" v-for="g in mdl.list">
+              <div class="g-col-12 g-col-sm-6 g-col-md-4" v-for="e in g.list">
+                <ProjectGridItem :data="e"></ProjectGridItem>
+              </div>
+            </div>
+          </template>
+          <div class="row" v-else-if="mdl.id == MDL_ID.EXPERIENCE && mdl.list">
+            <div class="col" style="min-width: 400px" v-for="m in mdl.list">
+              <ul class="exp__list list-unstyled">
+                <h3>{{ m.title }}</h3>
+                <template v-for="exp in m.list">
+                  <li class="mb-3" v-if="m.id == MDL_ID.EXPERIENCE">
+                    <h5>{{ exp.companyName + " • " + exp.title }}</h5>
+                    <time
+                      style="margin-bottom: 0.5rem"
+                      :datetime="exp.startDate + '/' + exp.endDate"
+                    >
+                      {{ exp.startDate + " - " + exp.endDate }}
+                    </time>
+
+                    <ul class="list--circle-inside" v-if="exp.responsibilities">
+                      <li v-for="responsibility in exp.responsibilities">{{ responsibility }}</li>
+                    </ul>
+                  </li>
+                  <li class="mb-3" v-else>
+                    <h5>
+                      <i class="ali degree icon" />
+                      {{ exp.field + " • " + exp.degree }}
+                    </h5>
+                    <time
+                      style="margin-bottom: 0.5rem"
+                      :datetime="exp.startYear + '/' + exp.endYear"
+                    >
+                      {{ exp.startYear + " - " + exp.endYear }}
+                    </time>
+                    <p style="font-size: 1rem; font-weight: 500">{{ exp.school }}</p>
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+          <ul class="list-unstyled" v-else-if="mdl.id == MDL_ID.SKILL && mdl.list">
+            <li v-for="e in mdl.list">
+              <Markup :src="e"></Markup>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+</template>
 
 <style lang="scss">
 @import "https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css";
 
 #__cv {
   user-select: none;
+  font-size: $font-size-sm;
 
   .navbar {
     background-color: rgba(255, 255, 255, 0.72);
@@ -245,8 +258,21 @@ watch(meta, (n, o) => {
   section {
     color: #2f3337;
 
+    &:first-child {
+      padding-top: 0;
+    }
+
     &:nth-child(even) {
       background: #fafafb;
+    }
+
+    .social-networking a {
+      color: var(--#{$variable-prefix}body-color);
+      text-decoration: none;
+
+      &:hover {
+        color: #a0c7e4;
+      }
     }
 
     .profile__avatar {
@@ -257,7 +283,7 @@ watch(meta, (n, o) => {
 
     &#projects .grid {
       &:not(:last-child) {
-        padding-bottom: var(--bs-gap);
+        padding-bottom: var(--#{$variable-prefix}gap);
       }
     }
   }

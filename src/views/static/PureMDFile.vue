@@ -1,12 +1,3 @@
-<template>
-  <Loading v-if="isLoading" />
-  <div id="__file" v-else>
-    <main>
-      <Markup :src="text"></Markup>
-    </main>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from "vue"
 import { useRoute } from "vue-router"
@@ -20,8 +11,19 @@ const { isFetching: isLoading, data } = useFetch(`/api/${path}.md`).get().text()
 const text = computed(() => data.value || "")
 </script>
 
+<template>
+  <Loading v-if="isLoading" />
+  <div id="__file" v-else>
+    <main>
+      <Markup :src="text"></Markup>
+    </main>
+  </div>
+</template>
+
 <style lang="scss">
 #__file {
+  font-size: $font-size-sm;
+
   a {
     color: black;
   }

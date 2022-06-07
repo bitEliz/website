@@ -22,15 +22,15 @@ export default defineComponent({
     return function () {
       const githubProps = {
         xmlns: "http://www.w3.org/2000/svg",
-        width: "5rem",
-        height: "5rem",
+        // width: "5rem",
+        // height: "5rem",
         fill: "currentColor",
         class: "bi bi-github",
         viewBox: "0 0 16 16"
       }
 
       const children = [
-        h("div", { class: "tile__media" }, [
+        h("div", { class: "tile-media mb-4" }, [
           data.value?.isOpenSource && !imageUrl.value
             ? h(
                 "svg",
@@ -41,13 +41,17 @@ export default defineComponent({
               )
             : h("img", { src: imageUrl.value, alt: "artwork" })
         ]),
-        h("div", { class: "tile__description" }, [
-          h(Markup, { class: "tile__excerpt", src: excerpt.value })
+        h("div", { class: "tile-description" }, [
+          h(Markup, { class: "tile-excerpt", src: excerpt.value })
         ])
       ]
       return data.value?.trackViewUrl
-        ? h("a", { class: "tile", href: trackViewUrl.value, target: "_blank" }, children)
-        : h("div", { class: "tile" }, children)
+        ? h(
+            "a",
+            { class: "tile d-block w-100", href: trackViewUrl.value, target: "_blank" },
+            children
+          )
+        : h("div", { class: "tile d-block w-100" }, children)
     }
   }
 })
@@ -55,22 +59,24 @@ export default defineComponent({
 
 <style lang="scss">
 .tile {
-  width: 100%;
-  display: block;
-  background: white;
-  border-radius: 0.5rem;
+  background: var(--#{$variable-prefix}body-bg);
+  @include border-radius(0.5rem);
+
   padding: 2rem;
   padding-bottom: 1rem;
+  color: var(--#{$variable-prefix}body-color);
+  text-decoration: none;
 
-  & &__media {
-    margin-bottom: 1.5rem;
+  &:focus,
+  &:hover {
+    color: var(--#{$variable-prefix}body-color);
   }
 
   img,
   svg {
     width: 5rem;
     height: 5rem;
-    border-radius: 1rem;
+    @include border-radius(1rem);
   }
 }
 </style>
