@@ -10,8 +10,6 @@ async function main() {
 
   app.use(router)
 
-  app.directive("bk-scrollspy", VBScrollspy)
-
   app.mount("#app")
 }
 
