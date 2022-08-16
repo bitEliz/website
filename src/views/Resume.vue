@@ -63,13 +63,19 @@ const fullName = computed(() => {
 })
 
 watch(json, () => {
-  const documentTitle: string = json.value.username?.toUpperCase() || ""
-  document.title = documentTitle + " - RESUME"
+  let documentTitle: string = json.value.username?.toUpperCase() || ""
+  if (documentTitle) {
+    documentTitle += " - RESUME"
+  }
+  document.title = documentTitle
 })
 
 watch(sections, () => {
   nextTick(() => {
-    const scrollspy = ScrollSpy.getOrCreateInstance(document.body, { target: "#navigation" })
+    const scrollspy = ScrollSpy.getOrCreateInstance(document.body, {
+      target: "#navigation",
+      offset: 0
+    })
     scrollspy?.refresh()
   })
 })
@@ -112,12 +118,7 @@ onUpdated(() => {
         <div class="collapse navbar-collapse" id="collapse">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item" :key="mdl.id" v-for="(mdl, i) in sections">
-              <a
-                class="nav-link"
-                :class="i == 0 ? 'active' : ''"
-                :aria-current="i == 0 ? true : undefined"
-                :href="'#' + mdl.id"
-              >
+              <a class="nav-link" :class="i == 0 ? 'active' : ''" :href="'#' + mdl.id">
                 {{ mdl.title }}
               </a>
             </li>
