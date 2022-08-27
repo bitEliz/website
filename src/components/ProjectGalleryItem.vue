@@ -11,15 +11,12 @@
 </template>
 
 <script setup lang="ts">
-import BIGithub from "./BIGithub.vue"
-import Markup from "./markup"
-
 const project = defineProps<{ isOpenSource: boolean; summary: string; artworkUrl?: string }>()
 </script>
 
 <style lang="scss" scoped>
 .tile {
-  background: var(--#{$variable-prefix}body-bg);
+  background: var(--#{$prefix}body-bg);
   @include border-radius(0.5rem);
 
   padding: 2rem;

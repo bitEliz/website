@@ -11,7 +11,6 @@
 
 <script setup lang="ts">
 import fluent from "~/types/fluent"
-import ProjectGalleryItem from "./ProjectGalleryItem.vue"
 
 const props = defineProps<{ galleries: Array<Array<fluent.Project>> }>()
 const galleries = props.galleries
@@ -20,15 +19,15 @@ const galleries = props.galleries
 <style lang="scss" scoped>
 .grid {
   &:not(:last-child) {
-    padding-bottom: var(--#{$variable-prefix}gap);
+    padding-bottom: var(--#{$prefix}gap);
   }
 
   a {
-    color: var(--#{$variable-prefix}body-color);
+    color: var(--#{$prefix}body-color);
 
     &:focus,
     &:hover {
-      color: var(--#{$variable-prefix}body-color);
+      color: var(--#{$prefix}body-color);
     }
   }
 }

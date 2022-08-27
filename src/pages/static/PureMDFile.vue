@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import { useRoute } from "vue-router"
-import Markup from "../../components/markup"
-import Loading from "../../components/Loading.vue"
-import { useFetch } from "@vueuse/core"
 
 const route = useRoute()
 const path = route.path.startsWith("/static") ? route.path : `/static${route.path}`
-const { isFetching: isLoading, data } = useFetch(`/api/${path}.md`).get().text()
+const { pending: isLoading, data } = useFetch(`/api/${path}.md`)
 const text = computed(() => data.value || "")
 </script>
 
@@ -23,7 +19,7 @@ const text = computed(() => data.value || "")
 <style lang="scss">
 #__file {
   a {
-    color: var(--#{$variable-prefix}body-color);
+    color: var(--#{$prefix}body-color);
   }
 
   main {

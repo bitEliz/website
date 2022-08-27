@@ -1,7 +1,7 @@
 import { useMediaQuery } from "./mediaQuery"
 
 export declare type BreakpointLabel = "xs" | "sm" | "md" | "lg" | "xl"
-export var breakpointsMap: Record<BreakpointLabel, number> = {
+export const breakpointsMap: Record<BreakpointLabel, number> = {
   xs: 0,
   sm: 576,
   md: 768,

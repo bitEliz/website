@@ -2,7 +2,7 @@ import { App, computed, createVNode, defineComponent, PropType, toRef } from "vu
 import { marked } from "marked"
 import HL from "highlight.js/lib/common"
 
-var Markup = defineComponent({
+const Markup = defineComponent({
   name: "VMarkup",
   props: {
     src: String,

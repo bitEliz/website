@@ -1,25 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "useDefineForClassFields": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "lib": ["esnext", "ESNext.AsyncIterable", "DOM", "DOM.Iterable"],
-    "esModuleInterop": true,
-    "allowJs": true,
-    "sourceMap": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "jsx": "preserve",
-    "noEmit": true,
-    "experimentalDecorators": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./src/*"],
-      "/@/*": ["./src/*"]
-    },
-    "types": ["node", "marked"]
-  },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  // https://v3.nuxtjs.org/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json"
 }

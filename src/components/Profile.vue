@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import Markup from "~/components/markup"
 import fluent from "~/types/fluent"
 
 const props = defineProps<{
@@ -42,7 +41,7 @@ const fullName = profile.lastName + profile.firstName
   border: 4px solid white;
 }
 .social-networking a {
-  color: var(--#{$variable-prefix}body-color);
+  color: var(--#{$prefix}body-color);
   text-decoration: none;
 
   &:hover {

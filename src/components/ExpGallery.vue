@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { MDL_ID } from "~/types/mdl_id"
+import { MDL_ID } from "~~/src/types/fluent/mdl_id"
 
 const props = defineProps<{ galleries: Array<{ id: MDL_ID; title: string; data: Array<any> }> }>()
 const galleries = props.galleries

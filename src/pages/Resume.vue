@@ -1,11 +1,10 @@
 <template>
-  <Loading v-if="isLoading"></Loading>
-
+  <LazyLoading v-if="isLoading"></LazyLoading>
   <div id="__cv" v-else>
     <header class="sticky-top" id="navigation">
       <nav class="navbar navbar-expand-sm container-fluid" aria-label="navigation">
         <a class="navbar-brand" aria-label="resume" href="#">{{ fullName }}</a>
-        <ToggleButton
+        <LazyToggleButton
           class="navbar-toggler"
           data-bs-toggle="collapse"
           data-bs-target="#collapse"
@@ -31,12 +30,12 @@
           style="padding-top: 2rem; padding-bottom: var(--bs-gutter-x, 0.75rem)"
         >
           <h3 v-if="s.id != MDL_ID.PROFILE && s.id != MDL_ID.EXPERIENCE">{{ s.title }}</h3>
-          <Profile :profile="s.data" v-if="s.id == MDL_ID.PROFILE" />
-          <ProjectGallery :galleries="s.data" v-else-if="s.id == MDL_ID.PROJECT" />
-          <ExpGallery :galleries="s.data" v-else-if="s.id == MDL_ID.EXPERIENCE" />
+          <LazyProfile :profile="s.data" v-if="s.id == MDL_ID.PROFILE" />
+          <LazyProjectGallery :galleries="s.data" v-else-if="s.id == MDL_ID.PROJECT" />
+          <LazyExpGallery :galleries="s.data" v-else-if="s.id == MDL_ID.EXPERIENCE" />
           <ul class="list-unstyled" v-else-if="s.id == MDL_ID.SKILL">
             <li v-for="(e, i) in s.data" :key="i">
-              <Markup :src="e"></Markup>
+              <LazyMarkup :src="e"></LazyMarkup>
             </li>
           </ul>
         </div>
@@ -46,24 +45,16 @@
 </template>
 
 <script setup lang="ts">
-import { MDL_ID } from "~/types/mdl_id"
-import { computed, nextTick, onUpdated, watch } from "vue"
-import Markup from "~/components/markup"
-import Loading from "~/components/Loading.vue"
+import { MDL_ID } from "~~/src/types/fluent/mdl_id"
 import fluent from "~/types/fluent"
-import { useFetch, useTitle } from "@vueuse/core"
-import { ScrollSpy } from "bootstrap"
-import Profile from "~/components/Profile.vue"
-import ProjectGallery from "~/components/ProjectGallery.vue"
-import ExpGallery from "~/components/ExpGallery.vue"
-import ToggleButton from "~/components/ToggleButton.vue"
 
-const { isFetching: isLoading, error, data: json } = useFetch(`/api/users/paul/resume`).get().json()
-
-const profile = computed<fluent.User | undefined>(() => json.value)
+const __uid = useRuntimeConfig().public.__uid
+const { pending: isLoading, data: profile } = useLazyFetch<fluent.User>(
+  `/api/users/${__uid}?emb=edu.exp.proj.sns.skill`
+)
 
 const sections = computed(() => {
-  if (!json.value) {
+  if (!profile.value) {
     return []
   }
 
@@ -88,20 +79,20 @@ const sections = computed(() => {
   }
 
   let result: Array<any> = []
-  result.push({ id: MDL_ID.PROFILE, title: "简介", data: json.value })
+  result.push({ id: MDL_ID.PROFILE, title: "简介", data: profile.value })
 
-  const projectGroups = _prepareProjs(json.value)
+  const projectGroups = _prepareProjs(profile.value)
   if (projectGroups.length > 0) {
     result.push({ id: MDL_ID.PROJECT, title: "项目", data: projectGroups })
   }
 
-  const exp = _prepareExps(json.value!)
+  const exp = _prepareExps(profile.value!)
   if (exp.length > 0) {
     result.push({ id: MDL_ID.EXPERIENCE, title: "经历", data: exp })
   }
 
-  if (json.value.skill?.professional) {
-    result.push({ id: MDL_ID.SKILL, title: "技能", data: json.value.skill?.professional })
+  if (profile.value.skill?.professional) {
+    result.push({ id: MDL_ID.SKILL, title: "技能", data: profile.value.skill?.professional })
   }
 
   return result
@@ -113,19 +104,21 @@ const fullName = computed(() => {
   return lastName + firstName
 })
 
-useTitle(
-  computed(() => {
-    let documentTitle: string = profile.value?.username?.toUpperCase() || ""
-    if (documentTitle) {
-      documentTitle += " - RESUME"
-    }
-    return documentTitle
-  })
-)
+const documentTitle = computed(() => {
+  let documentTitle: string = profile.value?.username?.toUpperCase() || ""
+  if (documentTitle) {
+    documentTitle += " - RESUME"
+  }
+  return documentTitle
+})
+
+useHead({ title: documentTitle })
+
+const { $bootstrap } = useNuxtApp()
 
 watch(sections, () => {
   nextTick(() => {
-    const scrollspy = ScrollSpy.getOrCreateInstance(document.body, {
+    const scrollspy = $bootstrap.ScrollSpy.getOrCreateInstance(document.body, {
       target: "#navigation",
       offset: 0
     })
@@ -134,7 +127,7 @@ watch(sections, () => {
 })
 
 onUpdated(() => {
-  ScrollSpy.getInstance(document.body)?.refresh()
+  $bootstrap.ScrollSpy.getInstance(document.body)?.refresh()
 })
 </script>
 
