@@ -1,0 +1,8 @@
+!.*.js
+.cache/
+.temp/
+node_modules/
+lib/
+dist/
+.nuxt/
+.output/

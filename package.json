@@ -1,46 +1,44 @@
 {
-  "name": "website",
+  "name": "blog",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "nuxt dev --port=5173",
-    "build": "nuxt build",
-    "serve": "nuxt preview",
-    "generate": "nuxt generate",
-    "clean": "nuxt cleanup",
-    "format:prettier": "prettier --write  \"src/**/*.{js?(x),ts?(x),css,scss,vue,md}\"",
-    "lint:eslint": "eslint src",
-    "lint:lint-staged": "lint-staged"
+    "build:core": "pnpm --filter=\"./packages/core\" -r --stream build",
+    "dev:core": "pnpm --filter=\"./packages/core\" -r --stream dev",
+    "format": "prettier --write \"**/*.{cjs,ts?(x),css,scss,md,vue}\"",
+    "generate:core": "pnpm --filter=\"./packages/core\" -r --stream generate",
+    "lint": "eslint --ext .cjs,.js,.ts .",
+    "prepare": "husky install"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged --concurrent false",
-    "commit-msg": "commitlint -e -V"
-  },
-  "dependencies": {
-    "@popperjs/core": "^2.11.6",
-    "bootstrap": "^5.2.0",
-    "bootstrap-icons": "^1.9.1",
-    "highlight.js": "^11.6.0",
-    "marked": "^4.0.19"
+  "lint-staged": {
+    "package.json": "sort-package-json",
+    "*.{cjs,js,vue,json,yaml,scss,md}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.1.1",
+    "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@types/bootstrap": "^5.2.3",
-    "@types/marked": "^4.0.6",
+    "@types/node": "^18.7.13",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
-    "cross-env": "^7.0.3",
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "nuxt": "3.0.0-rc.8",
-    "nuxt3": "npm:nuxt3@latest",
     "prettier": "^2.7.1",
-    "sass": "^1.54.5",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.8.2",
-    "yorkie": "^2.0.0"
+    "sort-package-json": "^1.57.0",
+    "typescript": "^4.8.2"
+  },
+  "engines": {
+    "node": ">=16.11.0"
   }
 }
