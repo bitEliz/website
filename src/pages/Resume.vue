@@ -48,7 +48,7 @@ import fluent from "@/types/fluent"
 import { MDL_ID } from "@/types/fluent/resume"
 
 const __uid = useRuntimeConfig().public.__uid
-const { pending: isLoading, data: profile } = useLazyFetch<fluent.User>(
+const { data: profile } = useLazyFetch<fluent.User>(
   `/api/users/${__uid}?emb=edu.exp.proj.sns.skill`
 )
 
@@ -103,15 +103,15 @@ const fullName = computed(() => {
   return lastName + firstName
 })
 
-const documentTitle = computed(() => {
-  let documentTitle: string = profile.value?.username?.toUpperCase() || ""
-  if (documentTitle) {
-    documentTitle += " - RESUME"
-  }
-  return documentTitle
+useHead({
+  title: computed(() => {
+    let documentTitle: string = profile.value?.username?.toUpperCase() || ""
+    if (documentTitle) {
+      documentTitle += " - RESUME"
+    }
+    return documentTitle
+  })
 })
-
-useHead({ title: documentTitle })
 
 const { $bootstrap } = useNuxtApp()
 
