@@ -8,20 +8,19 @@ RUN apk update \
     && apk upgrade \
     && rm -rf /var/cache/apk/*
 
+# Install pnpm
+RUN npm install -g pnpm
+
 # Set up a build area
 WORKDIR /build
-
-# First just resolve dependencies.
-COPY package.json .
-COPY yarn.lock .
-
-RUN yarn
 
 # Copy entire repo into container
 COPY . .
 
+RUN pnpm install
+
 # Build everything
-RUN yarn build
+RUN pnpm build:core
 
 
 # ================================
@@ -34,12 +33,13 @@ RUN apk update \
     && apk upgrade \
     && rm -rf /var/cache/apk/*
 
+WORKDIR /app
+
 # Copy built executable and any staged resources from builder
-COPY --from=builder /build/.output /app
+COPY --from=builder /build/packages/core/.output .
 
-# Start the service when the image is run, default to listening on 3000 in production environment
-
-ENV NITRO_PORT=5173
+ENV NITRO_PORT=3000
 EXPOSE ${NITRO_PORT}
 
-ENTRYPOINT ["node", "/app/server/index.mjs"]
+# Start the service when the image is run, default to listening on 3000 in production environment
+ENTRYPOINT ["docker-entrypoint.sh", "server/index.mjs"]

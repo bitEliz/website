@@ -7,10 +7,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build:core": "pnpm --filter=\"./packages/core\" -r --stream build",
-    "dev:core": "pnpm --filter=\"./packages/core\" -r --stream dev",
-    "format": "prettier --write \"**/*.{cjs,ts?(x),css,scss,md,vue}\"",
-    "generate:core": "pnpm --filter=\"./packages/core\" -r --stream generate",
+    "build:core": "pnpm --filter=\"./packages/core\" --stream build",
+    "dev:core": "pnpm --filter=\"./packages/core\" --stream dev",
+    "generate:core": "pnpm --filter=\"./packages/core\" --stream generate",
     "lint": "eslint --ext .cjs,.js,.ts .",
     "prepare": "husky install"
   },
