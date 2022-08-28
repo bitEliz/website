@@ -5,7 +5,6 @@ importers:
     specifiers:
       '@commitlint/cli': ^17.1.1
       '@commitlint/config-conventional': ^17.1.0
-      '@types/node': ^18.7.13
       '@typescript-eslint/parser': ^5.35.1
       conventional-changelog-cli: 2.2.2
       eslint: ^8.23.0
@@ -13,14 +12,12 @@ importers:
       husky: ^8.0.1
       lint-staged: ^13.0.3
       prettier: ^2.7.1
-      rimraf: ^3.0.2
       sort-package-json: ^1.57.0
       tsup: ^6.2.3
-      typescript: ~4.7.0
+      typescript: ~4.7.4
     devDependencies:
       '@commitlint/cli': 17.1.1_ts-node@10.9.1
       '@commitlint/config-conventional': 17.1.0
-      '@types/node': 18.7.13
       '@typescript-eslint/parser': 5.35.1_sorwav4hsh5vncerguqybud76i
       conventional-changelog-cli: 2.2.2
       eslint: 8.23.0
@@ -28,14 +25,13 @@ importers:
       husky: 8.0.1
       lint-staged: 13.0.3
       prettier: 2.7.1
-      rimraf: 3.0.2
       sort-package-json: 1.57.0
       tsup: 6.2.3_6oasmw356qmm23djlsjgkwvrtm
       typescript: 4.7.4
 
   packages/core:
     specifiers:
-      '@blog/markdown': workspace:2.0.0-beta.50
+      '@blog/markdown': workspace:*
       '@popperjs/core': ^2.11.6
       '@types/bootstrap': ^5.2.3
       '@types/marked': ^4.0.6
@@ -62,7 +58,7 @@ importers:
 
   packages/markdown:
     specifiers:
-      '@blog/utils': workspace:^0.1.0
+      '@blog/utils': workspace:*
       '@mdit-vue/plugin-component': ^0.10.0
       '@mdit-vue/plugin-frontmatter': ^0.10.0
       '@mdit-vue/plugin-headers': ^0.10.0
@@ -635,11 +631,11 @@ packages:
       '@types/node': 14.18.26
       chalk: 4.1.2
       cosmiconfig: 7.0.1
-      cosmiconfig-typescript-loader: 3.1.2_sojisuq57pai4d4e47xjxa5i7a
+      cosmiconfig-typescript-loader: 3.1.2_g2hk5bvc6tygpm343gjj4vegfu
       lodash: 4.17.21
       resolve-from: 5.0.0
       ts-node: 10.9.1_57uwcby55h6tzvkj3v5sfcgxoe
-      typescript: 4.8.2
+      typescript: 4.7.4
     dev: true
 
   /@commitlint/message/17.0.0:
@@ -2240,7 +2236,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.3
-      caniuse-lite: 1.0.30001383
+      caniuse-lite: 1.0.30001384
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -2363,7 +2359,7 @@ packages:
     engines: { node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7 }
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001383
+      caniuse-lite: 1.0.30001384
       electron-to-chromium: 1.4.233
       node-releases: 2.0.6
       update-browserslist-db: 1.0.5_browserslist@4.21.3
@@ -2490,15 +2486,15 @@ packages:
       }
     dependencies:
       browserslist: 4.21.3
-      caniuse-lite: 1.0.30001383
+      caniuse-lite: 1.0.30001384
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-lite/1.0.30001383:
+  /caniuse-lite/1.0.30001384:
     resolution:
       {
-        integrity: sha512-swMpEoTp5vDoGBZsYZX7L7nXHe6dsHxi9o6/LKf/f0LukVtnrxly5GVb/fWdCDTqi/yw6Km6tiJ0pmBacm0gbg==
+        integrity: sha512-BBWt57kqWbc0GYZXb47wTXpmAgqr5LSibPzNjk/AWMdmJMQhLqOl3c/Kd4OAU/tu4NLfYkMx8Tlq3RVBkOBolQ==
       }
     dev: true
 
@@ -3071,7 +3067,7 @@ packages:
       }
     dev: true
 
-  /cosmiconfig-typescript-loader/3.1.2_sojisuq57pai4d4e47xjxa5i7a:
+  /cosmiconfig-typescript-loader/3.1.2_g2hk5bvc6tygpm343gjj4vegfu:
     resolution:
       {
         integrity: sha512-rIwakk27LtK7vjSjGgs3FDbKkq41Byw3VHRGRuAkRQLfGla+O7s+cy1FXRkjLSZ2G9z1og1bcOIsELo1w4G0Kg==
@@ -3086,7 +3082,7 @@ packages:
       '@types/node': 14.18.26
       cosmiconfig: 7.0.1
       ts-node: 10.9.1_57uwcby55h6tzvkj3v5sfcgxoe
-      typescript: 4.8.2
+      typescript: 4.7.4
     dev: true
 
   /cosmiconfig/7.0.1:
@@ -9275,15 +9271,6 @@ packages:
     resolution:
       {
         integrity: sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
-      }
-    engines: { node: '>=4.2.0' }
-    hasBin: true
-    dev: true
-
-  /typescript/4.8.2:
-    resolution:
-      {
-        integrity: sha512-C0I1UsrrDHo2fYI5oaCGbSejwX4ch+9Y5jTQELvovfmFkK3HHSZJB8MSJcWLmCUBzQBchCrZ9rMRV6GuNrvGtw==
       }
     engines: { node: '>=4.2.0' }
     hasBin: true
