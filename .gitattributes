@@ -1,0 +1,5 @@
+# Enforce Unix newline 
+* text=auto eol=lf
+
+.yarn/releases/** binary
+.yarn/plugins/** binary

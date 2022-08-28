@@ -2,7 +2,9 @@
 .temp/
 .git
 .nuxt
+dist
 .output
 node_modules
-dist
+.yarn
+.pnp.*
 lib
