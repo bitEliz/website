@@ -1,8 +1,17 @@
-export interface Model<ID> {
+export enum MDL_ID {
+  DEFAULT = "",
+  PROJECT = "projects",
+  PROFILE = "profile",
+  EXPERIENCE = "experience",
+  EDUCATIONAL = "educational",
+  SKILL = "skills"
+}
+
+export interface Identifiable<ID> {
   id: ID
 }
 
-export interface Blog extends Model<number> {
+export interface Blog extends Identifiable<number> {
   alias: string
   title: string
   excerpt: string
@@ -15,12 +24,12 @@ export interface Blog extends Model<number> {
   createdAt?: string
 }
 
-export interface BlogCategory extends Model<number> {
+export interface BlogCategory extends Identifiable<number> {
   name: string
   blog?: Array<Blog>
 }
 
-export interface User extends Model<number> {
+export interface User extends Identifiable<number> {
   username: string
   firstName: string
   lastName: string
@@ -38,16 +47,16 @@ export interface User extends Model<number> {
   blog?: Array<Blog>
 }
 
-export interface Skill extends Model<number> {
+export interface Skill extends Identifiable<number> {
   professional: Array<string>
   workflow?: Array<string>
 }
 
-export interface SocialNetworkingService extends Model<number> {
+export interface SocialNetworkingService extends Identifiable<number> {
   name?: string
 }
 
-export interface SocialNetworking extends Model<number> {
+export interface SocialNetworking extends Identifiable<number> {
   url: string
   user?: User
   userId?: number
@@ -59,7 +68,7 @@ export type ProjKind = "app" | "website" | "library"
 
 export type ProjVisibility = "private" | "public"
 
-export interface Project extends Model<number> {
+export interface Project extends Identifiable<number> {
   name: string
   summary: string
   kind: ProjKind
@@ -80,11 +89,11 @@ export interface Project extends Model<number> {
   userId?: number
 }
 
-export interface Industry extends Model<number> {
+export interface Industry extends Identifiable<number> {
   title?: string
 }
 
-export interface Experience extends Model<number> {
+export interface Experience extends Identifiable<number> {
   title: string
   companyName: string
   location: string
@@ -98,7 +107,7 @@ export interface Experience extends Model<number> {
   industries: Array<Industry>
 }
 
-export interface Education extends Model<number> {
+export interface Education extends Identifiable<number> {
   school: string
   degree: string
   field: string

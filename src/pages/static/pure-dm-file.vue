@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { computed } from "vue"
-
 const route = useRoute()
 const path = route.path.startsWith("/static") ? route.path : `/static${route.path}`
-const { pending: isLoading, data } = useFetch(`/api/${path}.md`)
+const { pending: isLoading, data } = await useFetch(`/api/${path}.md`)
 const text = computed(() => data.value || "")
 </script>
 

@@ -1,3 +1,3 @@
-import * as fluent from "./fluent"
+import * as fluent from "./resume"
 
 export default fluent

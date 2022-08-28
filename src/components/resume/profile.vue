@@ -17,12 +17,12 @@
 </template>
 
 <script setup lang="ts">
-import fluent from "~/types/fluent"
+import { SocialNetworking } from "@/types/fluent/resume"
 
 const props = defineProps<{
   profile: {
     avatarUrl?: string
-    social?: Array<fluent.SocialNetworking>
+    social?: Array<SocialNetworking>
     firstName: string
     lastName: string
     aboutMe?: string

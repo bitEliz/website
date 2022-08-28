@@ -3,7 +3,6 @@ import { marked } from "marked"
 import HL from "highlight.js/lib/common"
 
 const Markup = defineComponent({
-  name: "VMarkup",
   props: {
     src: String,
     options: {

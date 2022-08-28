@@ -1,7 +1,7 @@
 <template>
   <div class="tile w-100">
     <div class="tile-media mb-4">
-      <BIGithub v-if="project.isOpenSource && !project.artworkUrl" />
+      <SymbolsGithub v-if="project.isOpenSource && !project.artworkUrl" />
       <img :src="project.artworkUrl" alt="" v-else />
     </div>
     <div class="tile-description">

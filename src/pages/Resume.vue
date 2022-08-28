@@ -30,9 +30,9 @@
           style="padding-top: 2rem; padding-bottom: var(--bs-gutter-x, 0.75rem)"
         >
           <h3 v-if="s.id != MDL_ID.PROFILE && s.id != MDL_ID.EXPERIENCE">{{ s.title }}</h3>
-          <LazyProfile :profile="s.data" v-if="s.id == MDL_ID.PROFILE" />
-          <LazyProjectGallery :galleries="s.data" v-else-if="s.id == MDL_ID.PROJECT" />
-          <LazyExpGallery :galleries="s.data" v-else-if="s.id == MDL_ID.EXPERIENCE" />
+          <LazyResumeProfile :profile="s.data" v-if="s.id == MDL_ID.PROFILE" />
+          <LazyResumeProjectGallery :galleries="s.data" v-else-if="s.id == MDL_ID.PROJECT" />
+          <LazyResumeExpGallery :galleries="s.data" v-else-if="s.id == MDL_ID.EXPERIENCE" />
           <ul class="list-unstyled" v-else-if="s.id == MDL_ID.SKILL">
             <li v-for="(e, i) in s.data" :key="i">
               <LazyMarkup :src="e"></LazyMarkup>
@@ -45,8 +45,8 @@
 </template>
 
 <script setup lang="ts">
-import { MDL_ID } from "~~/src/types/fluent/mdl_id"
-import fluent from "~/types/fluent"
+import fluent from "@/types/fluent"
+import { MDL_ID } from "@/types/fluent/resume"
 
 const __uid = useRuntimeConfig().public.__uid
 const { pending: isLoading, data: profile } = useLazyFetch<fluent.User>(

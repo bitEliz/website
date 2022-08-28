@@ -42,41 +42,25 @@
   </div>
 </template>
 
-<script lang="ts">
-import { BlogGroup } from "../../types/blog"
-import BlogListItem from "../../components/BlogListItem.vue"
-import { computed, defineComponent, ref, unref } from "vue"
+<script setup lang="ts">
+import { BlogGroup } from "@/types/blog"
 
-export default defineComponent({
-  components: {
-    BlogListItem
-  },
-  setup() {
-    const blogGroup = ref<BlogGroup>({})
+const blogGroup = ref<BlogGroup>({})
 
-    const latestBlog = computed(() => unref(blogGroup).latestBlog)
-    const featuredBlog = computed(() => unref(blogGroup).featuredBlog)
-    const trunkedBlog = computed(() => unref(blogGroup).trunkedBlog)
+const latestBlog = computed(() => unref(blogGroup).latestBlog)
+const featuredBlog = computed(() => unref(blogGroup).featuredBlog)
+const trunkedBlog = computed(() => unref(blogGroup).trunkedBlog)
 
-    const loadData = async () => {
-      try {
-        const response = await fetch(`/users/${import.meta.env.USER}/blog`)
-        blogGroup.value = await response.json()
-      } catch (error) {
-        handleError(error)
-      }
-    }
-
-    const handleError = (e: any) => void 0
-
-    return {
-      latestBlog,
-      featuredBlog,
-      trunkedBlog,
-      loadData
-    }
+const loadData = async () => {
+  try {
+    const response = await fetch(`/users/${import.meta.env.USER}/blog`)
+    blogGroup.value = await response.json()
+  } catch (error) {
+    handleError(error)
   }
-})
+}
+
+const handleError = (e: any) => void 0
 </script>
 
 <style lang="scss">

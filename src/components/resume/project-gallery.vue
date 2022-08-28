@@ -2,17 +2,17 @@
   <div class="grid" style="--bs-gap: 1rem" v-for="g in galleries">
     <div class="g-col-12 g-col-md-6 g-col-lg-4" v-for="e in g">
       <a v-if="e.trackViewUrl" class="text-decoration-none" :href="e.trackViewUrl" target="_blank">
-        <ProjectGalleryItem :="e" />
+        <ResumeProjectGalleryItem :="e" />
       </a>
-      <ProjectGalleryItem v-else :="e" />
+      <ResumeProjectGalleryItem v-else :="e" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import fluent from "~/types/fluent"
+import { Project } from "@/types/fluent/resume"
 
-const props = defineProps<{ galleries: Array<Array<fluent.Project>> }>()
+const props = defineProps<{ galleries: Array<Array<Project>> }>()
 const galleries = props.galleries
 </script>
 
