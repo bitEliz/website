@@ -4,6 +4,7 @@
   "description": "core package of blog",
   "scripts": {
     "build": "nuxt build",
+    "clean": "nuxt cleanup",
     "dev": "nuxt dev --port=5173",
     "generate": "nuxt generate",
     "serve": "nuxt preview"
