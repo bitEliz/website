@@ -1,13 +1,12 @@
 <script setup lang="ts">
 const route = useRoute()
 const path = route.path.startsWith("/static") ? route.path : `/static${route.path}`
-const { pending: isLoading, data } = await useFetch(`/api/${path}.md`)
+const { data } = await useFetch(`/api/${path}.md`)
 const text = computed(() => data.value || "")
 </script>
 
 <template>
-  <Loading v-if="isLoading" />
-  <div id="__file" v-else>
+  <div id="__file">
     <main>
       <Markup :src="text"></Markup>
     </main>

@@ -1,10 +1,9 @@
 <template>
-  <LazyLoading v-if="isLoading"></LazyLoading>
-  <div id="__cv" v-else>
+  <div id="__cv">
     <header class="sticky-top" id="navigation">
       <nav class="navbar navbar-expand-sm container-fluid" aria-label="navigation">
         <a class="navbar-brand" aria-label="resume" href="#">{{ fullName }}</a>
-        <LazyToggleButton
+        <ToggleButton
           class="navbar-toggler"
           data-bs-toggle="collapse"
           data-bs-target="#collapse"

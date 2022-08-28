@@ -1,6 +1,5 @@
 <template>
-  <LazyLoading v-if="isLoading"></LazyLoading>
-  <main id="__blog" v-else>
+  <main id="__blog">
     <article v-if="blog">
       <BlogHeader :blog="blog" />
       <Markup class="article" :src="innerHtml"></Markup>
