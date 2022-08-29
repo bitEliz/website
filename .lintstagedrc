@@ -1,0 +1,10 @@
+{
+  "package.json": "sort-package-json",
+  "*.{js,vue,json,yaml,scss,md}": [
+    "prettier --write"
+  ],
+  "*.ts?(x)": [
+    "eslint",
+    "prettier --parser=typescript --write"
+  ]
+}

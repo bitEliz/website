@@ -1,6 +1,4 @@
 {
-  "name": "blog",
-  "version": "0.1.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -17,18 +15,9 @@
     "clean:packages": "pnpm --filter=\"./packages/*\" --recursive --stream clean",
     "dev:core": "pnpm --filter=@blog/core dev",
     "generate:core": "pnpm --filter=@blog/core generate",
-    "lint": "eslint --ext .cjs,.js,.ts,.tsx .",
+    "lint": "eslint --ext .js,.ts,.tsx .",
     "prepare": "husky install",
     "release:changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
-  },
-  "lint-staged": {
-    "package.json": "sort-package-json",
-    "*.{cjs,js,vue,json,yaml,scss,md}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
-    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.1",
