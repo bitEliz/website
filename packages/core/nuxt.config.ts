@@ -9,10 +9,10 @@ export default defineNuxtConfig({
   srcDir: 'src',
   runtimeConfig: {
     api: {
-      __baseURL: process.env.NUXT_API_BASE_URL
+      __baseURL: process.env.NUXT_API_BASE_URL || 'http://localhost:8080'
     },
     public: {
-      __uid: process.env.NUXT_API_UID
+      __uid: process.env.NUXT_API_UID || '__uid'
     }
   },
 

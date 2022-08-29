@@ -1,6 +1,6 @@
 <template>
   <a
-    class="tile d--flex flex--column"
+    class="tile d-flex flex--column"
     :class="!vertical ? 'sm:flex--row' : ''"
     :href="'/blog/' + blog?.alias ?? ''"
   >

@@ -38,7 +38,7 @@ package-lock.json
 .yarn-integrity
 
 # dotenv environment variables file
-.env.*.local
+.env
 
 # Nuxt.js build / generate output
 .nuxt
