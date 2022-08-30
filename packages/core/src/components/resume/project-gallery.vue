@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { Project } from '@/types/fluent/resume'
+import { Project } from '@/types/fluent'
 
 const props = defineProps<{ galleries: Array<Array<Project>> }>()
 const galleries = props.galleries

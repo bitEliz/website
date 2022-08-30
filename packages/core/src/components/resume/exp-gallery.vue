@@ -4,7 +4,7 @@
       <ul class="exp__list list-unstyled">
         <h3>{{ gallery.title }}</h3>
         <template v-for="exp in gallery.data">
-          <li class="mb-3" v-if="gallery.id == MDL_ID.EXPERIENCE">
+          <li class="mb-3" v-if="gallery.id == RESUME_MODULE_ID.EXPERIENCE">
             <h5>{{ exp.companyName + ' • ' + exp.title }}</h5>
             <time
               style="margin-bottom: 0.5rem"
@@ -39,10 +39,10 @@
 </template>
 
 <script setup lang="ts">
-import { MDL_ID } from '@/types/fluent/resume'
+import { RESUME_MODULE_ID } from '@/types/fluent/resume'
 
 const props = defineProps<{
-  galleries: Array<{ id: MDL_ID; title: string; data: Array<any> }>
+  galleries: Array<{ id: RESUME_MODULE_ID; title: string; data: Array<any> }>
 }>()
 const galleries = props.galleries
 </script>

@@ -6,21 +6,29 @@
           class="container"
           style="padding-top: 2rem; padding-bottom: var(--bs-gutter-x, 0.75rem)"
         >
-          <h3 v-if="s.id != MDL_ID.PROFILE && s.id != MDL_ID.EXPERIENCE">
+          <h3
+            v-if="
+              s.id != RESUME_MODULE_ID.PROFILE &&
+              s.id != RESUME_MODULE_ID.EXPERIENCE
+            "
+          >
             {{ s.title }}
           </h3>
-          <LazyResumeProfile :profile="s.data" v-if="s.id == MDL_ID.PROFILE" />
+          <LazyResumeProfile
+            :profile="s.data"
+            v-if="s.id == RESUME_MODULE_ID.PROFILE"
+          />
           <LazyResumeProjectGallery
             :galleries="s.data"
-            v-else-if="s.id == MDL_ID.PROJECT"
+            v-else-if="s.id == RESUME_MODULE_ID.PROJECT"
           />
           <LazyResumeExpGallery
             :galleries="s.data"
-            v-else-if="s.id == MDL_ID.EXPERIENCE"
+            v-else-if="s.id == RESUME_MODULE_ID.EXPERIENCE"
           />
-          <ul class="list-unstyled" v-else-if="s.id == MDL_ID.SKILL">
+          <ul class="list-unstyled" v-else-if="s.id == RESUME_MODULE_ID.SKILL">
             <li v-for="(e, i) in s.data" :key="i">
-              <LazyMarkup :src="e"></LazyMarkup>
+              <LazyMarkdown :content="e"></LazyMarkdown>
             </li>
           </ul>
         </div>
@@ -30,8 +38,8 @@
 </template>
 
 <script setup lang="ts">
-import fluent from '@/types/fluent'
-import { MDL_ID } from '@/types/fluent/resume'
+import { Project, User } from '@/types/fluent'
+import { RESUME_MODULE_ID } from '@/types/fluent'
 
 const __uid = useRuntimeConfig().public.__uid
 const { data: profile } = useLazyFetch<fluent.User>(
@@ -43,18 +51,18 @@ const sections = computed(() => {
     return []
   }
 
-  const _prepareExps = (profile: fluent.User): Array<any> => {
+  const _prepareExps = (profile: User): Array<any> => {
     let exp = []
     if (profile.experiences) {
       exp.push({
-        id: MDL_ID.EXPERIENCE,
+        id: RESUME_MODULE_ID.EXPERIENCE,
         title: '工作经历',
         data: profile.experiences
       })
     }
     if (profile.education) {
       exp.push({
-        id: MDL_ID.EDUCATIONAL,
+        id: RESUME_MODULE_ID.EDUCATIONAL,
         title: '教育经历',
         data: profile.education
       })
@@ -62,12 +70,10 @@ const sections = computed(() => {
     return exp
   }
 
-  const _prepareProjs = (
-    profile: fluent.User
-  ): Array<Array<fluent.Project>> => {
+  const _prepareProjs = (profile: User): Array<Array<Project>> => {
     const projects =
       profile.projects?.filter((e) => e.visibility == 'public') || []
-    let projectGroups: Array<Array<fluent.Project>> = []
+    let projectGroups: Array<Array<Project>> = []
     projectGroups.push(projects.filter((e) => e.isOpenSource))
     projectGroups.push(projects.filter((e) => !e.isOpenSource))
     projectGroups = projectGroups.filter((e) => e.length > 0)
@@ -75,21 +81,29 @@ const sections = computed(() => {
   }
 
   let result: Array<any> = []
-  result.push({ id: MDL_ID.PROFILE, title: '简介', data: profile.value })
+  result.push({
+    id: RESUME_MODULE_ID.PROFILE,
+    title: '简介',
+    data: profile.value
+  })
 
   const projectGroups = _prepareProjs(profile.value)
   if (projectGroups.length > 0) {
-    result.push({ id: MDL_ID.PROJECT, title: '项目', data: projectGroups })
+    result.push({
+      id: RESUME_MODULE_ID.PROJECT,
+      title: '项目',
+      data: projectGroups
+    })
   }
 
-  const exp = _prepareExps(profile.value!)
+  const exp = _prepareExps(profile.value)
   if (exp.length > 0) {
-    result.push({ id: MDL_ID.EXPERIENCE, title: '经历', data: exp })
+    result.push({ id: RESUME_MODULE_ID.EXPERIENCE, title: '经历', data: exp })
   }
 
   if (profile.value.skill?.professional) {
     result.push({
-      id: MDL_ID.SKILL,
+      id: RESUME_MODULE_ID.SKILL,
       title: '技能',
       data: profile.value.skill?.professional
     })

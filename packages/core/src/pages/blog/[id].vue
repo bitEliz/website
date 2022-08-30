@@ -8,20 +8,14 @@
 </template>
 
 <script setup lang="ts">
-import fluent from '@/types/fluent'
+import { Blog } from '@/types/fluent'
 
-const blog = ref<fluent.Blog>()
 const route = useRoute()
-const innerHtml = computed(() => blog.value?.content)
-const loadData = async () => {
-  try {
-    const response = await fetch(`/blog/${route.params.id}`)
-    blog.value = await response.json()
-  } catch (error) {
-    handleError(error)
-  }
-}
-const handleError = (error: any) => void 0
+const { data: blog } = useLazyAsyncData(
+  'blog',
+  () => $fetch(`/api/blog/${route.params.id}`) as Promise<Blog>
+)
+const html = computed(() => blog.value.content)
 </script>
 
 <style lang="scss">

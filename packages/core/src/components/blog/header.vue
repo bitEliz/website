@@ -36,8 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import fluent from '~/types/fluent'
+import { Blog } from '~/types/fluent'
 
-const props = defineProps<{ blog: fluent.Blog }>()
+const props = defineProps<{ blog: Blog }>()
 const blog = props.blog
 </script>

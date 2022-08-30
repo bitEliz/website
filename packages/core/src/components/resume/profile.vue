@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { SocialNetworking } from '@/types/fluent/resume'
+import { SocialNetworking } from '@/types/fluent'
 
 const props = defineProps<{
   profile: {

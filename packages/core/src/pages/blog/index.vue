@@ -47,24 +47,13 @@
 </template>
 
 <script setup lang="ts">
-import { BlogGroup } from '@/types/blog'
+import { BlogGroup } from '@/types/fluent'
 
 const blogGroup = ref<BlogGroup>({})
 
 const latestBlog = computed(() => unref(blogGroup).latestBlog)
 const featuredBlog = computed(() => unref(blogGroup).featuredBlog)
 const trunkedBlog = computed(() => unref(blogGroup).trunkedBlog)
-
-const loadData = async () => {
-  try {
-    const response = await fetch(`/users/${import.meta.env.USER}/blog`)
-    blogGroup.value = await response.json()
-  } catch (error) {
-    handleError(error)
-  }
-}
-
-const handleError = (e: any) => void 0
 </script>
 
 <style lang="scss">
