@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="blog">
-    <main role="main">
-      <section v-if="latestBlog?.length" class="blog__lastest">
+  <div id="__blogs">
+    <main role="main" class="container">
+      <section v-if="latestBlog" class="lastest">
         <div class="wrapper">
           <h1>Latest Blog</h1>
           <ul
@@ -11,7 +11,7 @@
               v-for="(blog, index) in latestBlog"
               :key="blog.id"
               class="blog__item"
-              :class="index === 0 ? 'f-b--100' : index > 2 ? 'f-b--1/3' : ''"
+              :class="index === 0 ? 'col-12' : index > 2 ? 'col-4' : ''"
             >
               <BlogListItem
                 :blog="blog"
@@ -22,10 +22,10 @@
           </ul>
         </div>
       </section>
-      <section v-if="featuredBlog?.length" class="blog__featured">
+      <section v-if="featuredBlog" class="featured">
         <h1>Featured Blog</h1>
       </section>
-      <section v-if="trunkedBlog?.length" class="blog__more--trunked">
+      <section v-if="trunkedBlog" class="trunked">
         <div class="wrapper">
           <h1>More Blog</h1>
           <ul
@@ -47,17 +47,15 @@
 </template>
 
 <script setup lang="ts">
-import { BlogGroup } from '@/types/fluent'
+const { data } = await useFetch(`/api/_blog`)
 
-const blogGroup = ref<BlogGroup>({})
-
-const latestBlog = computed(() => unref(blogGroup).latestBlog)
-const featuredBlog = computed(() => unref(blogGroup).featuredBlog)
-const trunkedBlog = computed(() => unref(blogGroup).trunkedBlog)
+const latestBlog = computed(() => unref(data).latestBlog)
+const featuredBlog = computed(() => unref(data).featuredBlog)
+const trunkedBlog = computed(() => unref(data).trunkedBlog)
 </script>
 
 <style lang="scss">
-.blog {
+#__blog {
   background: #fafafb;
 
   .blog__item-list {

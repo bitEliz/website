@@ -41,10 +41,7 @@
 import { Project, User } from '@/types/fluent'
 import { RESUME_MODULE_ID } from '@/types/fluent'
 
-const __uid = useRuntimeConfig().public.__uid
-const { data: profile } = useLazyFetch<fluent.User>(
-  `/api/users/${__uid}?emb=edu.exp.proj.sns.skill`
-)
+const { data: profile } = await useFetch('/api/_resume')
 
 const sections = computed(() => {
   if (!profile.value) {

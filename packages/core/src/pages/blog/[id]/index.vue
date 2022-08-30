@@ -1,21 +1,15 @@
 <template>
-  <main id="__blog">
+  <main id="__blog" class="container">
+    <BlogHeader :blog="blog" />
     <article v-if="blog">
-      <BlogHeader :blog="blog" />
-      <Markdown class="article" :content="html"></Markdown>
+      <Markdown :content="blog.content"></Markdown>
     </article>
   </main>
 </template>
 
 <script setup lang="ts">
-import { Blog } from '@/types/fluent'
-
 const route = useRoute()
-const { data: blog } = useLazyAsyncData(
-  'blog',
-  () => $fetch(`/api/blog/${route.params.id}`) as Promise<Blog>
-)
-const html = computed(() => blog.value.content)
+const { data: blog } = await useFetch(`/api/blog/${route.params.id}`)
 </script>
 
 <style lang="scss">
