@@ -2,7 +2,7 @@
   <main id="__blog">
     <article v-if="blog">
       <BlogHeader :blog="blog" />
-      <Markup class="article" :src="innerHtml"></Markup>
+      <Markdown class="article" :content="html"></Markdown>
     </article>
   </main>
 </template>

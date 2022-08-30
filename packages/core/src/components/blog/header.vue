@@ -26,11 +26,11 @@
           <time pubdate :datetime="blog.createdAt">{{ blog.createdAt }}</time>
         </div>
       </div>
-      <Markup
+      <Markdown
         v-if="blog.excerpt"
         class="blog__excerpt"
         :src="blog.excerpt"
-      ></Markup>
+      ></Markdown>
     </div>
   </header>
 </template>

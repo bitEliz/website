@@ -26,10 +26,10 @@
         </div>
       </div>
     </div>
-    <Markup
-      :src="profile.aboutMe"
+    <Markdown
+      :content="profile.aboutMe"
       class="col-sm-8 profile__about flex-grow-1"
-    ></Markup>
+    ></Markdown>
   </div>
 </template>
 

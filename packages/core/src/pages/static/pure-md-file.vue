@@ -3,14 +3,16 @@ const route = useRoute()
 const path = route.path.startsWith('/static')
   ? route.path
   : `/static${route.path}`
-const { data } = await useFetch(`/api/${path}.md`)
-const text = computed(() => data.value || '')
+const { data: content } = useLazyAsyncData(
+  'markdown',
+  () => $fetch(`/api/${path}.md`) as Promise<string>
+)
 </script>
 
 <template>
   <div id="__file">
     <main>
-      <Markup :src="text"></Markup>
+      <Markdown :content="content"></Markdown>
     </main>
   </div>
 </template>

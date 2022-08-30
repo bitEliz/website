@@ -1,17 +1,17 @@
 <template>
   <div class="tile w-100">
     <div class="tile-media mb-4">
-      <SymbolsGithub v-if="project.isOpenSource && !project.artworkUrl" />
-      <img :src="project.artworkUrl" alt="" v-else />
+      <SymbolsGithub v-if="props.isOpenSource && !props.artworkUrl" />
+      <img :src="props.artworkUrl" alt="" v-else />
     </div>
     <div class="tile-description">
-      <Markup class="tile-excerpt" :src="project.summary" />
+      <Markdown class="tile-excerpt" :content="props.summary" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const project = defineProps<{
+const props = defineProps<{
   isOpenSource: boolean
   summary: string
   artworkUrl?: string
