@@ -1,11 +1,12 @@
 {
   "name": "@blog/core",
   "version": "0.1.0",
+  "private": true,
   "description": "core package of blog",
   "scripts": {
     "build": "nuxt build",
     "clean": "nuxt cleanup",
-    "dev": "nuxt dev --port=5173",
+    "dev": "nuxt dev --host=localhost --port=5173",
     "generate": "nuxt generate",
     "serve": "nuxt preview"
   },
@@ -18,7 +19,7 @@
   "devDependencies": {
     "@types/bootstrap": "^5.2.3",
     "@types/marked": "^4.0.6",
-    "nuxt": "3.0.0-rc.8",
+    "nuxt": "^3.0.0-rc.8",
     "sass": "^1.54.5"
   }
 }
