@@ -17,7 +17,8 @@
     "generate:core": "pnpm --filter=@blog/core generate",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "prepare": "husky install",
-    "release:changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "release:changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "serve:core": "pnpm --filter=@blog/core --stream serve"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",

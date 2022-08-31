@@ -6,7 +6,7 @@
   "scripts": {
     "build": "nuxt build",
     "clean": "nuxt cleanup",
-    "dev": "nuxt dev --host=localhost --port=5173",
+    "dev": "nuxt dev",
     "generate": "nuxt generate",
     "serve": "nuxt preview"
   },
