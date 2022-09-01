@@ -1,17 +1,29 @@
 <template>
   <div
     class="cell"
-    :class="axis === 'horizontal' ? 'flex-row' : ''"
+    :class="axis === 'horizontal' ? 'flex-row align-items-center' : ''"
     :style="borderRadiusProp"
   >
     <div
       v-if="data.artworkUrl"
-      :class="aspectRatio ? 'cell-media ratio' : 'cell-media'"
+      class="cell-media"
+      :class="
+        axis === 'horizontal'
+          ? aspectRatio
+            ? 'col-4 ratio'
+            : 'col-4'
+          : aspectRatio
+          ? 'ratio'
+          : ''
+      "
       :style="aspectRatioProp"
     >
-      <img class="w-100" :src="data.artworkUrl" :alt="data.title" />
+      <img :src="data.artworkUrl" :alt="data.title" />
     </div>
-    <div class="cell-description d-flex flex-column justify-content-between">
+    <div
+      class="cell-description d-flex flex-column justify-content-between"
+      :class="axis === 'horizontal' ? 'col-8' : ''"
+    >
       <div class="cell-head">
         <div class="category fs-8 text-secondary text-uppercase mb-1">Tag</div>
         <h4 class="text-dark">{{ data.title }}</h4>
@@ -30,7 +42,7 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    axis?: string
+    axis?: 'horizontal' | 'vertical'
     aspectRatio?: number
     borderRadius?: string
     data: {
@@ -42,8 +54,7 @@ const props = withDefaults(
   }>(),
   {
     axis: 'vertical',
-    aspectRatio: 0.5625,
-    borderRadius: '1rem'
+    aspectRatio: 0.5625
   }
 )
 
@@ -61,7 +72,7 @@ const borderRadiusProp =
   --#{$prefix}cell-title-spacer-y: #{$card-title-spacer-y};
   --#{$prefix}cell-border-width: #{$card-border-width};
   --#{$prefix}cell-border-color: #{$card-border-color};
-  --#{$prefix}cell-border-radius: #{$card-border-radius};
+  --#{$prefix}cell-border-radius: 1rem;
   --#{$prefix}cell-box-shadow: #{$card-box-shadow};
   --#{$prefix}cell-height: #{$card-height};
   --#{$prefix}cell-color: #{$card-color};
@@ -92,12 +103,22 @@ const borderRadiusProp =
     @include border-top-radius(var(--#{$prefix}cell-border-radius));
   }
 
-  &.flex-row .cell-media {
-    width: 33%;
+  &.flex-row {
+    border: none;
+    --bs-cell-border-radius: 0.5rem;
 
-    img {
-      @include border-bottom-start-radius(var(--#{$prefix}cell-border-radius));
-      @include border-top-end-radius(unset);
+    @include media-breakpoint-up(lg) {
+      --bs-cell-border-radius: 1rem;
+    }
+
+    .cell-media {
+      &.col-4 {
+        width: 33.33333333% !important;
+      }
+
+      img {
+        @include border-radius(var(--#{$prefix}cell-border-radius));
+      }
     }
   }
 }
