@@ -14,11 +14,6 @@ const { data: blog } = await useFetch(`/api/blog/${route.params.id}`)
 
 <style lang="scss">
 #__blog {
-  max-width: 798px;
-  min-width: 320px;
-  padding: 2rem 2rem;
-  margin: 0 auto;
-
   header {
     border-bottom: 1px solid #e4e6e8;
     margin-bottom: 2.5rem;
