@@ -2,10 +2,11 @@ import { defineNuxtConfig } from 'nuxt'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  telemetry: false,
   app: {
     buildAssetsDir: 'assets/'
   },
-  css: ['bootstrap/scss/bootstrap.scss'],
+  css: ['@/_assets/styles/bootstrap.scss'],
   srcDir: 'src',
   runtimeConfig: {
     api: {
@@ -19,7 +20,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "@/assets/styles/bootstrap";`
+          additionalData: `@import "@/_assets/styles/_preprocess.bootstrap.scss";`
         }
       }
     }

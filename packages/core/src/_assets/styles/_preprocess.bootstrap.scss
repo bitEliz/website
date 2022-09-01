@@ -1,0 +1,22 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import 'bootstrap/scss/functions';
+
+// 2. Include any default variable overrides here
+$enable-cssgrid: true;
+
+$link-decoration: none;
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import 'bootstrap/scss/variables';
+
+// 4. Include any default map overrides here
+$font-sizes: map-merge(
+  $font-sizes,
+  (
+    7: $font-size-base * 0.875,
+    8: $font-size-base * 0.75
+  )
+);
+
+// @import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
