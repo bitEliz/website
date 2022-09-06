@@ -1,9 +1,11 @@
 <template>
-  <main id="__blog" class="container">
-    <BlogHeader :blog="blog" />
-    <article v-if="blog">
-      <Markdown :content="blog.content"></Markdown>
-    </article>
+  <main id="__blog">
+    <div class="container">
+      <BlogHeader :blog="blog" />
+      <article v-if="blog">
+        <Markdown :content="blog.content"></Markdown>
+      </article>
+    </div>
   </main>
 </template>
 

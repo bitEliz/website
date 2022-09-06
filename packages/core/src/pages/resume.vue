@@ -1,40 +1,43 @@
 <template>
-  <div id="__cv">
-    <main>
-      <section v-for="s in sections" :key="s.id" :id="s.id">
-        <div
-          class="container"
-          style="padding-top: 2rem; padding-bottom: var(--bs-gutter-x, 0.75rem)"
+  <main id="__cv">
+    <section
+      v-for="(s, i) in sections"
+      :key="s.id"
+      :id="s.id"
+      :class="i % 2 == 0 ? '' : 'bg-light'"
+    >
+      <div
+        class="container"
+        style="padding-top: 2rem; padding-bottom: var(--bs-gutter-x, 0.75rem)"
+      >
+        <h3
+          v-if="
+            s.id != RESUME_MODULE_ID.PROFILE &&
+            s.id != RESUME_MODULE_ID.EXPERIENCE
+          "
         >
-          <h3
-            v-if="
-              s.id != RESUME_MODULE_ID.PROFILE &&
-              s.id != RESUME_MODULE_ID.EXPERIENCE
-            "
-          >
-            {{ s.title }}
-          </h3>
-          <LazyResumeProfile
-            :profile="s.data"
-            v-if="s.id == RESUME_MODULE_ID.PROFILE"
-          />
-          <LazyResumeProjectGallery
-            :galleries="s.data"
-            v-else-if="s.id == RESUME_MODULE_ID.PROJECT"
-          />
-          <LazyResumeExpGallery
-            :galleries="s.data"
-            v-else-if="s.id == RESUME_MODULE_ID.EXPERIENCE"
-          />
-          <ul class="list-unstyled" v-else-if="s.id == RESUME_MODULE_ID.SKILL">
-            <li v-for="(e, i) in s.data" :key="i">
-              <LazyMarkdown :content="e"></LazyMarkdown>
-            </li>
-          </ul>
-        </div>
-      </section>
-    </main>
-  </div>
+          {{ s.title }}
+        </h3>
+        <LazyResumeProfile
+          :profile="s.data"
+          v-if="s.id == RESUME_MODULE_ID.PROFILE"
+        />
+        <LazyResumeProjectGallery
+          :galleries="s.data"
+          v-else-if="s.id == RESUME_MODULE_ID.PROJECT"
+        />
+        <LazyResumeExpGallery
+          :galleries="s.data"
+          v-else-if="s.id == RESUME_MODULE_ID.EXPERIENCE"
+        />
+        <ul class="list-unstyled" v-else-if="s.id == RESUME_MODULE_ID.SKILL">
+          <li v-for="(e, i) in s.data" :key="i">
+            <LazyMarkdown :content="e"></LazyMarkdown>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -122,52 +125,4 @@ useHead({
 
 <style lang="scss">
 @import 'https://at.alicdn.com/t/font_1932202_s1pihrh03mo.css';
-
-#__cv {
-  user-select: none;
-
-  .navbar {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    background-color: rgba(255, 255, 255, 0.72);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.05),
-      0 2px 8px rgba(0, 0, 0, 0.05);
-
-    @supports (
-      (-webkit-backdrop-filter: initial) or (backdrop-filter: initial)
-    ) {
-      -webkit-backdrop-filter: saturate(180%) blur(40px);
-      backdrop-filter: saturate(180%) blur(40px);
-    }
-
-    .navbar-toggle {
-      border: none;
-    }
-
-    .nav-link {
-      text-transform: uppercase;
-      color: #848d95;
-
-      &:hover {
-        color: #a0c7e4;
-      }
-
-      &.active {
-        color: black;
-      }
-    }
-  }
-
-  section {
-    color: #2f3337;
-
-    &:first-child {
-      padding-top: 0;
-    }
-
-    &:nth-child(even) {
-      background: #fafafb;
-    }
-  }
-}
 </style>
