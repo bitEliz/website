@@ -1,7 +1,13 @@
 <template>
   <main id="__blog">
     <div class="container">
-      <BlogHeader :blog="blog" />
+      <BlogFrontMatter
+        :title="blog.title"
+        :artwork-url="blog.artworkUrl"
+        :excerpt="blog.excerpt"
+        :tags="blog.tags"
+        :created-at="blog.createdAt"
+      />
       <article v-if="blog">
         <Markdown :content="blog.content"></Markdown>
       </article>
