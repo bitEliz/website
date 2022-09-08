@@ -11,6 +11,12 @@ RUN apk update \
 # Install pnpm
 RUN npm install -g pnpm
 
+ARG NUXT_API_BASE_URL=http://127.0.0.1:8080
+ARG NUXT_API_UID=__uid
+
+ENV NUXT_API_BASE_URL=${NUXT_API_BASE_URL}
+ENV NUXT_API_UID=${NUXT_API_UID}
+
 # Set up a build area
 WORKDIR /build
 

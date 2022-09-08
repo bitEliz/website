@@ -69,6 +69,9 @@ jobs:
         with:
           context: .
           file: ./docker/Dockerfile
+          build-args: |
+            NUXT_API_BASE_URL=${{ secrets.DOCKER_BUILDARGS_API_BASE_URL }}
+            NUXT_API_UID=${{ secrets.DOCKER_BUILDARGS_UID }}
           push: true
           tags: ${{ steps.prepare.outputs.tags }}
           labels: |
