@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
-    "bootstrap": "^5.2.0",
+    "bootstrap": "^5.2.1",
     "highlight.js": "^11.6.0",
-    "marked": "^4.0.19"
+    "marked": "^4.1.0"
   },
   "devDependencies": {
-    "@types/bootstrap": "^5.2.3",
-    "@types/marked": "^4.0.6",
+    "@types/bootstrap": "^5.2.4",
+    "@types/marked": "^4.0.7",
     "nuxt": "3.0.0-rc.9",
-    "sass": "^1.54.5"
+    "sass": "^1.54.9"
   }
 }
