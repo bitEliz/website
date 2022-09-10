@@ -7,7 +7,6 @@
     :style="borderRadiusProp"
   >
     <div
-      v-if="data.artworkUrl"
       class="tile-media"
       :class="
         layoutDirection === 'horizontal'
@@ -20,18 +19,14 @@
       "
       :style="aspectRatioProp"
     >
-      <img :src="data.artworkUrl" :alt="data.title" />
+      <slot name="media" v-if="$slots.media"></slot>
+      <img class="img-fluid" :src="data.artworkUrl" :alt="data.title" v-else />
     </div>
     <div
       class="tile-description d-flex flex-column justify-content-between"
       :class="layoutDirection === 'horizontal' ? 'col-8' : ''"
     >
-      <div class="tile-head">
-        <div class="tile-label fs-8 text-secondary text-uppercase mb-1">
-          Tag
-        </div>
-        <h4 class="text-dark">{{ data.title }}</h4>
-      </div>
+      <slot name="excerpt"></slot>
       <time
         class="timestamp fs-7 text-secondary txt-uppercase"
         :datatime="data.createdAt"
@@ -47,23 +42,22 @@
 const props = withDefaults(
   defineProps<{
     layoutDirection?: 'horizontal' | 'vertical'
-    aspectRatio?: number
+    aspectRatio?: string
     borderRadius?: string
     data: {
       artworkUrl?: string
-      tags?: Array<string>
       title: string
       createdAt?: string
     }
   }>(),
   {
     layoutDirection: 'vertical',
-    aspectRatio: 0.5625
+    aspectRatio: '56.25%'
   }
 )
 
 const aspectRatioProp =
-  props.aspectRatio && `--bs-aspect-ratio: ${props.aspectRatio * 100}%`
+  props.aspectRatio && `--bs-aspect-ratio: ${props.aspectRatio}`
 const borderRadiusProp =
   props.borderRadius && `--bs-tile-border-radius: ${props.borderRadius}`
 </script>
@@ -103,7 +97,7 @@ const borderRadiusProp =
     color: var(--#{$prefix}tile-color);
   }
 
-  &-media img {
+  &-media > :deep(img) {
     @include border-top-radius(var(--#{$prefix}tile-border-radius));
   }
 
@@ -120,7 +114,7 @@ const borderRadiusProp =
         width: 33.33333333% !important;
       }
 
-      img {
+      > :deep(img) {
         @include border-radius(var(--#{$prefix}tile-border-radius));
       }
     }

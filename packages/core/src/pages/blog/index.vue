@@ -19,7 +19,18 @@
               <Tile
                 class="text-reset text-body border-light h-100"
                 :data="blog"
-              />
+              >
+                <template #excerpt>
+                  <div class="tile-head">
+                    <div
+                      class="tile-label fs-8 text-secondary text-uppercase mb-1"
+                    >
+                      Tag
+                    </div>
+                    <h4 class="text-dark">{{ blog.title }}</h4>
+                  </div>
+                </template>
+              </Tile>
             </a>
           </li>
         </ul>
@@ -35,7 +46,18 @@
                 layout-direction="horizontal"
                 class="text-reset text-body border-light"
                 :data="blog"
-              />
+              >
+                <template #excerpt>
+                  <div class="tile-head">
+                    <div
+                      class="tile-label fs-8 text-secondary text-uppercase mb-1"
+                    >
+                      Tag
+                    </div>
+                    <h4 class="text-dark">{{ blog.title }}</h4>
+                  </div>
+                </template>
+              </Tile>
             </a>
           </li>
         </ul>
