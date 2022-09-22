@@ -1,6 +1,7 @@
 <template>
-  <NuxtLayout>
-    <Loading />
-    <NuxtPage />
-  </NuxtLayout>
+  <RouterView v-slot="{ Component }">
+    <Suspense>
+      <component :is="Component"></component>
+    </Suspense>
+  </RouterView>
 </template>
