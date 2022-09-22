@@ -3,12 +3,12 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import express from 'express'
 import { createServer } from 'vite'
+import manifest from './dist/client/ssr-manifest.json' assert { type: 'json' }
 ;(async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
   const isProd = process.env.NODE_ENV === 'production'
 
-  const manifest = isProd ? require('./dist/client/ssr-manifest.json') : {}
   let template = isProd
     ? fs.readFileSync(
         path.resolve(__dirname, 'dist/client/index.html'),
