@@ -1,6 +1,7 @@
-import { Blog } from '@/types/fluent'
-import { resolveApiUrl } from '@/utils'
+import { Blog } from '@/models'
 
-export default defineEventHandler((event) => {
-  return $fetch(resolveApiUrl(event.req.url)) as Promise<Blog>
-})
+// Fetch blog with id or alias.
+export const fetchBlog = async (
+  id: number | string,
+  params?: Record<string, any>
+): Promise<Blog> => await useApi(`/api/blog/${id}`, params)
