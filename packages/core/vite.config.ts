@@ -13,11 +13,11 @@ export default ({ mode }: { mode: string }) =>
       vueJsxPlugin(),
       importPlugin({
         imports: ['vue', 'vue-router', '@vueuse/core', 'pinia'],
-        dts: './src/types/auto-imports.d.ts'
+        dts: './types/auto-imports.d.ts'
       }),
       componentPlugin({
         directoryAsNamespace: true,
-        dts: './src/types/components.d.ts'
+        dts: './types/components.d.ts'
       })
     ],
     css: {
@@ -38,21 +38,6 @@ export default ({ mode }: { mode: string }) =>
           target: loadEnv(mode, process.cwd()).API_BASE_URL,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '/')
-        }
-      }
-    },
-    build: {
-      rollupOptions: {
-        output: {
-          assetFileNames: (assetInfo) => {
-            let assets = assetInfo.name.split('.')[1]
-            if (/png|jpe?g|svg|tiff|bmp|ico/i.test(assets)) {
-              assets = 'img'
-            }
-            return `assets/${assets}/[name]-[hash][extname]`
-          },
-          chunkFileNames: 'assets/js/[name].[hash].js'
-          // entryFileNames: 'assets/js/[name].[hash].js'
         }
       }
     }
