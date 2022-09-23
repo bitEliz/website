@@ -1,4 +1,4 @@
-import { fetchBlog } from '@/server/api/blog'
+import { fetchBlog } from '@/server/api'
 import { Blog } from '@/models'
 
 export const useBlogStore = defineStore('blog', {

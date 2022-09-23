@@ -1,4 +1,4 @@
-import { fetchUser } from '@/server/api/users'
+import { fetchUser } from '@/server/api'
 import { User } from '@/models'
 
 export const useProfileStore = defineStore('profile', {
