@@ -1,7 +1,7 @@
-import { fetchUserBlog } from '@/server/api/users'
+import { fetchUserBlog } from '@/server/api'
 import { BlogGroup } from '@/models'
 
-export const useBlogsStore = defineStore('blogs', {
+export const useBlogGalleryStore = defineStore('blog_gallery', {
   state: (): { blog: BlogGroup } => ({
     blog: {}
   }),

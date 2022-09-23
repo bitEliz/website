@@ -16,13 +16,15 @@
 </template>
 
 <script setup lang="ts">
+import { firstOne } from '@/utils'
+
 const route = useRoute()
 const store = useBlogStore()
 const { blog } = storeToRefs(store)
 
 onServerPrefetch(async () => {
   if (import.meta.env.SSR) {
-    await store.fetch(route.params.id as string)
+    await store.fetch(firstOne(route.params.id) || '')
   }
 })
 </script>

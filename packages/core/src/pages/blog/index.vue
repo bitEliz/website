@@ -67,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-const store = useBlogsStore()
+const store = useBlogGalleryStore()
 const { blog: data } = storeToRefs(store)
 const latestBlog = computed(() => unref(data).latestBlog || [])
 const featuredBlog = computed(() => unref(data).featuredBlog || [])
