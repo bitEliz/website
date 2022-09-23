@@ -6,12 +6,12 @@
   "type": "module",
   "scripts": {
     "build": "pnpm run build:client && pnpm run build:server",
-    "build:client": "vite build --ssrManifest --outDir dist/client",
-    "build:server": "vite build --ssr src/entry-server --outDir dist/server",
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:server": "vite build --outDir dist/server --ssr src/entry-server",
     "clean": "rm -rf dist",
-    "debug": "node --inspect-brk server",
-    "dev": "node server",
-    "generate": "vite build --ssrManifest --outDir dist/static && pnpm run build:server && node prerender",
+    "debug": "node --inspect-brk server.dev",
+    "dev": "node server.dev",
+    "generate": "vite build --outDir dist/static --ssrManifest && pnpm run build:server && node prerender",
     "serve": "NODE_ENV=production node server"
   },
   "dependencies": {
