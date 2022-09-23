@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { firstOne } from '@/utils'
+
 const route = useRoute()
-const path = route.path.startsWith('/static')
-  ? route.path
-  : `/static${route.path}`
-const { data: content } = useLazyAsyncData(
-  'markdown',
-  () => $fetch(`/api/${path}.md`) as Promise<string>
-)
+const store = usePureMDFileStore()
+const { data: content } = storeToRefs(store)
+
+onServerPrefetch(async () => {
+  if (import.meta.env.SSR) {
+    await store.fetch(firstOne(route.params.id) || '')
+  }
+})
 </script>
 
 <template>
