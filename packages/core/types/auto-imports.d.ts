@@ -122,8 +122,8 @@ declare global {
   const useAttrs: typeof import('vue')['useAttrs']
   const useBase64: typeof import('@vueuse/core')['useBase64']
   const useBattery: typeof import('@vueuse/core')['useBattery']
+  const useBlogGalleryStore: typeof import('../src/store/blog-gallery')['useBlogGalleryStore']
   const useBlogStore: typeof import('../src/store/blog')['useBlogStore']
-  const useBlogsStore: typeof import('../src/store/blogs')['useBlogsStore']
   const useBluetooth: typeof import('@vueuse/core')['useBluetooth']
   const useBreakpoints: typeof import('@vueuse/core')['useBreakpoints']
   const useBroadcastChannel: typeof import('@vueuse/core')['useBroadcastChannel']
@@ -208,6 +208,7 @@ declare global {
   const usePreferredLanguages: typeof import('@vueuse/core')['usePreferredLanguages']
   const usePreferredReducedMotion: typeof import('@vueuse/core')['usePreferredReducedMotion']
   const useProfileStore: typeof import('../src/store/profile')['useProfileStore']
+  const usePureMDFileStore: typeof import('../src/store/pure-md-file')['usePureMDFileStore']
   const useRafFn: typeof import('@vueuse/core')['useRafFn']
   const useRefHistory: typeof import('@vueuse/core')['useRefHistory']
   const useResizeObserver: typeof import('@vueuse/core')['useResizeObserver']
@@ -524,11 +525,11 @@ declare module '@vue/runtime-core' {
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useBase64: UnwrapRef<typeof import('@vueuse/core')['useBase64']>
     readonly useBattery: UnwrapRef<typeof import('@vueuse/core')['useBattery']>
+    readonly useBlogGalleryStore: UnwrapRef<
+      typeof import('../src/store/blog-gallery')['useBlogGalleryStore']
+    >
     readonly useBlogStore: UnwrapRef<
       typeof import('../src/store/blog')['useBlogStore']
-    >
-    readonly useBlogsStore: UnwrapRef<
-      typeof import('../src/store/blogs')['useBlogsStore']
     >
     readonly useBluetooth: UnwrapRef<
       typeof import('@vueuse/core')['useBluetooth']
@@ -737,6 +738,9 @@ declare module '@vue/runtime-core' {
     >
     readonly useProfileStore: UnwrapRef<
       typeof import('../src/store/profile')['useProfileStore']
+    >
+    readonly usePureMDFileStore: UnwrapRef<
+      typeof import('../src/store/pure-md-file')['usePureMDFileStore']
     >
     readonly useRafFn: UnwrapRef<typeof import('@vueuse/core')['useRafFn']>
     readonly useRefHistory: UnwrapRef<
