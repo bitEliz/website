@@ -6,7 +6,7 @@
         :artwork-url="blog.artworkUrl"
         :excerpt="blog.excerpt"
         :tags="blog.tags"
-        :created-at="blog.createdAt"
+        :created-at="blog.createdAt || ''"
       />
       <article v-if="blog">
         <Markdown :content="blog.content"></Markdown>
@@ -17,7 +17,14 @@
 
 <script setup lang="ts">
 const route = useRoute()
-const { data: blog } = await useFetch(`/api/blog/${route.params.id}`)
+const store = useBlogStore()
+const { blog } = storeToRefs(store)
+
+onServerPrefetch(async () => {
+  if (import.meta.env.SSR) {
+    await store.fetch(route.params.id as string)
+  }
+})
 </script>
 
 <style lang="scss">

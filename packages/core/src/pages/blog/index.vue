@@ -67,11 +67,15 @@
 </template>
 
 <script setup lang="ts">
-import Tile from '@/components/tile.vue'
+const store = useBlogsStore()
+const { blog: data } = storeToRefs(store)
+const latestBlog = computed(() => unref(data).latestBlog || [])
+const featuredBlog = computed(() => unref(data).featuredBlog || [])
+const trunkedBlog = computed(() => unref(data).trunkedBlog || [])
 
-const { data } = await useFetch(`/api/_blog`)
-
-const latestBlog = computed(() => unref(data).latestBlog)
-const featuredBlog = computed(() => unref(data).featuredBlog)
-const trunkedBlog = computed(() => unref(data).trunkedBlog)
+onServerPrefetch(async () => {
+  if (import.meta.env.SSR) {
+    await store.fetch()
+  }
+})
 </script>

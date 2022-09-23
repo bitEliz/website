@@ -41,18 +41,16 @@
 </template>
 
 <script setup lang="ts">
-import { useProfileStore } from '@/store/profile'
-import { Project, User } from '@/models'
-import { RESUME_MODULE_ID } from '@/models'
+import { Project, User, RESUME_MODULE_ID } from '@/models'
 
-const profileStore = useProfileStore()
-const { profile } = storeToRefs(profileStore)
+const store = useProfileStore()
+const { profile } = storeToRefs(store)
 
 onServerPrefetch(async () => {
-  await profileStore.fetch()
+  if (import.meta.env.SSR) {
+    await store.fetch()
+  }
 })
-
-// const { data: profile } = await useFetch('/api/_resume')
 
 const sections = computed(() => {
   if (!profile.value) {
