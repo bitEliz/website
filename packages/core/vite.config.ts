@@ -18,7 +18,7 @@ export default defineConfig({
     }),
     componentPlugin({
       directoryAsNamespace: true,
-      dts: 'types/components.d.ts'
+      dts: 'types/auto-components.d.ts'
     })
   ],
   css: {
