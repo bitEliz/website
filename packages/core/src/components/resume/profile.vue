@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { SocialNetworking } from '@/types/fluent'
+import { SocialNetworking } from '@/models'
 
 const props = defineProps<{
   profile: {

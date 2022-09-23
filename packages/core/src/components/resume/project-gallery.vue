@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { Project } from '@/types/fluent'
+import { Project } from '@/models'
 
 const { galleries } = defineProps<{ galleries: Array<Array<Project>> }>()
 </script>

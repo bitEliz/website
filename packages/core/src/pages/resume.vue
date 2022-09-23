@@ -42,8 +42,8 @@
 
 <script setup lang="ts">
 import { useProfileStore } from '@/store/profile'
-import { Project, User } from '@/types/fluent'
-import { RESUME_MODULE_ID } from '@/types/fluent'
+import { Project, User } from '@/models'
+import { RESUME_MODULE_ID } from '@/models'
 
 const profileStore = useProfileStore()
 const { profile } = storeToRefs(profileStore)

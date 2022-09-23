@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { RESUME_MODULE_ID } from '@/types/fluent/resume'
+import { RESUME_MODULE_ID } from '@/models/resume'
 
 const props = defineProps<{
   galleries: Array<{ id: RESUME_MODULE_ID; title: string; data: Array<any> }>
