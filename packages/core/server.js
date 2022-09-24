@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import express from 'express'
 import manifest from './dist/client/ssr-manifest.json' assert { type: 'json' }
 ;(async () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -13,6 +14,7 @@ import manifest from './dist/client/ssr-manifest.json' assert { type: 'json' }
   const app = express()
 
   app.use((await import('compression')).default())
+
   app.use(
     '/',
     (await import('serve-static')).default(

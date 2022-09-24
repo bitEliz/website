@@ -49,5 +49,6 @@ export default defineConfig({
         entryFileNames: '[name].js'
       }
     }
-  }
+  },
+  envPrefix: 'BLOG_'
 })

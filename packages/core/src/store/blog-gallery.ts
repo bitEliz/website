@@ -7,7 +7,7 @@ export const useBlogGalleryStore = defineStore('blog_gallery', {
   }),
   actions: {
     async fetch() {
-      const response = await fetchUserBlog(import.meta.env.VITE_API_UID)
+      const response = await fetchUserBlog(import.meta.env.BLOG_API_UID)
       this.blog = {
         featuredBlog: response,
         latestBlog: response,

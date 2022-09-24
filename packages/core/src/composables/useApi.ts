@@ -2,7 +2,7 @@ export async function useApi<T>(
   url: string,
   params?: Record<string, any>
 ): Promise<T> {
-  let resolvedUrl = url.replace(/^\/api/, import.meta.env.VITE_API_BASE_URL)
+  let resolvedUrl = url.replace(/^\/api/, import.meta.env.BLOG_API_BASE_URL)
 
   let queries = ''
   if (params) {
