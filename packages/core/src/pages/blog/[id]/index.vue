@@ -9,7 +9,7 @@
         :created-at="blog.createdAt || ''"
       />
       <article v-if="blog">
-        <Markdown :content="blog.content"></Markdown>
+        <Markdown :content="blog.content || ''"></Markdown>
       </article>
     </div>
   </main>

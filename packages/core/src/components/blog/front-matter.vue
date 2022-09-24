@@ -3,19 +3,15 @@
     class="front-matter"
     :class="artworkUrl ? 'd-flex flex-column flex-sm-row' : ''"
   >
-    <div
-      v-if="artworkUrl"
-      class="front-matter-images"
-      style="padding-bottom: 25%"
-    >
+    <div v-if="artworkUrl" class="images" style="padding-bottom: 25%">
       <img :src="artworkUrl" />
     </div>
 
-    <div class="front-matter-description">
+    <div class="description">
       <div class="blog__head">
         <h1 class="blog__headline">{{ title }}</h1>
         <div class="blog__category txt-uppercase" style="margin-bottom: 1rem">
-          <div class="front-matter-tags">
+          <div class="tags">
             <span
               v-for="tag in tags"
               :key="tag"

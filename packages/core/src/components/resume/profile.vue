@@ -17,12 +17,14 @@
           v-for="e in profile.social"
           :key="e.id"
         >
-          <a :href="e.service?.name === 'Mail' ? 'mailto:' + e.url : e.url">
+          <RouterLink
+            :to="e.service?.name === 'Mail' ? 'mailto:' + e.url : e.url"
+          >
             <i
               :class="'ali ' + e.service?.name?.toLowerCase()"
               style="font-size: 2rem"
             ></i>
-          </a>
+          </RouterLink>
         </div>
       </div>
     </div>

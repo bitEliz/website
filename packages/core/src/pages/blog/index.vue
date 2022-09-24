@@ -1,5 +1,5 @@
 <template>
-  <main id="__blogs">
+  <main id="__blog-gallery">
     <section v-if="latestBlog.length" class="lastest bg-light">
       <div class="container">
         <h1 class="p-3 pb-0">Latest Blog</h1>
@@ -15,7 +15,7 @@
                 : 'p-3 col-12 col-md-6'
             "
           >
-            <a :herf="'/blog/' + blog.alias">
+            <RouterLink :to="'/blog/' + blog.alias">
               <Tile
                 class="text-reset text-body border-light h-100"
                 :data="blog"
@@ -31,7 +31,7 @@
                   </div>
                 </template>
               </Tile>
-            </a>
+            </RouterLink>
           </li>
         </ul>
       </div>
@@ -41,7 +41,7 @@
         <h1 class="p-3 pb-0">More Blog</h1>
         <ul class="list-unstyled mb-0">
           <li class="p-3" v-for="blog in trunkedBlog" :key="blog.id">
-            <a :herf="'/blog/' + blog.alias">
+            <RouterLink :to="'/blog/' + blog.alias">
               <Tile
                 layout-direction="horizontal"
                 class="text-reset text-body border-light"
@@ -58,7 +58,7 @@
                   </div>
                 </template>
               </Tile>
-            </a>
+            </RouterLink>
           </li>
         </ul>
       </div>
