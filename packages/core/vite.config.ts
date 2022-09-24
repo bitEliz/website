@@ -3,6 +3,7 @@ import vuePlugin from '@vitejs/plugin-vue'
 import vueJsxPlugin from '@vitejs/plugin-vue-jsx'
 import importPlugin from 'unplugin-auto-import/vite'
 import componentPlugin from 'unplugin-vue-components/vite'
+import pagesPlugin from 'vite-plugin-pages'
 import path from 'path'
 
 // https://vitejs.dev/config/
@@ -19,7 +20,8 @@ export default defineConfig({
     componentPlugin({
       directoryAsNamespace: true,
       dts: 'types/auto-components.d.ts'
-    })
+    }),
+    pagesPlugin()
   ],
   css: {
     preprocessorOptions: {
