@@ -9,6 +9,8 @@ import manifest from './dist/client/ssr-manifest.json' assert { type: 'json' }
 
   const app = express()
 
+  app.use(express.static(path.resolve(__dirname, 'dist/client')))
+
   const vite = await createServer({
     logLevel: 'error',
     server: {
