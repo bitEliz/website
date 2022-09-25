@@ -17,14 +17,15 @@
           v-for="e in profile.social"
           :key="e.id"
         >
-          <RouterLink
-            :to="e.service?.name === 'Mail' ? 'mailto:' + e.url : e.url"
+          <a
+            :href="e.service?.name === 'Mail' ? 'mailto:' + e.url : e.url"
+            target="_blank"
           >
             <i
               :class="'ali ' + e.service?.name?.toLowerCase()"
               style="font-size: 2rem"
             ></i>
-          </RouterLink>
+          </a>
         </div>
       </div>
     </div>
@@ -38,7 +39,7 @@
 <script setup lang="ts">
 import { SocialNetworking } from '@/models'
 
-const props = defineProps<{
+const { profile } = defineProps<{
   profile: {
     avatarUrl?: string
     social?: Array<SocialNetworking>
@@ -47,9 +48,8 @@ const props = defineProps<{
     aboutMe?: string
   }
 }>()
-
-const profile = props.profile
 const fullName = profile.lastName + profile.firstName
+console.log(profile.firstName, profile.lastName)
 </script>
 
 <style lang="scss" scoped>

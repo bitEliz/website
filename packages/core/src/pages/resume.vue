@@ -4,7 +4,7 @@
       v-for="(s, i) in sections"
       :key="s.id"
       :id="s.id"
-      :class="i % 2 == 0 ? '' : 'bg-light'"
+      :class="i % 2 == 0 ? 'mdl' : 'mdl bg-light'"
     >
       <div
         class="container"
@@ -52,31 +52,37 @@ onServerPrefetch(async () => {
   }
 })
 
+// False if user's username firstname and lastname equals to initial value
+const fake = (profile: User) =>
+  !profile.firstName && !profile.lastName && !profile.username
+
 const sections = computed(() => {
-  if (!profile.value) {
+  if (fake(profile.value)) {
     return []
   }
 
-  const _prepareExps = (profile: User): Array<any> => {
-    let exp = []
-    if (profile.experiences) {
+  type ContentData = { id: RESUME_MODULE_ID; title: string; data: any }
+  const serializeExps = (profile: User) => {
+    let exp: ContentData[] = []
+
+    profile.experiences &&
       exp.push({
         id: RESUME_MODULE_ID.EXPERIENCE,
         title: '工作经历',
         data: profile.experiences
       })
-    }
-    if (profile.education) {
+
+    profile.education &&
       exp.push({
         id: RESUME_MODULE_ID.EDUCATIONAL,
         title: '教育经历',
         data: profile.education
       })
-    }
+
     return exp
   }
 
-  const _prepareProjs = (profile: User): Array<Array<Project>> => {
+  const serializeProjs = (profile: User) => {
     const projects =
       profile.projects?.filter((e) => e.visibility == 'public') || []
     let projectGroups: Array<Array<Project>> = []
@@ -86,36 +92,34 @@ const sections = computed(() => {
     return projectGroups
   }
 
-  let result: Array<any> = []
-  result.push({
+  let ret: ContentData[] = []
+
+  ret.push({
     id: RESUME_MODULE_ID.PROFILE,
     title: '简介',
-    data: profile
+    data: profile.value
   })
 
-  const projectGroups = _prepareProjs(profile.value)
-  if (projectGroups.length > 0) {
-    result.push({
+  const projectGroups = serializeProjs(profile.value)
+  projectGroups.length > 0 &&
+    ret.push({
       id: RESUME_MODULE_ID.PROJECT,
       title: '项目',
       data: projectGroups
     })
-  }
 
-  const exp = _prepareExps(profile.value)
-  if (exp.length > 0) {
-    result.push({ id: RESUME_MODULE_ID.EXPERIENCE, title: '经历', data: exp })
-  }
+  const exp = serializeExps(profile.value)
+  exp.length > 0 &&
+    ret.push({ id: RESUME_MODULE_ID.EXPERIENCE, title: '经历', data: exp })
 
-  if (profile.value.skill?.professional) {
-    result.push({
+  profile.value.skill?.professional &&
+    ret.push({
       id: RESUME_MODULE_ID.SKILL,
       title: '技能',
       data: profile.value.skill?.professional
     })
-  }
 
-  return result
+  return ret
 })
 
 useTitle(
