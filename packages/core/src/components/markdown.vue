@@ -5,20 +5,22 @@
 <script lang="ts">
 import { marked } from 'marked'
 import HL from 'highlight.js/lib/common'
+import { PropType } from 'vue'
 
-interface MarkdownProps {
-  content?: string
-  options?: marked.MarkedOptions
-}
-
-export default defineComponent((props: MarkdownProps) => {
-  const options = {
-    ...props.options,
-    ...marked.defaults,
-    highlight: (code: string, lang: string) =>
-      HL.highlight(code, { language: lang }).value
+export default defineComponent({
+  props: {
+    content: String,
+    options: Object as PropType<marked.MarkedOptions>
+  },
+  setup(props) {
+    const options = {
+      ...props.options,
+      ...marked.defaults,
+      highlight: (code: string, lang: string) =>
+        HL.highlight(code, { language: lang }).value
+    }
+    const html = marked.parse(props.content || '', options)
+    return { html }
   }
-  const html = marked.parse(props.content || '', options)
-  return { html }
 })
 </script>

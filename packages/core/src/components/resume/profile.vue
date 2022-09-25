@@ -30,7 +30,7 @@
       </div>
     </div>
     <Markdown
-      :content="profile.aboutMe"
+      :content="profile.aboutMe || ''"
       class="col-sm-8 profile__about flex-grow-1"
     ></Markdown>
   </div>
