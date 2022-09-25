@@ -1,19 +1,23 @@
-export async function useApi<T>(
-  url: string,
-  params?: Record<string, any>
-): Promise<T> {
-  let resolvedUrl = url.replace(/^\/api/, import.meta.env.BLOG_API_BASE_URL)
+interface $RequestInit extends RequestInit {
+  query?: Record<string, any>
+}
 
-  let queries = ''
-  if (params) {
-    Object.keys(params).forEach((e) => {
-      queries += `&${e}=${params[e]}`
+export const useApi = async <T>(
+  input: string,
+  init?: $RequestInit
+): Promise<T> => {
+  let resolvedUrl = input.replace(/^\/api/, import.meta.env.BLOG_API_BASE_URL)
+
+  let urlQuery = ''
+  if (init?.query) {
+    Object.keys(init.query).forEach((e) => {
+      urlQuery += `&${e}=${init.query![e]}`
     })
-    queries = '?' + queries.slice(1)
+    urlQuery = '?' + urlQuery.slice(1)
   }
 
-  resolvedUrl += queries
+  resolvedUrl += urlQuery
 
-  const response = await fetch(resolvedUrl)
+  const response = await fetch(resolvedUrl, init)
   return await response.json()
 }
