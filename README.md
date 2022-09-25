@@ -1,7 +1,7 @@
 # Website
 
 <a href="LICENSE">
-    <img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="Apache 2.0 License">
+    <img src="https://img.shields.io/github/license/hdtls/website" alt="MIT License">
 </a>
 <a href="https://v3.vuejs.org">
     <img src="https://img.shields.io/badge/vue-next-brightgreen" alt="Vue@next">
@@ -19,34 +19,34 @@ Webiste primarily uses vitejs as its build tools, so we recommand using that as 
 ```shell
 git clone https://github.com/hdtls/website.git
 cd website
-yarn
+pnpm install
 ```
 
 To build & run them, run following command, replace SCRIPT_NAME with what you have define in `package.json`.
 
 ```Shell
-yarn SCRIPT_NAME
+pnpm SCRIPT_NAME
 ```
 
-For example, to start a dev server run following command:
+For example, to start core package dev server run following command:
 
 ```Shell
-yarn dev
+pnpm dev:core
 ```
 
-### An alternative: using `docker-compose`
+### An alternative: using `docker compose`
 
-Alternatively, you may want to develop or test with `docker-compose`.
-First make sure you have Docker installed, next run the following commands, replace SERVICE_NAME with service name that you have defined in docker-compose file:
+Alternatively, you may want to develop or test with `docker compose`.
+First make sure you have Docker installed, next run the following commands, replace SERVICE_NAME with service name that you have defined in compose file:
 
 ```Shell
-docker-compose -f docker/docker-compose.test.yml up -d SERVICE_NAME
+docker compose -f docker/compose.yml up -d SERVICE_NAME
 ```
 
 For example, to start website service run following command:
 
 ```shell
-docker-compose -f docker/docker-compose.test.yml up -d website
+docker compose -f docker/compose.yml up -d app
 ```
 
-This will run site in the Docker container in the background, listening on http://localhost:3000. The first time you run this command will take a few moments to compile the website.
+This will run site in the Docker container in the background, listening on http://localhost:5173. The first time you run this command will take a few moments to compile the website.
