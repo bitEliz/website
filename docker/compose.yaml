@@ -1,8 +1,15 @@
 services:
-  app:
+  blog-frontend-service:
     image: blog
     build:
       context: ..
       dockerfile: docker/Dockerfile
+      args:
+        - BLOG_API_BASE_URL=https://api.ttli.xyz
+        - BLOG_API_UID=paul
+    container_name: blog-frontend-service
+    environment:
+      - NODE_ENV=production
     ports:
       - '5173:5173'
+    restart: on-failure

@@ -24,10 +24,10 @@ WORKDIR /build
 # This creates a cached layer that can be reused
 # as long as your package
 # files do not change.
-COPY ./.npmrc ./
-COPY ./pnpm-*.yaml ./
-COPY ./package.json ./
-COPY ./packages/core/package.json ./packages/core/package.json
+COPY .npmrc .
+COPY pnpm-*.yaml .
+COPY package.json .
+COPY packages/core/package.json ./packages/core/package.json
 RUN pnpm install
 
 # Copy entire repo into container
@@ -35,6 +35,27 @@ COPY . .
 
 # Planning build
 RUN pnpm build:core
+
+# Switch to the staging area
+WORKDIR /staging
+
+# Copy executable and dependencies to staging area
+COPY .npmrc .
+COPY pnpm-*.yaml .
+COPY package.json .
+COPY packages/core/package.json ./packages/core/package.json
+RUN cp -r /build/packages/core/dist ./packages/core/ 
+
+RUN pnpm install --production --ignore-scripts
+
+
+FROM node:alpine
+
+WORKDIR /app
+
+COPY --from=builder /staging .
+
+ENV NODE_ENV=production
 
 EXPOSE 5173
 
