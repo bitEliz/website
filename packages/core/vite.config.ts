@@ -39,13 +39,13 @@ export default defineConfig({
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
-          let assets = assetInfo.name.split('.')[1]
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(assets)) {
-            assets = 'img'
+          let dirname = assetInfo.name.split('.').pop()
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(dirname)) {
+            dirname = 'img'
           }
-          return `assets/${assets}/[name]-[hash][extname]`
+          return `assets/${dirname}/[name]-[hash][extname]`
         },
-        chunkFileNames: 'assets/chunk/[name]-[hash].js',
+        chunkFileNames: `assets/js/[name]-[hash].js`,
         entryFileNames: '[name].js'
       }
     }
