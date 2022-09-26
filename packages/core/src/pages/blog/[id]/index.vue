@@ -20,7 +20,7 @@ import { firstOne } from '@/utils'
 
 const route = useRoute()
 const store = useBlogStore()
-const { blog } = storeToRefs(store)
+const { data: blog } = storeToRefs(store)
 
 onServerPrefetch(async () => {
   if (import.meta.env.SSR) {

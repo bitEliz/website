@@ -2,8 +2,8 @@ import { fetchUserBlog } from '@/server/api'
 import { BlogGroup } from '@/models'
 
 export const useBlogGalleryStore = defineStore('blog_gallery', {
-  state: (): { blog: BlogGroup } => ({
-    blog: {}
+  state: (): { data: BlogGroup } => ({
+    data: {}
   }),
   actions: {
     async fetch() {

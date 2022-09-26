@@ -2,8 +2,8 @@ import { fetchUser } from '@/server/api'
 import { User } from '@/models'
 
 export const useProfileStore = defineStore('profile', {
-  state: (): { profile: User } => ({
-    profile: { id: 0, username: '', firstName: '', lastName: '' }
+  state: (): { data: User } => ({
+    data: { id: 0, username: '', firstName: '', lastName: '' }
   }),
   actions: {
     async fetch() {

@@ -44,7 +44,7 @@
 import { Project, User, RESUME_MODULE_ID } from '@/models'
 
 const store = useProfileStore()
-const { profile } = storeToRefs(store)
+const { data: profile } = storeToRefs(store)
 
 onServerPrefetch(async () => {
   if (import.meta.env.SSR) {
