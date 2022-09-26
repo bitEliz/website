@@ -18,6 +18,13 @@ export const useApi = async <T>(
 
   resolvedUrl += urlQuery
 
-  const response = await fetch(resolvedUrl, init)
-  return await response.json()
+  try {
+    const response = await fetch(resolvedUrl, init)
+    if (!response.ok)
+      throw 'http request failure with error: ' + response.statusText
+    return await response.json()
+  } catch (error) {
+    console.error(error)
+    return null
+  }
 }
