@@ -11,8 +11,8 @@ RUN apk update \
 # Install pnpm
 RUN npm install -g pnpm
 
-ARG BLOG_API_BASE_URL=http://127.0.0.1:8080
-ARG BLOG_API_UID=__uid
+ARG BLOG_API_BASE_URL
+ARG BLOG_API_UID
 
 ENV BLOG_API_BASE_URL=${BLOG_API_BASE_URL}
 ENV BLOG_API_UID=${BLOG_API_UID}
@@ -43,8 +43,9 @@ WORKDIR /staging
 COPY .npmrc .
 COPY pnpm-*.yaml .
 COPY package.json .
-COPY packages/core/package.json ./packages/core/package.json
-RUN cp -r /build/packages/core/dist ./packages/core/ 
+COPY packages/core/package.json ./packages/core/
+COPY packages/core/server.js ./packages/core/
+RUN cp -r /build/packages/core/dist ./packages/core/
 
 RUN pnpm install --production --ignore-scripts
 

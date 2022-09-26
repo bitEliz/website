@@ -1,5 +1,5 @@
 services:
-  app:
+  frontend:
     image: blog
     build:
       context: ..
