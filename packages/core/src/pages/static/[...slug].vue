@@ -7,7 +7,7 @@ const { data: content } = storeToRefs(store)
 
 onServerPrefetch(async () => {
   if (import.meta.env.SSR) {
-    await store.fetch(firstOne(route.params.id) || '')
+    await store.fetch(firstOne(route.params.slug) || '')
   }
 })
 </script>

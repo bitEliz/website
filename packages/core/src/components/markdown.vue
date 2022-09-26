@@ -12,14 +12,14 @@ export default defineComponent({
     content: String,
     options: Object as PropType<marked.MarkedOptions>
   },
-  setup(props) {
-    const options = {
-      ...props.options,
+  setup({ content, options }) {
+    const markedOptions = {
+      ...options,
       ...marked.defaults,
       highlight: (code: string, lang: string) =>
         HL.highlight(code, { language: lang }).value
     }
-    const html = marked.parse(props.content || '', options)
+    const html = content && marked.parse(content, markedOptions)
     return { html }
   }
 })
