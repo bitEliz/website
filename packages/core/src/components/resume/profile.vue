@@ -49,7 +49,6 @@ const { profile } = defineProps<{
   }
 }>()
 const fullName = profile.lastName + profile.firstName
-console.log(profile.firstName, profile.lastName)
 </script>
 
 <style lang="scss" scoped>
