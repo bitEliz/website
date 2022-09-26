@@ -7,9 +7,12 @@ export const useProfileStore = defineStore('profile', {
   }),
   actions: {
     async fetch() {
-      this.profile = await fetchUser(import.meta.env.BLOG_API_UID, {
+      const response = await fetchUser(import.meta.env.BLOG_API_UID, {
         emb: 'edu.exp.proj.skill.sns'
       })
+      if (response) {
+        this.data = response
+      }
     }
   }
 })

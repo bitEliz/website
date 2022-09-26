@@ -7,7 +7,10 @@ export const useBlogStore = defineStore('blog', {
   }),
   actions: {
     async fetch(id: string | number) {
-      this.blog = await fetchBlog(id)
+      const response = await fetchBlog(id)
+      if (response) {
+        this.data = response
+      }
     }
   }
 })

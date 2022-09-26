@@ -5,7 +5,7 @@ interface $RequestInit extends RequestInit {
 export const useApi = async <T>(
   input: string,
   init?: $RequestInit
-): Promise<T> => {
+): Promise<T | null> => {
   let resolvedUrl = input.replace(/^\/api/, import.meta.env.BLOG_API_BASE_URL)
 
   let urlQuery = ''

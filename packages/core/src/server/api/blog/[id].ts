@@ -4,4 +4,4 @@ import { Blog } from '@/models'
 export const fetchBlog = async (
   id: number | string,
   query?: Record<string, any>
-): Promise<Blog> => await useApi(`/api/blog/${id}`, { query: query })
+): Promise<Blog | null> => await useApi(`/api/blog/${id}`, { query: query })
