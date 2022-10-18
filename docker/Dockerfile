@@ -24,7 +24,6 @@ WORKDIR /build
 # This creates a cached layer that can be reused
 # as long as your package
 # files do not change.
-COPY .npmrc .
 COPY pnpm-*.yaml .
 COPY package.json .
 COPY packages/core/package.json ./packages/core/package.json
@@ -40,7 +39,7 @@ RUN pnpm build:core
 WORKDIR /staging
 
 # Copy executable and dependencies to staging area
-COPY .npmrc .
+# COPY .npmrc .
 COPY pnpm-*.yaml .
 COPY package.json .
 COPY packages/core/package.json ./packages/core/
