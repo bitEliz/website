@@ -46,7 +46,7 @@ docker compose -f docker/compose.yml up -d SERVICE_NAME
 For example, to start website service run following command:
 
 ```shell
-docker compose -f docker/compose.yml up -d app
+docker compose -f docker/compose.yml up -d frontend
 ```
 
 This will run site in the Docker container in the background, listening on http://localhost:5173. The first time you run this command will take a few moments to compile the website.
