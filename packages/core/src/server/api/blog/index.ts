@@ -1,6 +1,7 @@
 import { Blog } from '@/models'
 
-export * from './[id]'
+async function fetchAllBlog(): Promise<Blog[] | null> {
+  return await $fetch(`${useRuntimeConfig().api.__baseURL}/blog`)
+}
 
-export const fetchAllBlog = async (): Promise<Blog[] | null> =>
-  await useApi('/api/blog')
+export default defineEventHandler(() => fetchAllBlog())

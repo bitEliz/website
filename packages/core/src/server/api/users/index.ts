@@ -1,6 +1,7 @@
 import { User } from '@/models'
 
-export * from './[id]'
+async function fetchAllUsers(): Promise<User[] | null> {
+  return await $fetch(`${useRuntimeConfig().api.__baseURL}/users`)
+}
 
-export const fetchAllUsers = async (): Promise<User[] | null> =>
-  await useApi('/api/users')
+export default defineEventHandler(() => fetchAllUsers())

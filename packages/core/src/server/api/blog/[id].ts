@@ -1,7 +1,15 @@
 import { Blog } from '@/models'
 
 // Fetch blog with id or alias.
-export const fetchBlog = async (
+async function fetchBlog(
   id: number | string,
   query?: Record<string, any>
-): Promise<Blog | null> => await useApi(`/api/blog/${id}`, { query: query })
+): Promise<Blog | null> {
+  return await $fetch(`${useRuntimeConfig().api.__baseURL}/blog/${id}`, {
+    query: query
+  })
+}
+
+export default defineEventHandler((event) =>
+  fetchBlog(event.context.params.id, getQuery(event))
+)

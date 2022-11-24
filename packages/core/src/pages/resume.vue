@@ -43,14 +43,11 @@
 <script setup lang="ts">
 import { Project, User, RESUME_MODULE_ID } from '@/models'
 
-const store = useProfileStore()
-const { data: profile } = storeToRefs(store)
-
-onServerPrefetch(async () => {
-  if (import.meta.env.SSR) {
-    await store.fetch()
-  }
-})
+const { data } = useFetch('/api/resume')
+const profile = computed(
+  () =>
+    (data.value || { id: 0, firstName: '', lastName: '', username: '' }) as User
+)
 
 // False if user's username firstname and lastname equals to initial value
 const fake = (profile: User) =>
@@ -122,21 +119,22 @@ const sections = computed(() => {
   return ret
 })
 
-useTitle(
-  computed(() => {
+useHead({
+  title: computed(() => {
     let documentTitle: string = profile.value.username?.toUpperCase() || ''
     if (documentTitle) {
       documentTitle += ' - RESUME'
     }
     return documentTitle
   })
-)
+})
 </script>
 
 <style lang="css">
 @font-face {
   font-family: 'ali';
-  src: url('//at.alicdn.com/t/font_1932202_s1pihrh03mo.eot?t=1594388184711'); /* IE9 */
+  src: url('//at.alicdn.com/t/font_1932202_s1pihrh03mo.eot?t=1594388184711');
+  /* IE9 */
   src: url('//at.alicdn.com/t/font_1932202_s1pihrh03mo.eot?t=1594388184711#iefix')
       format('embedded-opentype'),
     /* IE6-IE8 */
@@ -148,7 +146,8 @@ useTitle(
       format('truetype'),
     /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
       url('//at.alicdn.com/t/font_1932202_s1pihrh03mo.svg?t=1594388184711#ali')
-      format('svg'); /* iOS 4.1- */
+      format('svg');
+  /* iOS 4.1- */
 }
 
 .ali {

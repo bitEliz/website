@@ -5,37 +5,22 @@
   "description": "core package of blog",
   "type": "module",
   "scripts": {
-    "build": "pnpm run build:client && pnpm run build:server",
-    "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --outDir dist/server --ssr src/entry-server",
-    "clean": "rm -rf dist",
-    "debug": "node --inspect-brk server.dev",
-    "dev": "node server.dev",
-    "generate": "vite build --outDir dist/static --ssrManifest && pnpm run build:server && node prerender",
-    "serve": "NODE_ENV=production node server"
+    "build": "nuxi build",
+    "clean": "nuxi cleanup",
+    "dev": "nuxi dev",
+    "generate": "nuxt generate",
+    "serve": "nuxi start"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
-    "@vueuse/core": "^9.4.0",
     "bootstrap": "^5.2.2",
-    "compression": "^1.7.4",
-    "express": "^4.18.2",
     "highlight.js": "^11.6.0",
-    "marked": "^4.1.1",
-    "pinia": "^2.0.23",
-    "serve-static": "^1.15.0",
-    "vue": "^3.2.41",
-    "vue-router": "^4.1.6"
+    "marked": "^4.1.1"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.5",
     "@types/marked": "^4.0.7",
-    "@vitejs/plugin-vue": "^3.2.0",
-    "@vitejs/plugin-vue-jsx": "^2.1.0",
-    "sass": "^1.55.0",
-    "unplugin-auto-import": "^0.11.4",
-    "unplugin-vue-components": "^0.22.9",
-    "vite": "^3.2.1",
-    "vite-plugin-pages": "^0.27.1"
+    "nuxt": "^3.0.0",
+    "sass": "^1.56.1"
   }
 }

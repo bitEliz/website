@@ -1,5 +1,5 @@
 <template>
-  <div id="__g">
+  <div id="__g" v-if="isLoading">
     <div class="g-loading">
       <div class="loader">
         <svg viewBox="0 0 80 80">
@@ -56,9 +56,9 @@ const start = () => {
 const finish = (): void => {
   isLoading.value = false
 }
-// const nuxtApp = useNuxtApp()
-// nuxtApp.hook('page:start', start)
-// nuxtApp.hook('page:finish', finish)
+const nuxtApp = useNuxtApp()
+nuxtApp.hook('page:start', start)
+nuxtApp.hook('page:finish', finish)
 </script>
 
 <style lang="scss" scoped>
@@ -68,7 +68,7 @@ const finish = (): void => {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: $zindex-tooltip;
+  z-index: 9999;
   background: #ffffff;
 
   .g-loading {

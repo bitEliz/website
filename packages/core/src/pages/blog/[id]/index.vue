@@ -2,11 +2,11 @@
   <main id="__blog">
     <div class="container">
       <BlogFrontMatter
-        :title="blog.title"
-        :artwork-url="blog.artworkUrl"
-        :excerpt="blog.excerpt"
-        :tags="blog.tags"
-        :created-at="blog.createdAt || ''"
+        :title="blog?.title || ''"
+        :artwork-url="blog?.artworkUrl"
+        :excerpt="blog?.excerpt || ''"
+        :tags="blog?.tags"
+        :created-at="blog?.createdAt || ''"
       />
       <article v-if="blog">
         <Markdown :content="blog.content || ''"></Markdown>
@@ -16,17 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import { firstOne } from '@/utils'
-
 const route = useRoute()
-const store = useBlogStore()
-const { data: blog } = storeToRefs(store)
-
-onServerPrefetch(async () => {
-  if (import.meta.env.SSR) {
-    await store.fetch(firstOne(route.params.id) || '')
-  }
-})
+const { data: blog } = useFetch(`/api/blog/${route.params.id}`)
 </script>
 
 <style lang="scss">

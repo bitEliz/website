@@ -1,21 +1,12 @@
 <script setup lang="ts">
-import { firstOne } from '@/utils'
-
 const route = useRoute()
-const store = usePureMDFileStore()
-const { data: content } = storeToRefs(store)
-
-onServerPrefetch(async () => {
-  if (import.meta.env.SSR) {
-    await store.fetch(firstOne(route.params.slug) || '')
-  }
-})
+const { data: content } = useFetch('/api/pure-md-file')
 </script>
 
 <template>
   <div id="__file">
     <main>
-      <Markdown :content="content"></Markdown>
+      <Markdown :content="content || undefined"></Markdown>
     </main>
   </div>
 </template>

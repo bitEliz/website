@@ -67,15 +67,8 @@
 </template>
 
 <script setup lang="ts">
-const store = useBlogGalleryStore()
-const { data } = storeToRefs(store)
-const latestBlog = computed(() => unref(data).latestBlog || [])
-const featuredBlog = computed(() => unref(data).featuredBlog || [])
-const trunkedBlog = computed(() => unref(data).trunkedBlog || [])
-
-onServerPrefetch(async () => {
-  if (import.meta.env.SSR) {
-    await store.fetch()
-  }
-})
+const { data } = useFetch('/api/blog-gallery')
+const latestBlog = computed(() => unref(data)?.latestBlog || [])
+const featuredBlog = computed(() => unref(data)?.featuredBlog || [])
+const trunkedBlog = computed(() => unref(data)?.trunkedBlog || [])
 </script>
