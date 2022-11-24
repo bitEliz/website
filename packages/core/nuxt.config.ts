@@ -3,7 +3,6 @@ export default defineNuxtConfig({
     buildAssetsDir: '/assets/',
     rootId: '__rt'
   },
-  css: ['@/assets/styles/bootstrap.scss'],
   srcDir: 'src',
   runtimeConfig: {
     api: {
