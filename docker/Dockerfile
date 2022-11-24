@@ -11,53 +11,35 @@ RUN apk update \
 # Install pnpm
 RUN npm install -g pnpm
 
-ARG BLOG_API_BASE_URL
-ARG BLOG_API_UID
-
-ENV BLOG_API_BASE_URL=${BLOG_API_BASE_URL}
-ENV BLOG_API_UID=${BLOG_API_UID}
-
 # Set up a build area
 WORKDIR /build
-
-# First just resolve dependencies.
-# This creates a cached layer that can be reused
-# as long as your package
-# files do not change.
-COPY pnpm-*.yaml .
-COPY package.json .
-COPY packages/core/package.json ./packages/core/package.json
-RUN pnpm install
 
 # Copy entire repo into container
 COPY . .
 
-# Planning build
+RUN pnpm install
+
+# Build everything
 RUN pnpm build:core
 
-# Switch to the staging area
-WORKDIR /staging
 
-# Copy executable and dependencies to staging area
-# COPY .npmrc .
-COPY pnpm-*.yaml .
-COPY package.json .
-COPY packages/core/package.json ./packages/core/
-COPY packages/core/server.js ./packages/core/
-RUN cp -r /build/packages/core/dist ./packages/core/
-
-RUN pnpm install --production --ignore-scripts
-
-
+# ================================
+# Run image
+# ================================
 FROM node:alpine
+
+# Make sure all system packages are up to date.
+RUN apk update \
+    && apk upgrade \
+    && rm -rf /var/cache/apk/*
 
 WORKDIR /app
 
-COPY --from=builder /staging .
+# Copy built executable and any staged resources from builder
+COPY --from=builder /build/packages/core/.output .
 
-ENV NODE_ENV=production
+ENV NITRO_PORT=3000
+EXPOSE ${NITRO_PORT}
 
-EXPOSE 5173
-
-# Start the service when the image is run, default to listening on 5173 in production environment
-ENTRYPOINT ["docker-entrypoint.sh", "packages/core/server"]
+# Start the service when the image is run, default to listening on 3000 in production environment
+ENTRYPOINT ["docker-entrypoint.sh", "server/index.mjs"]

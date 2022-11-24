@@ -4,10 +4,7 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-      args:
-        - BLOG_API_BASE_URL=http://localhost:8080
-        - BLOG_API_UID=any
     environment:
       - NODE_ENV=production
     ports:
-      - '5173:5173'
+      - '3000:3000'
