@@ -41,92 +41,14 @@
 </template>
 
 <script setup lang="ts">
-import { Project, User, RESUME_MODULE_ID } from '@/models'
+import { RESUME_MODULE_ID } from '@/models'
 
 const { data } = useFetch('/api/resume')
-const profile = computed(
-  () =>
-    (data.value || { id: 0, firstName: '', lastName: '', username: '' }) as User
-)
 
-// False if user's username firstname and lastname equals to initial value
-const fake = (profile: User) =>
-  !profile.firstName && !profile.lastName && !profile.username
-
-const sections = computed(() => {
-  if (fake(profile.value)) {
-    return []
-  }
-
-  type ContentData = { id: RESUME_MODULE_ID; title: string; data: any }
-  const serializeExps = (profile: User) => {
-    let exp: ContentData[] = []
-
-    profile.experiences &&
-      exp.push({
-        id: RESUME_MODULE_ID.EXPERIENCE,
-        title: '工作经历',
-        data: profile.experiences
-      })
-
-    profile.education &&
-      exp.push({
-        id: RESUME_MODULE_ID.EDUCATIONAL,
-        title: '教育经历',
-        data: profile.education
-      })
-
-    return exp
-  }
-
-  const serializeProjs = (profile: User) => {
-    const projects =
-      profile.projects?.filter((e) => e.visibility == 'public') || []
-    let projectGroups: Array<Array<Project>> = []
-    projectGroups.push(projects.filter((e) => e.isOpenSource))
-    projectGroups.push(projects.filter((e) => !e.isOpenSource))
-    projectGroups = projectGroups.filter((e) => e.length > 0)
-    return projectGroups
-  }
-
-  let ret: ContentData[] = []
-
-  ret.push({
-    id: RESUME_MODULE_ID.PROFILE,
-    title: '简介',
-    data: profile.value
-  })
-
-  const projectGroups = serializeProjs(profile.value)
-  projectGroups.length > 0 &&
-    ret.push({
-      id: RESUME_MODULE_ID.PROJECT,
-      title: '项目',
-      data: projectGroups
-    })
-
-  const exp = serializeExps(profile.value)
-  exp.length > 0 &&
-    ret.push({ id: RESUME_MODULE_ID.EXPERIENCE, title: '经历', data: exp })
-
-  profile.value.skill?.professional &&
-    ret.push({
-      id: RESUME_MODULE_ID.SKILL,
-      title: '技能',
-      data: profile.value.skill?.professional
-    })
-
-  return ret
-})
+const sections = computed(() => unref(data)?.sections || [])
 
 useHead({
-  title: computed(() => {
-    let documentTitle: string = profile.value.username?.toUpperCase() || ''
-    if (documentTitle) {
-      documentTitle += ' - RESUME'
-    }
-    return documentTitle
-  })
+  title: computed(() => unref(data)?.documentTitle || '')
 })
 </script>
 
