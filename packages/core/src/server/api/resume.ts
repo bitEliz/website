@@ -76,5 +76,5 @@ async function fetchResume(uid: number | string) {
 }
 
 export default defineEventHandler(() => {
-  return fetchResume(useRuntimeConfig().public.__uid)
+  return fetchResume(useRuntimeConfig().public.uid)
 })

@@ -5,7 +5,7 @@ async function fetchBlog(
   id: number | string,
   query?: Record<string, any>
 ): Promise<Blog | null> {
-  return await $fetch(`${useRuntimeConfig().api.__baseURL}/blog/${id}`, {
+  return await $fetch(`${useRuntimeConfig().public.baseUrl}/blog/${id}`, {
     query: query
   })
 }

@@ -2,7 +2,7 @@
 export const fetchMDFile = async (filename: string): Promise<string> => {
   try {
     const response = await $fetch(
-      `${useRuntimeConfig().api.__baseURL}/static/${filename}.md`
+      `${useRuntimeConfig().public.baseUrl}/static/${filename}.md`
     )
     return response as string
   } catch (error) {

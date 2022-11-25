@@ -5,11 +5,9 @@ export default defineNuxtConfig({
   },
   srcDir: 'src',
   runtimeConfig: {
-    api: {
-      __baseURL: process.env.BLOG_API_BASE_URL
-    },
     public: {
-      __uid: process.env.BLOG_API_UID
+      uid: 'paul',
+      baseUrl: 'http://localhost:8080'
     }
   },
   vite: {

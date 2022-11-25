@@ -1,1 +1,1 @@
-export * from './darkMode'
+export * from './dark-mode'
