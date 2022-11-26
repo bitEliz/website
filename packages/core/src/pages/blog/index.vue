@@ -15,7 +15,7 @@
                 : 'p-3 col-12 col-md-6'
             "
           >
-            <RouterLink :to="'/blog/' + blog.alias">
+            <NuxtLink :to="'/blog/' + blog.alias">
               <Tile
                 class="text-reset text-body border-light h-100"
                 :data="blog"
@@ -31,7 +31,7 @@
                   </div>
                 </template>
               </Tile>
-            </RouterLink>
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -41,7 +41,7 @@
         <h1 class="p-3 pb-0">More Blog</h1>
         <ul class="list-unstyled mb-0">
           <li class="p-3" v-for="blog in trunkedBlog" :key="blog.id">
-            <RouterLink :to="'/blog/' + blog.alias">
+            <NuxtLink :to="'/blog/' + blog.alias">
               <Tile
                 layout-direction="horizontal"
                 class="text-reset text-body border-light"
@@ -58,7 +58,7 @@
                   </div>
                 </template>
               </Tile>
-            </RouterLink>
+            </NuxtLink>
           </li>
         </ul>
       </div>
