@@ -65,9 +65,10 @@ async function fetchResume(uid: number | string) {
       data: response.skill?.professional
     })
 
-  const documentTitle = response.username
-    ? response.username.toUpperCase() + ' - RESUME'
-    : ''
+  const documentTitle =
+    response.lastName && response.firstName
+      ? response.lastName + response.firstName + '的简历'
+      : ''
 
   return {
     documentTitle,
